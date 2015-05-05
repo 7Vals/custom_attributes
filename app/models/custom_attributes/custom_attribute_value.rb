@@ -8,22 +8,12 @@ module CustomAttributes
 
     def value
       #TODO: return based on type
-      val = nil
-      if (custom_attribute.attr_type == 'integer')
-        val = integer_value
-      else
-        val = string_value
-      end
-      val
+      string_value || integer_value
     end
 
     def value=(newVal)
       #TODO: checks here based on type
-      if (custom_attribute.attr_type == 'integer')
-        self.integer_value = newVal
-      else
-        self.string_value = newVal
-      end
+      self.string_value = newVal
     end
   end
 end
