@@ -1,5 +1,5 @@
-module CustomAttributeValues
-  class StringValue < CustomAttributeValue
+module CustomAttributes
+  module StringValue
     def value=(newVal)
       self.string_value = newVal
     end

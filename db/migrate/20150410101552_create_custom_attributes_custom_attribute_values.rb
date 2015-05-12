@@ -1,6 +1,5 @@
 class CreateCustomAttributesCustomAttributeValues < ActiveRecord::Migration
   def change
-    
     create_table :custom_attributes_custom_attribute_values do |t|
       t.string :type
       t.string :owner_type

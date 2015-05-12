@@ -1,5 +1,5 @@
 module CustomAttributes
-  class IntegerValue < CustomAttributeValue
+  module IntegerValue
     def value=(newVal)
       self.integer_value = newVal.to_i if newVal
     end

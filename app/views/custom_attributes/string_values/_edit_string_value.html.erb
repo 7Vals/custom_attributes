@@ -1,0 +1,9 @@
+<br>
+<%= form.fields_for :custom_attributes do |custom_fields| %>
+	<%= string_value.name %><br/>
+<% if string_value.custom_attribute_defn.attr_type=='multiline-text' %>
+	<%= custom_fields.text_area "#{string_value.name}".to_sym, :value=>"#{string_value.value}" %>
+<% else %>
+  <%= custom_fields.text_field "#{string_value.name}".to_sym, :value=>"#{string_value.value}" %>
+<% end %>
+<% end %>

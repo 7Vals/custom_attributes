@@ -1,12 +1,5 @@
-<% editable ||= false %>
-
-<br/>
-*** Integer ***
-<% if not editable %>
-	<%= integer_value.name %>: <%= integer_value.value %>
-<% else %>
+<br>
 <%= form.fields_for :custom_attributes do |custom_fields| %>
 	<%= integer_value.name %><br/>
 	<%= custom_fields.text_field "#{integer_value.name}".to_sym, :value=>"#{integer_value.value}" %>
-<% end %>
 <% end %>

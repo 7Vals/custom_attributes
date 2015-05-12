@@ -1,0 +1,8 @@
+<%% editable ||= false %>
+
+<%% if editable %>
+<%%= render partial: "custom_attributes/<%= sub_class.underscore %>_values/edit_<%= sub_class.underscore %>_value", locals: {<%= sub_class.underscore %>_value: <%= singular_name %>_custom_attribute_<%= sub_class.underscore %>_value, form: form} %>
+<%% else %>
+<%%= render partial: "custom_attributes/<%= sub_class.underscore %>_values/show_<%= sub_class.underscore %>_value", locals: {<%= sub_class.underscore %>_value: <%= singular_name %>_custom_attribute_<%= sub_class.underscore %>_value} %>
+<%% end %>
+
