@@ -1,7 +1,8 @@
-<% cssStyles ||= {} %>
+<% cssClasses ||= {} %>
+
 <div class="custom-attributes title <%=cssClasses[:title]%>">
-  <%= string_value.name %>
+  <%= double_value.name %>
 </div>
 <div class="custom-attributes value edit-cursor <%=cssClasses[:field]%>">
-  <%= string_value.value %>
+  <%= double_value.value %>
 </div>

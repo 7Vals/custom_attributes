@@ -26,9 +26,19 @@ module CustomAttributes
         template "custom_attribute_value_model.rb", "app/models/#{file_name}_custom_attribute_value.rb"
       end
 
+      def create_controllers
+        template "custom_attribute_values_controller.rb", "app/controllers/#{file_name}_custom_attribute_values_controller.rb"
+      end
+
       def create_derived_custom_attribute_values
         create_custom_attribute_value_sub_class("String")
         create_custom_attribute_value_sub_class("Integer")
+        create_custom_attribute_value_sub_class("Double")
+        create_custom_attribute_value_sub_class("DateTime")
+      end
+
+      def copy_inline_editing_js_file
+        template "custom_attributes_inline_editing.js.erb", "public/javascripts/vendors/custom_attributes/inline_editing.js"
       end
 
       def create_migrations

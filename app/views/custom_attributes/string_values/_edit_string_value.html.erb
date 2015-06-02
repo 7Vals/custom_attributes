@@ -1,9 +1,33 @@
-<br>
-<%= form.fields_for :custom_attributes do |custom_fields| %>
-	<%= string_value.name %><br/>
-<% if string_value.custom_attribute_defn.attr_type=='multiline-text' %>
-	<%= custom_fields.text_area "#{string_value.name}".to_sym, :value=>"#{string_value.value}" %>
+<% form ||= nil %>
+<% cssClasses ||= {} %>
+
+<% if form %>
+<% # BEGIN Field part of form %>
+  <%= form.fields_for :custom_attributes do |custom_fields| %>
+    <%= string_value.name %><br/>
+    <% if string_value.custom_attribute_defn.attr_type==CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
+    <%= custom_fields.text_area "#{string_value.name}".to_sym, :value=>"#{string_value.value}" %>
+    <% else %>
+    <%= custom_fields.text_field "#{string_value.name}".to_sym, :value=>"#{string_value.value}" %>
+    <% end %>
+  <% end %>
+<% # END Field part of form %>
 <% else %>
-  <%= custom_fields.text_field "#{string_value.name}".to_sym, :value=>"#{string_value.value}" %>
-<% end %>
+<% # BEGIN Inline Editing %>
+<div class="custom-attributes editable-inline" data-controller="<%= string_value.owner.class.to_s.underscore %>_custom_attribute_values" data-owner-id="<%= string_value.owner.id %>" data-attr-name="<%= string_value.name %>">
+  <div class="custom-attributes title <%=cssClasses[:title]%>">
+    <%= string_value.name %>
+  </div>
+  <div class="custom-attributes value edit-cursor <%=cssClasses[:field]%>">
+    <%= string_value.value %>
+  </div>
+  <div class="custom-attributes field <%=cssClasses[:field]%>" style="display: none">
+  <% if string_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
+    <textarea class="custom-attributes field"><%= string_value.value %></textarea>
+  <% else %>
+    <input type="text" class="custom-attributes field" value="<%= string_value.value %>"/>
+  <% end %>
+  </div>
+</div>
+<% # END Inline Editing %>
 <% end %>

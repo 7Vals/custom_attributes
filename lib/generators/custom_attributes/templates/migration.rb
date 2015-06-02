@@ -12,9 +12,11 @@ class CreateCustomAttributesFor<%= name %> < ActiveRecord::Migration
     end
 
     create_table (:<%= singular_table_name %>_custom_attribute_values) do |t|
-      t.string :type
-      t.string :string_value
-      t.integer :integer_value
+      t.string    :type
+      t.string    :string_value
+      t.integer   :integer_value
+      t.double    :double_value
+      t.date_time :date_time_value
       t.references :<%= singular_table_name %>, foreign_key: true
       t.references :<%= singular_table_name %>_custom_attribute_definition, foreign_key: true
   <% if options.tenant %>

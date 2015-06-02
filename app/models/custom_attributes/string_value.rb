@@ -1,7 +1,11 @@
 module CustomAttributes
   module StringValue
     def value=(newVal)
-      self.string_value = newVal
+      if (newVal && newVal.present?)
+        self.string_value = newVal
+      else
+        self.string_value = nil
+      end
     end
 
     def value

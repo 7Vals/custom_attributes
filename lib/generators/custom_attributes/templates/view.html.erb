@@ -1,3 +1,4 @@
+<%% form ||= nil %>
 <%% editable ||= false %>
 
 <br/>
@@ -6,7 +7,7 @@
 <%% else %>
 <%%= form.fields_for :custom_attributes do |custom_fields| %>
   <%%= custom_attribute_value.name %><br/>
-  <%% if <%= file_name%>_custom_attribute_value.custom_attribute.attr_type=='multiline-text' %>
+  <%% if <%= file_name%>_custom_attribute_value.custom_attribute.attr_type==CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
     <%%= custom_fields.text_area "#{custom_attribute_value.name}".to_sym, :value=>"#{custom_attribute_value.value}" %>
   <%% else %>
     <%%= custom_fields.text_field "#{custom_attribute_value.name}".to_sym, :value=>"#{custom_attribute_value.value}" %>

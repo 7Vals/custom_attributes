@@ -1,0 +1,16 @@
+<% cssClasses ||= {} %>
+
+<div class="custom-attributes row">
+  <div class="custom-attributes definition title <%=cssClasses[:title]%>">
+    <%= custom_attribute_definition.attr_name %>
+  </div>
+  <div class="custom-attributes definition field <%=cssClasses[:field]%>">
+<% if custom_attribute_definition.attr_type == CustomAttributes::CustomAttribute::TYPE_TEXT %>
+    <input type="text" disabled="disabled">
+<% elsif custom_attribute_definition.attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
+    <textarea disabled="disabled"></textarea>
+<% else %>
+    <input type="text" disabled="disabled">
+<% end %>
+  </div>
+</div>

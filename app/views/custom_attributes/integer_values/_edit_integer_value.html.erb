@@ -1,5 +1,25 @@
-<br>
-<%= form.fields_for :custom_attributes do |custom_fields| %>
-	<%= integer_value.name %><br/>
-	<%= custom_fields.text_field "#{integer_value.name}".to_sym, :value=>"#{integer_value.value}" %>
+<% form ||= nil %>
+<% cssClasses ||= {} %>
+
+<% if form %>
+<% # BEGIN Field part of form %>
+  <%= form.fields_for :custom_attributes do |custom_fields| %>
+    <%= integer_value.name %><br/>
+    <%= custom_fields.text_field "#{integer_value.name}".to_sym, :value=>"#{integer_value.value}" %>
+  <% end %>
+<% # END Field part of form %>
+<% else %>
+<% # BEGIN Inline Editing %>
+<div class="custom-attributes editable-inline" data-controller="<%= integer_value.owner.class.to_s.underscore %>_custom_attribute_values" data-owner-id="<%= integer_value.owner.id %>" data-attr-name="<%= integer_value.name %>">
+  <div class="custom-attributes title  <%=cssClasses[:title]%>">
+    <%= integer_value.name %>
+  </div>
+  <div class="custom-attributes value edit-cursor  <%=cssClasses[:field]%>">
+    <%= integer_value.value %>
+  </div>
+  <div class="custom-attributes field  <%=cssClasses[:field]%>" style="display: none">
+    <input type="text" class="custom-attributes field" value="<%= integer_value.value %>"/>
+  </div>
+</div>
+<% # END Inline Editing %>
 <% end %>

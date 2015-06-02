@@ -1,0 +1,10 @@
+<div class="custom-attribute-definition title">Name:</div>
+<div class="custom-attribute-definition field"><%= f.text_field :attr_name %></div>
+
+<div class="custom-attribute-definition title">Type:</div>
+<div class="custom-attribute-definition field">
+  <%= f.select(:attr_type, custom_attribute_types.invert) %>
+</div>
+
+<div class="custom-attribute-definition title">Sort Order:</div>
+<div class="custom-attribute-definition field"><%= f.text_field :sort_order %></div>

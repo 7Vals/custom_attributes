@@ -1,0 +1,25 @@
+<% form ||= nil %>
+<% cssClasses ||= {} %>
+
+<% if form %>
+<% # BEGIN Field part of form %>
+  <%= form.fields_for :custom_attributes do |custom_fields| %>
+    <%= date_time_value.name %><br/>
+    <%= custom_fields.text_field "#{date_time_value.name}".to_sym, :value=>"#{date_time_value.value}" %>
+  <% end %>
+<% # END Field part of form %>
+<% else %>
+<% # BEGIN Inline Editing %>
+<div class="custom-attributes editable-inline" data-controller="<%= date_time_value.owner.class.to_s.underscore %>_custom_attribute_values" data-owner-id="<%= date_time_value.owner.id %>" data-attr-name="<%= date_time_value.name %>">
+  <div class="custom-attributes title <%=cssClasses[:title]%>">
+    <%= date_time_value.name %>
+  </div>
+  <div class="custom-attributes value edit-cursor <%=cssClasses[:field]%>">
+    <%= date_time_value.value %>
+  </div>
+  <div class="custom-attributes field datetime <%=cssClasses[:field]%>" style="display: none">
+    <input type="text" class="custom-attributes field" value="<%= date_time_value.value %>"/>
+  </div>
+</div>
+<% # END Inline Editing %>
+<% end %>

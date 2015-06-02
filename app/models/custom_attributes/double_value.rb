@@ -1,15 +1,15 @@
 module CustomAttributes
-  module IntegerValue
+  module DoubleValue
     def value=(newVal)
       if (newVal && newVal.present?)
-        self.integer_value = newVal.to_i
+        self.double_value = newVal.to_f
       else
         self.integer_value = nil
       end
     end
 
     def value
-      self.integer_value
+      self.double_value
     end
   end
 end

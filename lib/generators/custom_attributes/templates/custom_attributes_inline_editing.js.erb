@@ -1,0 +1,44 @@
+$.fn.inline_editable = function() {
+
+  var CLICK_TO_EDIT_HTML = "<span style='font-style: italic; font-size: 0.9em'>Click to edit</i>"
+
+  return this.each(function () {
+    var $this = $(this)
+    var owner_id = $(this).data('owner-id')
+    var attr_name = $(this).data('attr-name')
+    var controller = $(this).data('controller')
+
+    if ($("div.value", $this).text().trim()=='') {
+      $("div.value", $this).html(CLICK_TO_EDIT_HTML)
+    }
+
+    $("div.value", $this).click(function() {
+      $("div.value", $this).hide()
+      $("div.field", $this).show()
+      $("div.field input", $this).focus()
+    });
+
+    $("div.field input,textarea", $this).blur(function() {
+      var url = '/' + controller  + '.json'
+      var value = this.value
+      $.ajax({
+           type:'POST'
+           ,url: url
+           ,data: $.param({ owner_id: owner_id, name: attr_name, value: value })
+           ,success: function(data) {
+              if (data.value) {
+                $("div.value", $this).text(data.value)
+              } else {
+                $("div.value", $this).html(CLICK_TO_EDIT_HTML)
+              }
+           }
+      });
+
+      $("div.field", $this).hide()
+      $("div.value", $this).show()
+    });
+
+  });
+};
+
+$("div.custom-attributes.editable-inline").inline_editable();
