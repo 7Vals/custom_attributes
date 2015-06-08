@@ -18,7 +18,7 @@
     <%= integer_value.value %>
   </div>
   <div class="custom-attributes field  <%=cssClasses[:field]%>" style="display: none">
-    <input type="text" class="custom-attributes field" value="<%= integer_value.value %>"/>
+    <input type="text" pattern="[0-9]+" class="custom-attributes field" value="<%= integer_value.value %>"/>
   </div>
 </div>
 <% # END Inline Editing %>

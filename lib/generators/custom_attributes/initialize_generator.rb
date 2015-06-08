@@ -17,8 +17,12 @@ module CustomAttributes
         @prev_migration_nr.to_s
       end
 
-      def views
+      def create_views_and_helpers
+        #TODO: verify if all views are being copied
         template "view.html.erb", "app/views/#{file_name}_custom_attribute_values/_#{file_name}_custom_attribute.html.erb"
+
+        #TODO: there should be a way that does NOT require copying the helper
+        template "application_helper.rb", "app/helpers/custom_attributes/custom_attributes_helper.rb"
       end
 
       def create_base_models
@@ -27,6 +31,7 @@ module CustomAttributes
       end
 
       def create_controllers
+        template "custom_attribute_definitions_controller.rb", "app/controllers/#{file_name}_custom_attribute_definitions_controller.rb"
         template "custom_attribute_values_controller.rb", "app/controllers/#{file_name}_custom_attribute_values_controller.rb"
       end
 

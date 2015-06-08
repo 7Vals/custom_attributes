@@ -11,12 +11,16 @@ class CreateCustomAttributesFor<%= name %> < ActiveRecord::Migration
       t.timestamps null: false
     end
 
+  <% if options.tenant %>
+    add_foreign_key :<%= singular_table_name %>_custom_attribute_definitions, :<%= options.tenant.pluralize %>, column: :<%= options.tenant.underscore %>_id, on_delete: :cascade
+  <% end %>
+
     create_table (:<%= singular_table_name %>_custom_attribute_values) do |t|
       t.string    :type
-      t.string    :string_value
+      t.text      :string_value
       t.integer   :integer_value
-      t.double    :double_value
-      t.date_time :date_time_value
+      t.decimal   :double_value
+      t.datetime  :date_time_value
       t.references :<%= singular_table_name %>, foreign_key: true
       t.references :<%= singular_table_name %>_custom_attribute_definition, foreign_key: true
   <% if options.tenant %>
@@ -25,8 +29,10 @@ class CreateCustomAttributesFor<%= name %> < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    #TODO: Add index for tenant
-    add_index  :<%= singular_table_name %>_custom_attribute_values, :<%= singular_table_name %>_custom_attribute_definition_id, name: 'index_<%= singular_table_name %>_cattr_vals_on_cattr_defn'
+    add_foreign_key :<%= singular_table_name %>_custom_attribute_values, :<%= singular_table_name %>_custom_attribute_definitions, on_delete: :cascade
+  <% if options.tenant %>
+    add_foreign_key :<%= singular_table_name %>_custom_attribute_values, :<%= options.tenant.pluralize %>, column: :<%= options.tenant.underscore %>_id, on_delete: :cascade
+  <% end %>
 
   end
 end

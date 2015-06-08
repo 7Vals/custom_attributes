@@ -1,5 +1,5 @@
 module CustomAttributes
-  module ApplicationHelper
+  module CustomAttributesHelper
     def custom_attribute_types
       types = {
         CustomAttribute::TYPE_NUMBER          => "Number",

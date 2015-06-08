@@ -1,11 +1,4 @@
 class <%= name %>CustomAttributeDefinitionsController < CustomAttributes::CustomAttributeDefinitionsController
-  <% if options.tenant %>
-  def custom_attributes_scope
-    <%= name %>CustomAttributeDefinition.current_tenant @current_company
-  end
-  # You can delete the remove the above scope if you have defined a default_scope for <%= name %>CustomAttributeDefinition.
-  <% end %>
-
   def new
     super
     respond_to do |format|
@@ -29,7 +22,13 @@ class <%= name %>CustomAttributeDefinitionsController < CustomAttributes::Custom
     end
   end
 
-private
+  private
+  <% if options.tenant %>
+  def custom_attributes_scope
+    <%= name %>CustomAttributeDefinition.current_tenant @current_company
+  end
+  # You can delete the remove the above scope if you have defined a default_scope for <%= name %>CustomAttributeDefinition.
+  <% end %>
   def custom_attribute_params
     params.require(:<%= singular_name %>_custom_attribute_definition).permit(:attr_name, :attr_type, :sort_order)
   end
