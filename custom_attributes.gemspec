@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Tariq Hussain"]
   s.email       = ["tariq.hussain@7vals.com"]
   s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of CustomAttributes."
-  s.description = "TODO: Description of CustomAttributes."
+  s.summary     = "Allows custom attributes to be added to a Rails model."
+  s.description = "Contains generators for generating the relevant models, concerns, views etc."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.rdoc"]
