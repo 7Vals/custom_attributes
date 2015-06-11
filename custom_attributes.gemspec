@@ -5,7 +5,7 @@ require "custom_attributes/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "custom_attributes"
+  s.name        = "custom_attributes_scaffold"
   s.version     = CustomAttributes::VERSION
   s.authors     = ["Tariq Hussain"]
   s.email       = ["tariq.hussain@7vals.com"]
