@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = CustomAttributes::VERSION
   s.authors     = ["Tariq Hussain"]
   s.email       = ["tariq.hussain@7vals.com"]
-  s.homepage    = "TODO"
+  s.homepage    = "http://github.com/7Vals/custom_attributes"
   s.summary     = "Allows custom attributes to be added to a Rails model."
   s.description = "Contains generators for generating the relevant models, concerns, views etc."
   s.license     = "MIT"
