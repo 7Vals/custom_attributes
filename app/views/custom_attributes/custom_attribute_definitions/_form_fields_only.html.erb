@@ -1,12 +1,16 @@
+<% titleClass ||= nil %>
+<% fieldClass ||= nil %>
+
 <% new_record ||= false %>
-<div class="custom-attribute-definition title">Name:</div>
-<div class="custom-attribute-definition field">
+<div class="custom-attribute-definition title <%=titleClass%>">Name:</div>
+<div class="custom-attribute-definition field <%=fieldClass%>">
 <%= f.text_field :attr_name, pattern:"^[a-zA-Z0-9\_\s]+$", title: "Name can only contain alphanumeric characters and spaces." %></div>
 
-<div class="custom-attribute-definition title">Type:</div>
-<div class="custom-attribute-definition field">
+<div class="custom-attribute-definition title <%=titleClass%>">Type:</div>
+<div class="custom-attribute-definition field <%=fieldClass%>">
   <%= f.select :attr_type, custom_attribute_types.invert, {}, {disabled: !new_record}%>
 </div>
 
-<div class="custom-attribute-definition title">Sort Order:</div>
-<div class="custom-attribute-definition field"><%= f.text_field :sort_order, readonly: true%></div>
+<% if new_record %>
+<%= f.hidden_field :sort_order %>
+<% end %>

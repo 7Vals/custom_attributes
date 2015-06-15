@@ -4,7 +4,7 @@ module CustomAttributes
       if (newVal && newVal.present?)
         self.double_value = newVal.to_f
       else
-        self.integer_value = nil
+        self.double_value = nil
       end
     end
 

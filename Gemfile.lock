@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    custom_attributes_scaffold (0.1.0)
+    custom_attributes_scaffold (0.1.1)
       rails (~> 4.2)
 
 GEM
