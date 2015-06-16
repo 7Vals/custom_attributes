@@ -19,7 +19,7 @@
     <%= string_value.name %>
   </div>
   <div class="custom-attributes value edit-cursor <%=cssClasses[:field]%>">
-    <%= string_value.value %>
+    <%= simple_format(string_value.value) %>
   </div>
   <div class="custom-attributes field <%=cssClasses[:field]%>" style="display: none">
   <% if string_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
