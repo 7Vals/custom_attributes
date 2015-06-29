@@ -1,21 +1,11 @@
 <% link_to_edit   ||= nil %>
 <% link_to_delete ||= nil %>
-<% remote_links ||= false %>
-
 <% cssClasses ||= {} %>
 
 <div class="custom-attributes row">
   <div class="actions_links pull-right">
-  <% if link_to_edit %>
-    <%= link_to link_to_edit, remote: remote_links, class: "edit text_style"  do %>
-       <i class="icon-pencil"></i>Edit
-    <% end %>
-  <% end %>
-  <% if link_to_delete %>
-    <%= link_to link_to_delete, remote: remote_links, method: :delete, class: "edit text_style"  do %>
-       <i class="icon-trash"></i>Delete
-    <% end %>
-  <% end %>
+  <%= link_to_edit if link_to_edit %>
+  <%= link_to_delete if link_to_delete %>
   </div>
 
   <div class="custom-attributes definition title <%=cssClasses[:title]%>">
