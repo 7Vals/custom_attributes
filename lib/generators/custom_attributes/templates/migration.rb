@@ -4,6 +4,7 @@ class CreateCustomAttributesFor<%= name %> < ActiveRecord::Migration
     create_table (:<%= singular_table_name %>_custom_attribute_definitions) do |t|
       t.string :attr_name
       t.string :attr_type
+      t.text   :default_value
       t.integer :sort_order
   <% if options.tenant %>
       t.integer :<%= options.tenant.underscore %>_id, foreign_key: true

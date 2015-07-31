@@ -11,6 +11,11 @@
   <%= f.select :attr_type, custom_attribute_types.invert, {}, {disabled: !new_record}%>
 </div>
 
+<div class="custom-attribute-definition title <%=titleClass%>">Default Value:</div>
+<div class="custom-attribute-definition field <%=fieldClass%>">
+  <%= f.text_field :default_value %>
+</div>
+
 <% if new_record %>
 <%= f.hidden_field :sort_order %>
 <% end %>
