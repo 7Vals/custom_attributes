@@ -3,7 +3,8 @@ module CustomAttributes
     extend ActiveSupport::Concern
     included do
     
-    # For future additions to the custom attribute defintion functionality
+      scope :by_sort_order, -> { order('sort_order ASC') }
+      validates :attr_name, format: { with: /^[a-zA-Z\_\s]+$/, multiline: true, message: 'cannot contain special characters.' }
 
     end
   end
