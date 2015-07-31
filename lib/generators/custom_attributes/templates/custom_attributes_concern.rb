@@ -1,8 +1,20 @@
 module <%= name %>CustomAttributes
   extend ActiveSupport::Concern
+  # TODO: Move most of this file to a common parent
 
   included do
     has_many :custom_attribute_values, :class_name=>'<%= name %>CustomAttributeValue', autosave: true
+    after_initialize :add_custom_attributes_with_default_values
+  end
+
+  def add_custom_attributes_with_default_values
+    return unless self.new_record?
+    return if self.custom_attributes.blank?
+    self.custom_attributes.each do |cav|
+      unless cav.custom_attribute_defn.default_value.blank?
+        self.custom_attribute_values.push(cav)
+      end
+    end
   end
 
   def custom_attributes=(map_of_custom_attributes)
