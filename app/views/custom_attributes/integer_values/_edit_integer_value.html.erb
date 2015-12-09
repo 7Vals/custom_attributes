@@ -4,8 +4,8 @@
 <% if form %>
 <% # BEGIN Field part of form %>
   <%= form.fields_for :custom_attributes do |custom_fields| %>
-    <%= integer_value.name %><br/>
-    <%= custom_fields.text_field "#{integer_value.name}".to_sym, :value=>"#{integer_value.value}" %>
+    <%= custom_fields.label integer_value.name, class: "#{cssClasses[:title]}" %>
+    <%= custom_fields.text_field "#{integer_value.name}".to_sym, value: "#{integer_value.value}", class: "#{cssClasses[:field]}" %>
   <% end %>
 <% # END Field part of form %>
 <% else %>
