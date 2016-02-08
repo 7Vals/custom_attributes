@@ -6,6 +6,8 @@ class CreateCustomAttributesFor<%= name %> < ActiveRecord::Migration
       t.string :attr_type
       t.text   :default_value
       t.integer :sort_order
+      t.boolean :required, default: false
+      end
   <% if options.tenant %>
       t.integer :<%= options.tenant.underscore %>_id, foreign_key: true
   <% end %>
