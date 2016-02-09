@@ -5,7 +5,7 @@
 <% # BEGIN Field part of form %>
   <%= form.fields_for :custom_attributes do |custom_fields| %>
     <%= custom_fields.label integer_value.name, class: "#{cssClasses[:title]}" %>
-    <%= custom_fields.text_field "#{integer_value.name}".to_sym, value: "#{integer_value.value}", class: "#{cssClasses[:field]}" required: required %>
+    <%= custom_fields.text_field "#{integer_value.name}".to_sym, value: "#{integer_value.value}", class: "#{cssClasses[:field]}", required: required %>
   <% end %>
 <% # END Field part of form %>
 <% else %>
