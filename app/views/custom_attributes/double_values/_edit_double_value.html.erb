@@ -1,11 +1,11 @@
-<% form ||= nil %>
+<% form       ||= nil %>
 <% cssClasses ||= {} %>
-
+<% required   ||= false %>
 <% if form %>
 <% # BEGIN Field part of form %>
   <%= form.fields_for :custom_attributes do |custom_fields| %>
     <%= custom_fields.label double_value.name, class: "#{cssClasses[:title]}" %>
-    <%= custom_fields.text_field "#{double_value.name}".to_sym, value: "#{double_value.value}", class: "#{cssClasses[:field]}" %>
+    <%= custom_fields.text_field "#{double_value.name}".to_sym, value: "#{double_value.value}", class: "#{cssClasses[:field]}", required: required %>
   <% end %>
 <% # END Field part of form %>
 <% else %>
