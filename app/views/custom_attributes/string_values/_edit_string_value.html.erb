@@ -5,6 +5,9 @@
 <% # BEGIN Field part of form %>
   <%= form.fields_for :custom_attributes do |custom_fields| %>
     <%= custom_fields.label string_value.name, class: "#{cssClasses[:title]}" %>
+    <% if required %>
+      <span class="required">*</span>
+    <% end %>
     <% if string_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
       <%= custom_fields.text_area "#{string_value.name}".to_sym, value: "#{string_value.value}", class: "#{cssClasses[:field]}", required:required %>
     <% else %>
@@ -17,6 +20,9 @@
 <div class="custom-attributes editable-inline" data-controller="<%= string_value.owner.class.to_s.underscore %>_custom_attribute_values" data-owner-id="<%= string_value.owner.id %>" data-attr-name="<%= string_value.name %>">
   <div class="custom-attributes title <%=cssClasses[:title]%>">
     <%= string_value.name %>
+    <% if required %>
+      <span class="required">*</span>
+    <% end %>
   </div>
   <div class="custom-attributes value edit-cursor <%=cssClasses[:field]%>">
     <%= simple_format(string_value.value) %>

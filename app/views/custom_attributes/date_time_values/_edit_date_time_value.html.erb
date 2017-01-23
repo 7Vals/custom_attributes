@@ -5,6 +5,9 @@
 <% # BEGIN Field part of form %>
   <%= form.fields_for :custom_attributes do |custom_fields| %>
     <%= custom_fields.label date_time_value.name, class: "#{cssClasses[:title]}" %>
+    <% if required %>
+      <span class="required">*</span>
+    <% end %>
     <%= custom_fields.text_field "#{date_time_value.name}".to_sym, value: "#{date_time_value.value}", class: "#{cssClasses[:field]}" %>
   <% end %>
 <% # END Field part of form %>
@@ -13,6 +16,9 @@
 <div class="custom-attributes editable-inline" data-controller="<%= date_time_value.owner.class.to_s.underscore %>_custom_attribute_values" data-owner-id="<%= date_time_value.owner.id %>" data-attr-name="<%= date_time_value.name %>">
   <div class="custom-attributes title <%=cssClasses[:title]%>">
     <%= date_time_value.name %>
+    <% if required %>
+      <span class="required">*</span>
+    <% end %>
   </div>
   <div class="custom-attributes value edit-cursor <%=cssClasses[:field]%>">
     <%= date_time_value.value %>

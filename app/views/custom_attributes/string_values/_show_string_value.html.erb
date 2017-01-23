@@ -1,6 +1,10 @@
 <% cssStyles ||= {} %>
+<% required  ||= false %>
 <div class="custom-attributes title <%=cssClasses[:title]%>">
   <%= string_value.name %>
+  <% if required %>
+    <span class="required">*</span>
+  <% end %>
 </div>
 <div class="custom-attributes value edit-cursor <%=cssClasses[:field]%>">
   <%= string_value.value %>

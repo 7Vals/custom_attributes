@@ -1,7 +1,11 @@
 <% cssClasses ||= {} %>
+<% required   ||= false %>
 
 <div class="custom-attributes title <%=cssClasses[:title]%>">
   <%= date_time_value.name %>
+  <% if required %>
+    <span class="required">*</span>
+  <% end %>
 </div>
 <div class="custom-attributes value edit-cursor <%=cssClasses[:field]%>">
   <%= date_time_value.value %>

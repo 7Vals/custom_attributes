@@ -5,6 +5,9 @@
 <% # BEGIN Field part of form %>
   <%= form.fields_for :custom_attributes do |custom_fields| %>
     <%= custom_fields.label integer_value.name, class: "#{cssClasses[:title]}" %>
+    <% if required %>
+      <span class="required">*</span>
+    <% end %>
     <%= custom_fields.text_field "#{integer_value.name}".to_sym, value: "#{integer_value.value}", class: "#{cssClasses[:field]}", required: required %>
   <% end %>
 <% # END Field part of form %>
@@ -13,6 +16,9 @@
 <div class="custom-attributes editable-inline" data-controller="<%= integer_value.owner.class.to_s.underscore %>_custom_attribute_values" data-owner-id="<%= integer_value.owner.id %>" data-attr-name="<%= integer_value.name %>">
   <div class="custom-attributes title  <%=cssClasses[:title]%>">
     <%= integer_value.name %>
+    <% if required %>
+      <span class="required">*</span>
+    <% end %>
   </div>
   <div class="custom-attributes value edit-cursor  <%=cssClasses[:field]%>">
     <%= integer_value.value %>
