@@ -4,7 +4,7 @@
 <div class="custom-attributes title <%=cssClasses[:title]%>">
   <%= double_value.name %>
   <% if required %>
-    <span class="required">*</span>
+    <span class="<%= cssClasses[:required] %>">*</span>
   <% end %>
 </div>
 <div class="custom-attributes value edit-cursor <%=cssClasses[:field]%>">
