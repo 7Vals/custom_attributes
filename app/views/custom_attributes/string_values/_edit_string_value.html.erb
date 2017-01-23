@@ -5,9 +5,6 @@
 <% # BEGIN Field part of form %>
   <%= form.fields_for :custom_attributes do |custom_fields| %>
     <%= custom_fields.label string_value.name, class: "#{cssClasses[:title]}" %>
-    <% if required %>
-      <span class="required">*</span>
-    <% end %>
     <% if string_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
       <%= custom_fields.text_area "#{string_value.name}".to_sym, value: "#{string_value.value}", class: "#{cssClasses[:field]}", required:required %>
     <% else %>
