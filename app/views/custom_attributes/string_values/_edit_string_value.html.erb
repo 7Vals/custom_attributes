@@ -26,9 +26,9 @@
   </div>
   <div class="custom-attributes field <%=cssClasses[:field]%>" style="display: none">
   <% if string_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
-    <textarea class="custom-attributes field"><%= string_value.value %></textarea>
+    <textarea class="custom-attributes field", required=<%= required %>><%= string_value.value %></textarea>
   <% else %>
-    <input type="text" class="custom-attributes field" value="<%= string_value.value %>"/>
+    <input type="text" class="custom-attributes field" value="<%= string_value.value %>", required=<%= required %>/>
   <% end %>
   </div>
 </div>
