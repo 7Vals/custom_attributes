@@ -12,12 +12,14 @@
 <% else %>
 <% # BEGIN Inline Editing %>
 <div class="custom-attributes editable-inline" data-controller="<%= date_time_value.owner.class.to_s.underscore %>_custom_attribute_values" data-owner-id="<%= date_time_value.owner.id %>" data-attr-name="<%= date_time_value.name %>">
-  <div class="custom-attributes title <%=cssClasses[:title]%>" style="display: inline-block">
-    <%= date_time_value.name %>
+  <div class="<%=cssClasses[:title]%>">
+    <div class="custom-attributes title" style="display: inline-block">
+      <%= date_time_value.name %>
+    </div>
+    <% if required %>
+      <span class="<%= cssClasses[:required] %>">*</span>
+    <% end %>
   </div>
-  <% if required %>
-    <span class="<%= cssClasses[:required] %>">*</span>
-  <% end %>
   <div class="custom-attributes value edit-cursor <%=cssClasses[:field]%>">
     <%= date_time_value.value %>
   </div>
