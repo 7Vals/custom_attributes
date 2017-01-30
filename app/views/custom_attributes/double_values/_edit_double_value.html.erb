@@ -12,7 +12,7 @@
 <% # BEGIN Inline Editing %>
 <div class="custom-attributes editable-inline" data-controller="<%= double_value.owner.class.to_s.underscore %>_custom_attribute_values" data-owner-id="<%= double_value.owner.id %>" data-attr-name="<%= double_value.name %>">
   <div class="<%=cssClasses[:title]%>">
-    <div class="custom-attributes title" style="display: inline-block">
+    <div class="custom-attributes title inline-block-display">
       <%= double_value.name %>
     </div>
     <% if required %>

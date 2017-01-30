@@ -13,7 +13,7 @@
 <% # BEGIN Inline Editing %>
 <div class="custom-attributes editable-inline" data-controller="<%= date_time_value.owner.class.to_s.underscore %>_custom_attribute_values" data-owner-id="<%= date_time_value.owner.id %>" data-attr-name="<%= date_time_value.name %>">
   <div class="<%=cssClasses[:title]%>">
-    <div class="custom-attributes title" style="display: inline-block">
+    <div class="custom-attributes title inline-block-display">
       <%= date_time_value.name %>
     </div>
     <% if required %>
