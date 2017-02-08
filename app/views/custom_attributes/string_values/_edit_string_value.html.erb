@@ -16,7 +16,7 @@
 <% # BEGIN Inline Editing %>
 <div class="custom-attributes editable-inline" data-controller="<%= string_value.owner.class.to_s.underscore %>_custom_attribute_values" data-owner-id="<%= string_value.owner.id %>" data-attr-name="<%= string_value.name %>">
   <div class="<%=cssClasses[:title]%>">
-    <div class="custom-attributes title inline-block-display">
+    <div class="custom-attributes title custom-attribute-title">
       <%= string_value.name %>
     </div>
     <% if required %>
