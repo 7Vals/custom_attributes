@@ -46,6 +46,10 @@ module CustomAttributes
         template "custom_attributes_inline_editing.js.erb", "public/javascripts/vendors/custom_attributes/inline_editing.js"
       end
 
+      def copy_custom_attributes_css_file
+        template "custom_attributes.css", "public/stylesheets/vendors/custom_attributes/custom_attributes.css"
+      end
+
       def create_migrations
         migration_template "migration.rb", "db/migrate/create_custom_attributes_for_#{file_name}.rb"
       end
