@@ -12,6 +12,7 @@ module <%= name %>CustomAttributes
     return if self.custom_attributes.blank?
     self.custom_attributes.each do |cav|
       unless cav.custom_attribute_defn.default_value.blank?
+        cav.apply_default_value
         self.custom_attribute_values.push(cav)
       end
     end
