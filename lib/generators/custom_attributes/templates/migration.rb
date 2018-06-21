@@ -5,6 +5,7 @@ class CreateCustomAttributesFor<%= name %> < ActiveRecord::Migration
       t.string :attr_name
       t.string :attr_type
       t.text   :default_value
+      t.string :placeholder
       t.integer :sort_order
       t.boolean :required, default: false
     end

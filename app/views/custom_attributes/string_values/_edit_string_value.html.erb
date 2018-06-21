@@ -8,9 +8,9 @@
     <% label_text += content_tag(:span, '*', class: cssClasses[:required]) if required %>
     <%= custom_fields.label string_value.name.to_sym, label_text.html_safe, class: cssClasses[:title] %>
     <% if string_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
-      <%= custom_fields.text_area "#{string_value.name}".to_sym, value: "#{string_value.value}", class: "#{cssClasses[:field]}", required:required %>
+      <%= custom_fields.text_area "#{string_value.name}".to_sym, value: "#{string_value.value}", class: "#{cssClasses[:field]}", required:required, placeholder: string_value.custom_attribute_defn.placeholder %>
     <% else %>
-      <%= custom_fields.text_field "#{string_value.name}".to_sym, value: "#{string_value.value}", class: "#{cssClasses[:field]}", required: required %>
+      <%= custom_fields.text_field "#{string_value.name}".to_sym, value: "#{string_value.value}", class: "#{cssClasses[:field]}", required: required, placeholder: string_value.custom_attribute_defn.placeholder %>
     <% end %>
   <% end %>
 <% # END Field part of form %>
