@@ -4,6 +4,7 @@ module CustomAttributes
     TYPE_NUMBER         = 'number'
     TYPE_DECIMAL        = 'decimal'
     TYPE_TEXT           = 'text'
+    TYPE_BOOLEAN        = 'boolean'
     TYPE_MULTILINE_TEXT = 'multiline_text'
     TYPE_DATE           = 'date'
     TYPE_DATE_TIME      = 'date_time'

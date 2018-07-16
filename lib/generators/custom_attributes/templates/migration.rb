@@ -22,6 +22,7 @@ class CreateCustomAttributesFor<%= name %> < ActiveRecord::Migration
       t.string    :type
       t.text      :string_value
       t.integer   :integer_value
+      t.boolean   :boolean_value
       t.decimal   :double_value, precision: 54, scale: 9
       t.datetime  :date_time_value
       t.references :<%= singular_table_name %>, foreign_key: true
