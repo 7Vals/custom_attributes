@@ -8,12 +8,21 @@
 
 <div class="custom-attribute-definition title <%=titleClass%>">Type:</div>
 <div class="custom-attribute-definition field <%=fieldClass%>">
-  <%= f.select :attr_type, custom_attribute_types.invert, {}, {disabled: !new_record}%>
+  <%= f.select :attr_type, custom_attribute_types.invert, {}, {disabled: !new_record, id: "custom_attribute_type"}%> 
 </div>
 
 <div class="custom-attribute-definition title <%=titleClass%>">Default Value:</div>
 <div class="custom-attribute-definition field <%=fieldClass%>">
   <%= f.text_field :default_value %>
+</div>
+
+<div id="custom_attribute_placeholder_div">
+  <div class="custom-attribute-definition title <%= titleClass %>">Placeholder:
+    <%= link_to "(?)", "#", title: "It will be displayed in the custom field before the user enters a value" %>
+  </div>
+  <div class="custom-attribute-definition field <%= fieldClass %>">
+    <%= f.text_field :placeholder %>
+  </div>
 </div>
 
 <% if new_record %>

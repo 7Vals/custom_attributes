@@ -4,7 +4,9 @@
 <% if form %>
 <% # BEGIN Field part of form %>
   <%= form.fields_for :custom_attributes do |custom_fields| %>
-    <%= custom_fields.label double_value.name, class: "#{cssClasses[:title]}" %>
+    <% label_text = double_value.name %>
+    <% label_text += content_tag(:span, '*', class: cssClasses[:required]) if required %>
+    <%= custom_fields.label double_value.name.to_sym, label_text.html_safe, class: cssClasses[:title] %>
     <%= custom_fields.text_field "#{double_value.name}".to_sym, value: "#{double_value.value}", class: "#{cssClasses[:field]}", required: required %>
   <% end %>
 <% # END Field part of form %>
