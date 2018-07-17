@@ -1,0 +1,34 @@
+<% form       ||= nil %>
+<% cssClasses ||= {} %>
+<% required   ||= false %>
+<% if form %>
+<% # BEGIN Field part of form %>
+  <%= form.fields_for :custom_attributes do |custom_fields| %>
+    <% label_text = boolean_value.name %>
+    <% label_text += content_tag(:span, '*', class: cssClasses[:required]) if required %>
+    <%= custom_fields.label boolean_value.name.to_sym, label_text.html_safe, class: cssClasses[:title] %>
+    <%= custom_fields.radio_button "#{boolean_value.name}".to_sym, true, boolean_value.value, class: "#{cssClasses[:field]}", required: required %>
+    <%= custom_fields.radio_button "#{boolean_value.name}".to_sym, false, !boolean_value.value, class: "#{cssClasses[:field]}", required: required %>
+  <% end %>
+<% # END Field part of form %>
+<% else %>
+<% # BEGIN Inline Editing %>
+<div class="custom-attributes editable-inline" data-controller="<%= boolean_value.owner.class.to_s.underscore %>_custom_attribute_values" data-owner-id="<%= boolean_value.owner.id %>" data-attr-name="<%= boolean_value.name %>">
+  <div class="<%=cssClasses[:title]%>">
+    <div class="custom-attributes title custom-attribute-title">
+      <%= boolean_value.name %>
+    </div>
+    <% if required %>
+      <span class="<%= cssClasses[:required] %>">*</span>
+    <% end %>
+  </div>
+  <div class="custom-attributes value edit-cursor <%=cssClasses[:field]%>">
+    <%= boolean_value.value ? "Yes" : "No" %>
+  </div>
+  <div class="custom-attributes field <%= cssClasses[:field] %>" style="display: none">
+    <%= radio_button_tag 'custom_attribute_definition', true, boolean_value.value, required: required, class: "custom-attributes field" %> Yes<br />
+    <%= radio_button_tag 'custom_attribute_definition', false, !boolean_value.value, required: required, class: "custom-attributes field" %> No
+  </div>
+</div>
+<% # END Inline Editing %>
+<% end %>

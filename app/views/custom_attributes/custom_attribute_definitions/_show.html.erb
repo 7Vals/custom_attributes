@@ -16,6 +16,9 @@
     <input type="text" disabled="disabled">
 <% elsif custom_attribute_definition.attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
     <textarea disabled="disabled"></textarea>
+<% elsif custom_attribute_definition.attr_type == CustomAttributes::CustomAttribute::TYPE_BOOLEAN %>
+    <%= radio_button_tag 'custom_attribute_definition', true, disabled: true %> Yes<br />
+    <%= radio_button_tag 'custom_attribute_definition', false, disabled: true %> No
 <% else %>
     <input type="text" disabled="disabled">
 <% end %>
