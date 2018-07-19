@@ -4,27 +4,36 @@
 <% new_record ||= false %>
 <div class="custom-attribute-definition title <%=titleClass%>">Name:</div>
 <div class="custom-attribute-definition field <%=fieldClass%>">
-<%= f.text_field :attr_name, pattern:"^[a-zA-Z0-9\_\s]+$", title: "Name can only contain alphanumeric characters and spaces." %></div>
+  <%= f.text_field :attr_name, pattern:"^[a-zA-Z0-9\_\s]+$", title: "Name can only contain alphanumeric characters and spaces." %>
+</div>
 
 <div class="custom-attribute-definition title <%=titleClass%>">Type:</div>
 <div class="custom-attribute-definition field <%=fieldClass%>">
-  <%= f.select :attr_type, custom_attribute_types.invert, {}, {disabled: !new_record, id: "custom_attribute_type"}%> 
+  <%= f.select :attr_type, custom_attribute_types.invert, {}, { disabled: !new_record, id: "custom_attribute_type" } %> 
 </div>
 
 <div class="custom-attribute-definition title <%=titleClass%>">Default Value:</div>
-<div class="custom-attribute-definition field <%=fieldClass%>">
-  <%= f.text_field :default_value %>
+<div class="custom-attribute-definition field <%=fieldClass%> default-value-div">
+  <% if f.object.try(:attr_type) == CustomAttributes::CustomAttribute::TYPE_BOOLEAN %>
+    <%= f.radio_button :default_value, true, class: "default-value-field" %> Yes<br />
+    <%= f.radio_button :default_value, false, class: "default-value-field" %> No<br />
+    <%= f.radio_button :default_value, "", class: "default-value-field" %> Keep it unselected
+  <% else %>
+    <%= f.text_field :default_value, class: "default-value-field" %>
+  <% end %>
 </div>
 
-<div id="custom_attribute_placeholder_div">
-  <div class="custom-attribute-definition title <%= titleClass %>">Placeholder:
-    <%= link_to "(?)", "#", title: "It will be displayed in the custom field before the user enters a value" %>
+<% unless f.object.try(:attr_type) == CustomAttributes::CustomAttribute::TYPE_BOOLEAN %>
+  <div id="custom_attribute_placeholder_div">
+    <div class="custom-attribute-definition title <%= titleClass %>">Placeholder:
+      <%= link_to "(?)", "#", title: "It will be displayed in the custom field before the user enters a value" %>
+    </div>
+    <div class="custom-attribute-definition field <%= fieldClass %>">
+      <%= f.text_field :placeholder %>
+    </div>
   </div>
-  <div class="custom-attribute-definition field <%= fieldClass %>">
-    <%= f.text_field :placeholder %>
-  </div>
-</div>
+<% end %>
 
 <% if new_record %>
-<%= f.hidden_field :sort_order %>
+  <%= f.hidden_field :sort_order %>
 <% end %>
