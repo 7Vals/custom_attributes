@@ -39,22 +39,14 @@ $.fn.inline_editable = function() {
            ,url: url
            ,data: $.param({ owner_id: owner_id, name: attr_name, value: value })
            ,success: function(data) {
-              if($("div.field", $this).data("radio-field")){
-                var field_html = '';
-                if(data.value){
-                  field_html = "Yes";
-                } else {
-                  field_html = "No";
-                }
-                $("div.value", $this).html(field_html);
-              } else {
-                if (data.value) {
-                  strValue = '' + data.value;
+              if (data.value) {
+                strValue = '' + data.value;
+                if(!$("div.field", $this).data("radio-field")){
                   $("div.field input,textarea", $this).val(data.value);
-                  $("div.value", $this).html(strValue.replace(/\n/g, '<br/>'));
-                } else {
-                  $("div.value", $this).html(CLICK_TO_EDIT_HTML);
                 }
+                $("div.value", $this).html(strValue.replace(/\n/g, '<br/>'));
+              } else {
+                $("div.value", $this).html(CLICK_TO_EDIT_HTML);
               }
 
               $("div.field", $this).hide();

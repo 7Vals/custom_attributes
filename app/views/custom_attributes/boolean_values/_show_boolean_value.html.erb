@@ -8,9 +8,5 @@
   <% end %>
 </div>
 <div class="custom-attributes value edit-cursor <%=cssClasses[:field]%>">
-  <% if boolean_value.value.nil? %>
-    --
-  <% else %>
-    <%= boolean_value.value ? "Yes" : "No" %>
-  <% end %>
+  <%= boolean_value.value %>
 </div>

@@ -9,8 +9,8 @@
 	<% if custom_attribute_value.custom_attribute.attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
 		<%= custom_fields.text_area "#{custom_attribute_value.name}".to_sym, :value=>"#{custom_attribute_value.value}" %>
   <% elsif custom_attribute_value.custom_attribute.attr_type == CustomAttributes::CustomAttribute::TYPE_BOOLEAN %>
-    <%= custom_fields.radio_button "#{custom_attribute_value.name}".to_sym, true, checked: custom_attribute_value.value %> Yes<br />
-    <%= custom_fields.radio_button "#{custom_attribute_value.name}".to_sym, false, checked: !custom_attribute_value.value %> No
+    <%= custom_fields.radio_button "#{custom_attribute_value.name}".to_sym, true, checked: custom_attribute_value.boolean_value %> Yes<br />
+    <%= custom_fields.radio_button "#{custom_attribute_value.name}".to_sym, false, checked: !custom_attribute_value.boolean_value.nil? && !custom_attribute_value.boolean_value %> No
 	<% else %>
 		<%= custom_fields.text_field "#{custom_attribute_value.name}".to_sym, :value=>"#{custom_attribute_value.value}" %>
 	<% end %>
