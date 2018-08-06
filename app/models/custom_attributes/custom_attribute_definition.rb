@@ -9,6 +9,10 @@ module CustomAttributes
       def number_type?
         [CustomAttributes::CustomAttribute::TYPE_NUMBER, CustomAttributes::CustomAttribute::TYPE_DECIMAL].include?(attr_type)
       end
+
+      def boolean_type?
+        attr_type == CustomAttributes::CustomAttribute::TYPE_BOOLEAN
+      end
     end
   end
 end

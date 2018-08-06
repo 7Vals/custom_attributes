@@ -1,11 +1,7 @@
 module CustomAttributes
   module BooleanValue
     def value=(newVal)
-      if !newVal.nil?
-        self.boolean_value = newVal
-      else
-        self.boolean_value = nil
-      end
+      self.boolean_value = newVal
     end
 
     def value
