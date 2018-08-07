@@ -5,9 +5,7 @@ module CustomAttributes
     end
 
     def value
-      if boolean_value.nil?
-        "--"
-      else
+      unless boolean_value.nil?
         boolean_value ? "Yes" : "No"
       end
     end

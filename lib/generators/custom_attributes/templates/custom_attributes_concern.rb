@@ -11,10 +11,7 @@ module <%= name %>CustomAttributes
     return unless self.new_record?
     return if self.custom_attributes.blank?
     self.custom_attributes.each do |cav|
-      if cav.custom_attribute_defn.default_value.present? && 
-        ((cav.value.blank? && !cav.custom_attribute_defn.boolean_type?) || 
-          (cav.boolean_value.nil? && cav.custom_attribute_defn.boolean_type?))
-        
+      if cav.custom_attribute_defn.default_value.present? && cav.value.blank?
         cav.apply_default_value
         self.custom_attribute_values.push(cav)
       end
