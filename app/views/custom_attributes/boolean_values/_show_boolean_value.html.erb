@@ -1,0 +1,12 @@
+<% cssClasses ||= {} %>
+<% required   ||= false %>
+
+<div class="custom-attributes title <%=cssClasses[:title]%>">
+  <%= boolean_value.name %>
+  <% if required %>
+    <span class="<%= cssClasses[:required] %>">*</span>
+  <% end %>
+</div>
+<div class="custom-attributes value edit-cursor <%=cssClasses[:field]%>">
+  <%= boolean_value.value %>
+</div>

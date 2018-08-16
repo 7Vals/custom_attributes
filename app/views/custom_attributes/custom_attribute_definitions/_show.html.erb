@@ -4,20 +4,23 @@
 
 <div class="custom-attributes row">
   <div class="actions_links pull-right">
-  <%= link_to_edit if link_to_edit %>
-  <%= link_to_delete if link_to_delete %>
+    <%= link_to_edit if link_to_edit %>
+    <%= link_to_delete if link_to_delete %>
   </div>
 
   <div class="custom-attributes definition title <%=cssClasses[:title]%>">
     <%= custom_attribute_definition.attr_name %>
   </div>
   <div class="custom-attributes definition field <%=cssClasses[:field]%>">
-<% if custom_attribute_definition.attr_type == CustomAttributes::CustomAttribute::TYPE_TEXT %>
-    <input type="text" disabled="disabled">
-<% elsif custom_attribute_definition.attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
-    <textarea disabled="disabled"></textarea>
-<% else %>
-    <input type="text" disabled="disabled">
-<% end %>
+    <% if custom_attribute_definition.attr_type == CustomAttributes::CustomAttribute::TYPE_TEXT %>
+      <input type="text" disabled="disabled">
+    <% elsif custom_attribute_definition.attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
+      <textarea disabled="disabled"></textarea>
+    <% elsif custom_attribute_definition.boolean_type? %>
+      <%= radio_button_tag 'custom_attribute_definition', true, true, disabled: true %> Yes<br />
+      <%= radio_button_tag 'custom_attribute_definition', false, false, disabled: true %> No
+    <% else %>
+      <input type="text" disabled="disabled">
+    <% end %>
   </div>
 </div>

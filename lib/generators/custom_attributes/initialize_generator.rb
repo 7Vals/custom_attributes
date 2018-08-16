@@ -40,6 +40,7 @@ module CustomAttributes
         create_custom_attribute_value_sub_class("Integer")
         create_custom_attribute_value_sub_class("Double")
         create_custom_attribute_value_sub_class("DateTime")
+        create_custom_attribute_value_sub_class("Boolean")
       end
 
       def copy_inline_editing_js_file

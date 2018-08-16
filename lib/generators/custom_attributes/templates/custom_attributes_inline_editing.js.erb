@@ -15,14 +15,18 @@ $.fn.inline_editable = function() {
     $("div.value", $this).click(function() {
       $("div.value", $this).hide();
       $("div.field", $this).show();
-      $("div.field input,textarea", $this).focus();
+      if(!$("div.field", $this).data("radio-field")){
+        $("div.field input,textarea", $this).focus();
+      }
     });
 
     $("div.field input,textarea", $this).focusout(function() {
       if (! this.validity.valid) {
         var attrName = $(this).closest("div.custom-attributes.editable-inline").find("div.custom-attributes.title").text().trim()
         alert("Invalid value for \'"+ attrName + "\'.");
-        $("div.field input", $this).val($("div.value", $this).text().trim());
+        if(!$("div.field", $this).data("radio-field")){
+          $("div.field input", $this).val($("div.value", $this).text().trim());
+        }
         $("div.field", $this).hide();
         $("div.value", $this).show();
         return;
@@ -37,7 +41,9 @@ $.fn.inline_editable = function() {
            ,success: function(data) {
               if (data.value) {
                 strValue = '' + data.value;
-                $("div.field input,textarea", $this).val(data.value);
+                if(!$("div.field", $this).data("radio-field")){
+                  $("div.field input,textarea", $this).val(data.value);
+                }
                 $("div.value", $this).html(strValue.replace(/\n/g, '<br/>'));
               } else {
                 $("div.value", $this).html(CLICK_TO_EDIT_HTML);
