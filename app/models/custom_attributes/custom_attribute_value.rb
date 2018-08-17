@@ -13,7 +13,7 @@ module CustomAttributes
         end
       end
 
-      def value_given?
+      def value_present?
         string_value.present? || double_value.present? || integer_value.present? || !boolean_value.nil?
       end
     end
