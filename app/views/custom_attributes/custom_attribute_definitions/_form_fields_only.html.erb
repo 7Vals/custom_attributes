@@ -17,7 +17,7 @@
   <% if f.object.try(:boolean_type?) %>
     <%= f.radio_button :default_value, true, class: "default-value-field" %> Yes<br />
     <%= f.radio_button :default_value, false, class: "default-value-field" %> No<br />
-    <%= f.radio_button :default_value, "", class: "default-value-field" %> Keep it unselected
+    <%= f.radio_button :default_value, "", class: "default-value-field" %> <i>Do not set a default value</i>
   <% else %>
     <%= f.text_field :default_value, class: "default-value-field" %>
   <% end %>
