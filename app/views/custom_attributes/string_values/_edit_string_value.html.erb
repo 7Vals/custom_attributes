@@ -30,9 +30,9 @@
   </div>
   <div class="custom-attributes field <%=cssClasses[:field]%>" style="display: none">
   <% if string_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
-    <textarea class="custom-attributes field", required=<%= required %>><%= string_value.value %></textarea>
+    <%= text_area_tag '', string_value.value, class: "custom-attributes field", required: required %>
   <% else %>
-    <input type="text" class="custom-attributes field" value="<%= string_value.value %>", required=<%= required %>/>
+    <%= text_field_tag '', string_value.value, class: "custom-attributes field",  required: required %>
   <% end %>
   </div>
 </div>
