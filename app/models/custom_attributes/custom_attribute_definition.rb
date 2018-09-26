@@ -13,6 +13,10 @@ module CustomAttributes
       def boolean_type?
         attr_type == CustomAttributes::CustomAttribute::TYPE_BOOLEAN
       end
+
+      def dropdown_type?
+        attr_type == CustomAttributes::CustomAttribute::TYPE_DROPDOWN
+      end
     end
   end
 end

@@ -24,6 +24,8 @@ class <%= name %>CustomAttributeValue < ActiveRecord::Base
         <% name %>CustomAttributeStringValue.new(custom_attribute_defn: custom_attribute_defn, owner: owner)
       when CustomAttributes::CustomAttribute::TYPE_BOOLEAN
         <% name %>CustomAttributeBooleanValue.new(custom_attribute_defn: custom_attribute_defn, owner: owner)
+      when CustomAttributes::CustomAttribute::TYPE_DROPDOWN
+        <% name %>CustomAttributeDropdownValue.new(custom_attribute_defn: custom_attribute_defn, owner: owner)
       else
         nil
       end
