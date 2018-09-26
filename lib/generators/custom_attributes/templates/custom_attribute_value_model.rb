@@ -2,6 +2,8 @@ class <%= name %>CustomAttributeValue < ActiveRecord::Base
     include CustomAttributes::CustomAttributeValue
     belongs_to :custom_attribute_defn, class_name: "<%= name %>CustomAttributeDefinition", foreign_key: "<%= singular_name %>_custom_attribute_definition_id"
     belongs_to :owner, class_name: "<%= name %>", foreign_key: "<%= singular_name %>_id"
+    has_many   :<%= name %>_custom_attribute_options
+    has_many   :<%= name %>_custom_attribute_option_values, dependent: :destroy
     <% if options.tenant %>
     scope :current_tenant, -> <%= options.tenant %>_id { where(<%= options.tenant %>_id: <%= options.tenant %>_id) }
     # Uncomment the following if you want to define a default_scope instead
