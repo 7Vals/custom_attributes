@@ -11,8 +11,10 @@
   <% elsif custom_attribute_value.custom_attribute.boolean_type? %>
     <%= custom_fields.radio_button "#{custom_attribute_value.name}".to_sym, true, checked: custom_attribute_value.boolean_value %> Yes<br />
     <%= custom_fields.radio_button "#{custom_attribute_value.name}".to_sym, false, checked: !custom_attribute_value.boolean_value.nil? && !custom_attribute_value.boolean_value %> No
+  <% elsif custom_attribute_value.custom_attribute.dropdown_type? %>
+    <%= custom_fields.select "#{custom_attribute_value.name}".to_sym, options_for_select(custom_attribute_value.custom_attribute_options.map {|op| [op.label, op.id]}, selected: custom_attribute_value.value) %>
 	<% else %>
-		<%= custom_fields.text_field "#{custom_attribute_value.name}".to_sym, :value=>"#{custom_attribute_value.value}" %>
+		<%= custom_fields.text_field "#{custom_attribute_value.name}".to_sym, value: "#{custom_attribute_value.value}" %>
 	<% end %>
 <% end %>
 <% end %>

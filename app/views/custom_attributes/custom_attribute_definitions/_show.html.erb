@@ -19,6 +19,12 @@
     <% elsif custom_attribute_definition.boolean_type? %>
       <%= radio_button_tag 'custom_attribute_definition', true, true, disabled: true %> Yes<br />
       <%= radio_button_tag 'custom_attribute_definition', false, false, disabled: true %> No
+    <% elsif custom_attribute_definition.dropdown_type? %>
+      <%= select_tag 'custom_attribute_definition', options_for_select(["-- Select --", ""]),  disabled: true %>
+      <%= content_tag :ul do %>
+        <%= custom_attribute_definition.custom_attribute_options.each { |option| concat content_tag :li, option.label } %>
+      <% end %>
+      <%= radio_button_tag 'custom_attribute_definition', false, false, disabled: true %> No
     <% else %>
       <input type="text" disabled="disabled">
     <% end %>

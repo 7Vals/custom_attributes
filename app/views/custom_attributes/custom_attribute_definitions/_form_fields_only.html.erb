@@ -18,12 +18,14 @@
     <%= f.radio_button :default_value, true, class: "default-value-field" %> Yes<br />
     <%= f.radio_button :default_value, false, class: "default-value-field" %> No<br />
     <%= f.radio_button :default_value, "", class: "default-value-field" %> <i>Do not set a default value</i>
+  <% elsif f.object.try(:dropdown_type?) %>
+    <%= f.select :default_value, options_for_select(f.object.custom_attribute_options.map {|op| [op.label, op.id]}), class: "span3" %>
   <% else %>
     <%= f.text_field :default_value, class: "default-value-field" %>
   <% end %>
 </div>
 
-<% unless f.object.try(:boolean_type?) %>
+<% unless f.object.try(:boolean_type?) || f.object.try(:dropdown_type?) %>
   <div id="custom_attribute_placeholder_div">
     <div class="custom-attribute-definition title <%= titleClass %>">Placeholder:
       <%= link_to "(?)", "#", title: "It will be displayed in the custom field before the user enters a value" %>
