@@ -1,0 +1,34 @@
+<% form       ||= nil %>
+<% cssClasses ||= {} %>
+<% if form %>
+  <% # BEGIN Field part of form %>
+    <%= form.fields_for :custom_attributes do |custom_fields| %>
+      <% label_text = dropdown_value.name %>
+      <% label_text += content_tag(:span, '*', class: cssClasses[:required]) %>
+      <%= custom_fields.label dropdown_value.name.to_sym, label_text.html_safe, class: cssClasses[:title] %>
+      <%= custom_fields.radio_button "#{dropdown_value.name}".to_sym, true, checked: dropdown_value.boolean_value, class: "#{cssClasses[:field]}", required: true %> Yes
+      <br />
+      <%= custom_fields.radio_button "#{dropdown_value.name}".to_sym, false, checked: !dropdown_value.dropdown_value.nil? && !dropdown_value.boolean_value, class: "#{cssClasses[:field]}", required: true %> No<br />
+
+      <%= select_tag "#{dropdown_value.name}".to_sym, options_for_select(dropdown_value.custom_attribute_options.map {|op| [op.option, op.id]}, selected: purchase_orders_asset_custom_attribute.present? ? purchase_orders_asset_custom_attribute.values.first : nil), class: "span3" %>
+    <% end %>
+  <% # END Field part of form %>
+<% else %>
+  <% # BEGIN Inline Editing %>
+  <div class="custom-attributes editable-inline" data-controller="<%= dropdown_value.owner.class.to_s.underscore %>_custom_attribute_values" data-owner-id="<%= dropdown_value.owner.id %>" data-attr-name="<%= dropdown_value.name %>">
+    <div class="<%= cssClasses[:title] %>">
+      <div class="custom-attributes title custom-attribute-title">
+        <%= dropdown_value.name %>
+      </div>
+      <span class="<%= cssClasses[:required] %>">*</span>
+    </div>
+    <div class="custom-attributes value edit-cursor <%= cssClasses[:field] %>">
+      <%= dropdown_value.value %>
+    </div>
+    <div class="custom-attributes field <%= cssClasses[:field] %>" style="display: none" data-radio-field="true">
+      <%= radio_button_tag 'custom_attribute_definition', true, dropdown_value.boolean_value, required: true, class: "custom-attributes field" %> Yes<br />
+      <%= radio_button_tag 'custom_attribute_definition', false, !dropdown_value.dropdown_value.nil? && !dropdown_value.boolean_value, required: true, class: "custom-attributes field" %> No
+    </div>
+  </div>
+  <% # END Inline Editing %>
+<% end %>
