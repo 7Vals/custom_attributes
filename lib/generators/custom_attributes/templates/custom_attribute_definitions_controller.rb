@@ -30,7 +30,15 @@ class <%= name %>CustomAttributeDefinitionsController < CustomAttributes::Custom
   # You can delete the remove the above scope if you have defined a default_scope for <%= name %>CustomAttributeDefinition.
   <% end %>
   def custom_attribute_params
-    params.require(:<%= singular_name %>_custom_attribute_definition).permit(:attr_name, :attr_type, :sort_order)
+    params.require(:<%= singular_name %>_custom_attribute_definition).permit(
+      :attr_name, 
+      :attr_type, 
+      :sort_order,
+       custom_attribute_options: [
+        :label,
+        :position
+      ]
+    )
   end
 
 end
