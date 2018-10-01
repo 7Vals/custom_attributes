@@ -34,7 +34,7 @@ class <%= name %>CustomAttributeDefinitionsController < CustomAttributes::Custom
       :attr_name, 
       :attr_type, 
       :sort_order,
-       custom_attribute_options: [
+      custom_attribute_options_attributes: [
         :label,
         :position
       ]

@@ -6,4 +6,5 @@ module CustomAttributes
         custom_attribute_option.label
       end
     end
+  end
 end

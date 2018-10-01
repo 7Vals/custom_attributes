@@ -20,7 +20,7 @@ $.fn.inline_editable = function() {
       }
     });
 
-    $("div.field input,textarea", $this).focusout(function() {
+    $("div.field input, textarea, select", $this).focusout(function() {
       if (! this.validity.valid) {
         var attrName = $(this).closest("div.custom-attributes.editable-inline").find("div.custom-attributes.title").text().trim()
         alert("Invalid value for \'"+ attrName + "\'.");

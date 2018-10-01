@@ -25,18 +25,17 @@
   <% end %>
 </div>
 
-<% if f.object.try(:dropdown_type?) %>
-  <div class="custom-attribute-definition options">
-    <div class="custom_attribute_options_content">
-      <div class="sortmultiple">
-        <%= f.fields_for :custom_attribute_options do |g| %>
-          <%= render partial: 'custom_attribute_option_fields', locals: { f: g } %>
-        <% end %>
-      </div>
-      <%= link_to 'Add Options', "#_", class: 'custom_options_link' %>
+<div class="clearfix"></div>
+<div class="custom-attribute-definition options hide">
+  <div class="custom_attribute_options_content">
+    <div class="sortmultiple">
+      <%= f.fields_for :custom_attribute_options do |g| %>
+        <%= render partial: 'custom_attribute_option_fields', locals: { f: g } %>
+      <% end %>
     </div>
+    <%= link_to 'Add Options', "#_", class: 'custom_options_link' %>
   </div>
-<% end %>
+</div>
 
 <% unless f.object.try(:boolean_type?) || f.object.try(:dropdown_type?) %>
   <div id="custom_attribute_placeholder_div">
