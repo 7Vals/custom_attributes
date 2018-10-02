@@ -42,36 +42,24 @@ class CreateCustomAttributesFor<%= name %> < ActiveRecord::Migration
     create_table (:<%= singular_table_name %>_custom_attribute_options) do |t|
       t.text :label
       t.integer :position
-      t.references :<%= singular_table_name %>_custom_attribute_definition, foreign_key: true, index: true
+      t.references :<%= singular_table_name %>_custom_attribute_definition, index: true
 
       <% if options.tenant %>
-        t.integer :<%= options.tenant.underscore %>_id, foreign_key: true, index: true
+        t.integer :<%= options.tenant.underscore %>_id, index: true
       <% end %>
 
       t.timestamps null: false
     end
-
-    add_foreign_key :<%= singular_table_name %>_custom_attribute_options, :<%= singular_table_name %>_custom_attribute_definitions, on_delete: :cascade
-    <% if options.tenant %>
-      add_foreign_key :<%= singular_table_name %>_custom_attribute_options, :<%= options.tenant.pluralize %>, column: :<%= options.tenant.underscore %>_id, on_delete: :cascade
-    <% end %>
 
     create_table (:<%= singular_table_name %>_custom_attribute_option_values) do |t|
-      t.references :<%= singular_table_name %>_custom_attribute_option, foreign_key: true, index: true
-      t.references :<%= singular_table_name %>_custom_attribute_value, foreign_key: true, index: true
+      t.references :<%= singular_table_name %>_custom_attribute_option, index: true
+      t.references :<%= singular_table_name %>_custom_attribute_value, index: true
 
       <% if options.tenant %>
-        t.integer :<%= options.tenant.underscore %>_id, foreign_key: true, index: true
+        t.integer :<%= options.tenant.underscore %>_id, index: true
       <% end %>
 
       t.timestamps null: false
     end
-
-    add_foreign_key :<%= singular_table_name %>_custom_attribute_option_values, :<%= singular_table_name %>_custom_attribute_options, on_delete: :cascade
-    add_foreign_key :<%= singular_table_name %>_custom_attribute_option_values, :<%= singular_table_name %>_custom_attribute_values, on_delete: :cascade
-    <% if options.tenant %>
-      add_foreign_key :<%= singular_table_name %>_custom_attribute_option_values, :<%= options.tenant.pluralize %>, column: :<%= options.tenant.underscore %>_id, on_delete: :cascade
-    <% end %>
-
   end
 end
