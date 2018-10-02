@@ -1,12 +1,13 @@
 <% form       ||= nil %>
 <% cssClasses ||= {} %>
+<% required   ||= false %>
 <% if form %>
   <% # BEGIN Field part of form %>
     <%= form.fields_for :custom_attributes do |custom_fields| %>
       <% label_text = dropdown_value.name %>
-      <% label_text += content_tag(:span, '*', class: cssClasses[:required]) %>
+      <% label_text += content_tag(:span, '*', class: cssClasses[:required]) if required %>
       <%= custom_fields.label dropdown_value.name.to_sym, label_text.html_safe, class: cssClasses[:title] %>
-      <%= custom_fields.select "#{dropdown_value.name}".to_sym, options_for_select(dropdown_value.custom_attribute_options.map { |op| op.label }, selected: dropdown_value.value), class: "span3 #{cssClasses[:field]}" %>
+      <%= custom_fields.select "#{dropdown_value.name}".to_sym, options_for_select(dropdown_value.custom_attribute_options.map { |op| op.label }, selected: dropdown_value.value), {}, class: "#{cssClasses[:field]}" %>
     <% end %>
   <% # END Field part of form %>
 <% else %>
@@ -16,7 +17,9 @@
       <div class="custom-attributes title custom-attribute-title">
         <%= dropdown_value.name %>
       </div>
-      <span class="<%= cssClasses[:required] %>">*</span>
+      <% if required %>
+        <span class="<%= cssClasses[:required] %>">*</span>
+      <% end %>
     </div>
     <div class="custom-attributes value edit-cursor <%= cssClasses[:field] %>">
       <%= dropdown_value.value %>
