@@ -35,8 +35,10 @@ class <%= name %>CustomAttributeDefinitionsController < CustomAttributes::Custom
       :attr_type, 
       :sort_order,
       custom_attribute_options_attributes: [
+        :id,
         :label,
-        :position
+        :position,
+        :_destroy
       ]
     )
   end

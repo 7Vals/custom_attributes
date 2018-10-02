@@ -19,22 +19,20 @@
     <%= f.radio_button :default_value, false, class: "default-value-field" %> No<br />
     <%= f.radio_button :default_value, "", class: "default-value-field" %> <i>Do not set a default value</i>
   <% elsif f.object.try(:dropdown_type?) %>
-    <%= f.select :default_value, options_for_select(f.object.custom_attribute_options.map {|op| [op.label, op.id]}), class: "span3" %>
+    <%= f.select :default_value, options_for_select(f.object.custom_attribute_options.map { |op| [op.label, op.id] }), class: "span3" %>
   <% else %>
     <%= f.text_field :default_value, class: "default-value-field" %>
   <% end %>
 </div>
 
 <div class="clearfix"></div>
-<div class="custom-attribute-definition options hide">
+<div class="custom-attribute-definition-options <%= 'hide' if f.object.blank? || !f.object.dropdown_type? %>">
   <div class="custom_attribute_options_content">
-    <div class="sortmultiple">
-      <%= f.fields_for :custom_attribute_options do |g| %>
-        <%= render partial: 'custom_attribute_option_fields', locals: { f: g } %>
-      <% end %>
-    </div>
-    <%= link_to 'Add Options', "#_", class: 'custom_options_link' %>
+    <%= f.fields_for :custom_attribute_options do |g| %>
+      <%= render partial: 'custom_attribute_option_fields', locals: { f: g } %>
+    <% end %>
   </div>
+  <%= link_to_add_options 'Add Options', f, :custom_attribute_options %>
 </div>
 
 <% unless f.object.try(:boolean_type?) || f.object.try(:dropdown_type?) %>
