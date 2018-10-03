@@ -13,7 +13,7 @@
     <%%= custom_fields.radio_button "#{custom_attribute_value.name}".to_sym, true, checked: custom_attribute_value.boolean_value %> Yes<br />
     <%%= custom_fields.radio_button "#{custom_attribute_value.name}".to_sym, false, checked: !custom_attribute_value.boolean_value.nil? && !custom_attribute_value.boolean_value %> No
   <%% elsif <%= file_name%>_custom_attribute_value.custom_attribute.dropdown_type? %>
-    <%%= custom_fields.select "#{custom_attribute_value.name}".to_sym, options_for_select(custom_attribute_value.custom_attribute_options.map { |op| op.label }, selected: custom_attribute_value.value) %>
+    <%%= custom_fields.select "#{custom_attribute_value.name}".to_sym, options_for_select(custom_attribute_value.custom_attribute_options.map { |op| op.label }, selected: custom_attribute_value.value), include_blank: "-- Select --" %>
   <%% else %>
     <%%= custom_fields.text_field "#{custom_attribute_value.name}".to_sym, :value=>"#{custom_attribute_value.value}" %>
   <%% end %>

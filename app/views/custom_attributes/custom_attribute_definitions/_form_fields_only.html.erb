@@ -19,7 +19,7 @@
     <%= f.radio_button :default_value, false, class: "default-value-field" %> No<br />
     <%= f.radio_button :default_value, "", class: "default-value-field" %> <i>Do not set a default value</i>
   <% elsif f.object.try(:dropdown_type?) %>
-    <%= f.select :default_value, options_for_select(f.object.custom_attribute_options.map { |op| [op.label, op.id] }), {}, class: "span3" %>
+    <%= f.select :default_value, options_for_select(f.object.custom_attribute_options.map { |op| [op.label, op.id] }), { include_blank: "-- Select --" }, class: "span3" %>
   <% else %>
     <%= f.text_field :default_value, class: "default-value-field" %>
   <% end %>
