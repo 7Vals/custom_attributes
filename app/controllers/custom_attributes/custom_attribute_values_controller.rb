@@ -6,7 +6,7 @@ module CustomAttributes
       respond_to do |format| 
         ca.value = params[:value]
         if ca.save
-          format.json { render json: ca.to_json(methods: :value), status: :created }
+          format.json { render json: ca.to_json(methods: [:value, :selected_option]), status: :created }
         else
           format.json { render json: ca, status: :unprocessable_entity }
         end

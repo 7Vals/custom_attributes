@@ -40,9 +40,14 @@ $.fn.inline_editable = function() {
            ,data: $.param({ owner_id: owner_id, name: attr_name, value: value })
            ,success: function(data) {
               if (data.value) {
-                strValue = '' + data.value;
+                if(data.custom_attribute_defn.attr_type == "dropdown"){
+                  var value = data.selected_option;
+                }else{
+                  var value = data.value;
+                }
+                var strValue = '' + data.value;
                 if(!$("div.field", $this).data("radio-field")){
-                  $("div.field input, textarea, select", $this).val(data.value);
+                  $("div.field input, textarea, select", $this).val(value);
                 }
                 $("div.value", $this).html(strValue.replace(/\n/g, '<br/>'));
               } else {
