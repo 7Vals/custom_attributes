@@ -9,7 +9,12 @@ module CustomAttributes
 
       def apply_default_value
         unless custom_attribute_defn.default_value.blank?
-          self.value = custom_attribute_defn.default_value
+          if custom_attribute_defn.dropdown_type?
+            custom_attribute_option  = custom_attribute_defn.custom_attribute_options.find_by label: custom_attribute_defn.default_value
+            self.value               = custom_attribute_option.try(:id)
+          else
+            self.value = custom_attribute_defn.default_value
+          end
         end
       end
 
