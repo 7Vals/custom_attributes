@@ -18,7 +18,7 @@ module CustomAttributes
       custom_attribute_option_values.first.try(:custom_attribute_option).try(:label)
     end
 
-    def selected_option
+    def selected_option_id
       custom_attribute_option_values.first.try(:custom_attribute_option).try(:id)
     end
   end

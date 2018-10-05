@@ -2,19 +2,19 @@
 
 <br/>
 <% if not editable %>
-	<%= custom_attribute_value.name %>: <%= custom_attribute_value.value %>
+  <%= custom_attribute_value.name %>: <%= custom_attribute_value.value %>
 <% else %>
 <%= form.fields_for :custom_attributes do |custom_fields| %>
-	<%= custom_attribute_value.name %><br/>
-	<% if custom_attribute_value.custom_attribute.attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
-		<%= custom_fields.text_area "#{custom_attribute_value.name}".to_sym, :value=>"#{custom_attribute_value.value}" %>
+  <%= custom_attribute_value.name %><br/>
+  <% if custom_attribute_value.custom_attribute.attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
+    <%= custom_fields.text_area "#{custom_attribute_value.name}".to_sym, :value=>"#{custom_attribute_value.value}" %>
   <% elsif custom_attribute_value.custom_attribute.boolean_type? %>
     <%= custom_fields.radio_button "#{custom_attribute_value.name}".to_sym, true, checked: custom_attribute_value.boolean_value %> Yes<br />
     <%= custom_fields.radio_button "#{custom_attribute_value.name}".to_sym, false, checked: !custom_attribute_value.boolean_value.nil? && !custom_attribute_value.boolean_value %> No
   <% elsif custom_attribute_value.custom_attribute.dropdown_type? %>
     <%= custom_fields.select "#{custom_attribute_value.name}".to_sym, options_for_select(custom_attribute_value.custom_attribute_options.map { |op| [op.label, op.id] }, selected: custom_attribute_value.value), include_blank: "-- Select --" %>
-	<% else %>
-		<%= custom_fields.text_field "#{custom_attribute_value.name}".to_sym, value: "#{custom_attribute_value.value}" %>
-	<% end %>
+  <% else %>
+    <%= custom_fields.text_field "#{custom_attribute_value.name}".to_sym, value: "#{custom_attribute_value.value}" %>
+  <% end %>
 <% end %>
 <% end %>

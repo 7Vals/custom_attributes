@@ -41,7 +41,7 @@ $.fn.inline_editable = function() {
            ,success: function(data) {
               if (data.value) {
                 if(data.custom_attribute_defn.attr_type == "dropdown"){
-                  var value = data.selected_option;
+                  var value = data.selected_option_id;
                 }else{
                   var value = data.value;
                 }

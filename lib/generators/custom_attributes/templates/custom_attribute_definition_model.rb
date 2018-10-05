@@ -43,7 +43,7 @@ class <%= name %>CustomAttributeDefinition < ActiveRecord::Base
     end
   end
 
-  def selected_option
-    custom_attribute_options.find_by(id: default_value).try(:label)
+  def default_option
+    custom_attribute_options.find_by(id: default_value)
   end
 end
