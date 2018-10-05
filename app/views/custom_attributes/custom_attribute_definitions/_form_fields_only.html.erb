@@ -2,6 +2,7 @@
 <% fieldClass ||= nil %>
 <% new_record ||= false %>
 <% option_deletion_alert_url ||= nil %>
+<% position_update_url ||= nil %>
 <div class="custom-attribute-definition title <%=titleClass%>">Name:</div>
 <div class="custom-attribute-definition field <%=fieldClass%>">
   <%= f.text_field :attr_name, pattern:"^[a-zA-Z0-9\_\s]+$", title: "Name can only contain alphanumeric characters and spaces." %>
@@ -19,7 +20,7 @@
     <%= f.radio_button :default_value, false, class: "default-value-field" %> No<br />
     <%= f.radio_button :default_value, "", class: "default-value-field" %> <i>Do not set a default value</i>
   <% elsif f.object.try(:dropdown_type?) %>
-    <%= f.select :default_value, options_for_select(f.object.custom_attribute_options.map { |op| [op.label, op.id] }), { include_blank: "-- Select --" }, class: "span3" %>
+    <%= select_tag :selected_option_label, options_for_select(f.object.custom_attribute_options.map { |op| op.label }, selected: f.object.selected_option), include_blank: "-- Select --", class: "dropdown-ca-default-select" %>
   <% else %>
     <%= f.text_field :default_value, class: "default-value-field" %>
   <% end %>
