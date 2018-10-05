@@ -17,6 +17,38 @@ module CustomAttributes
       def dropdown_type?
         attr_type == CustomAttributes::CustomAttribute::TYPE_DROPDOWN
       end
+
+      def save_custom_attribute_definition(selected_option_label)
+        begin
+          transaction do
+            save!
+            if dropdown_type?
+              selected_option = custom_attribute_options.find_by label: selected_option_label
+              update! default_value: selected_option.try(:id)
+            end
+          end
+        rescue ActiveRecord::ActiveRecordError => e
+          false
+        end
+      end
+
+      def update_custom_attribute_definition(custom_attribute_params, selected_option_label)
+        begin
+          transaction do
+            update!(custom_attribute_params)
+            if dropdown_type?
+              selected_option = custom_attribute_options.find_by label: selected_option_label
+              update! default_value: selected_option.try(:id)
+            end
+          end
+        rescue ActiveRecord::ActiveRecordError => e
+          false
+        end
+      end
+
+      def default_option
+        custom_attribute_options.find_by(id: default_value)
+      end
     end
   end
 end

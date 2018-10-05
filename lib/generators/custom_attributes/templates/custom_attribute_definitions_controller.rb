@@ -12,7 +12,7 @@ class <%= name %>CustomAttributeDefinitionsController < CustomAttributes::Custom
     @custom_attribute = custom_attributes_scope.new(custom_attribute_params)
 <% end %>
     respond_to do |format|
-      if @custom_attribute.save
+      if @custom_attribute.save_custom_attribute_definition(params[:selected_option_label])
         format.html { redirect_to action: :index }
         format.json { render :show, status: :created, location: @custom_attribute }
       else

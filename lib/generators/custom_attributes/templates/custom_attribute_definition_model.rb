@@ -12,38 +12,4 @@ class <%= name %>CustomAttributeDefinition < ActiveRecord::Base
     # default_scope { where(<%= options.tenant %>_id: Tenant.current_tenant) }
   <% end %>
   accepts_nested_attributes_for :custom_attribute_options, allow_destroy: :true
-
-  def save_custom_attribute_definition(selected_option_label)
-    begin
-      transaction do
-        save!
-        if dropdown_type?
-          selected_option = custom_attribute_options.find_by label: selected_option_label
-          update! default_value: selected_option.try(:id)
-        end
-      end
-    rescue ActiveRecord::ActiveRecordError => e
-      e.errors.each { |error| self.errors.add(:base, error) }
-      false
-    end
-  end
-
-  def update_custom_attribute_definition(custom_attribute_params, selected_option_label)
-    begin
-      transaction do
-        update!(custom_attribute_params)
-        if dropdown_type?
-          selected_option = custom_attribute_options.find_by label: selected_option_label
-          update! default_value: selected_option.try(:id)
-        end
-      end
-    rescue ActiveRecord::ActiveRecordError => e
-      e.errors.each { |error| self.errors.add(:base, error) }
-      false
-    end
-  end
-
-  def default_option
-    custom_attribute_options.find_by(id: default_value)
-  end
 end
