@@ -7,8 +7,5 @@ class <%= name %>CustomAttributeOptionValue < ActiveRecord::Base
 
   <% if options.tenant %>
     belongs_to :<%= options.tenant %>_id
-    scope :current_tenant, -> <%= options.tenant %>_id { where(<%= options.tenant %>_id: <%= options.tenant %>_id) }
-    # Uncomment the following if you want to define a default_scope instead
-    # default_scope { where(<%= options.tenant %>_id: Tenant.current_tenant) }
   <% end %>
 end

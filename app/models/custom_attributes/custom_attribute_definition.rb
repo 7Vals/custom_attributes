@@ -18,11 +18,15 @@ module CustomAttributes
         attr_type == CustomAttributes::CustomAttribute::TYPE_DROPDOWN
       end
 
-      def save_custom_attribute_definition(selected_option_label)
+      def has_options?
+        attr_type == CustomAttributes::CustomAttribute::TYPE_DROPDOWN
+      end
+
+      def save_custom_attribute(selected_option_label)
         begin
           transaction do
             save!
-            if dropdown_type?
+            if has_options?
               selected_option = custom_attribute_options.find_by label: selected_option_label
               update! default_value: selected_option.try(:id)
             end
@@ -32,11 +36,11 @@ module CustomAttributes
         end
       end
 
-      def update_custom_attribute_definition(custom_attribute_params, selected_option_label)
+      def update_custom_attribute(custom_attribute_params, selected_option_label)
         begin
           transaction do
             update!(custom_attribute_params)
-            if dropdown_type?
+            if has_options?
               selected_option = custom_attribute_options.find_by label: selected_option_label
               update! default_value: selected_option.try(:id)
             end

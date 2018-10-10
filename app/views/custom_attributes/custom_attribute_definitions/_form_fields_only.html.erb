@@ -1,7 +1,7 @@
 <% titleClass ||= nil %>
 <% fieldClass ||= nil %>
 <% new_record ||= false %>
-<% option_deletion_alert_url ||= nil %>
+<% confirm_option_deletion_url ||= nil %>
 <% position_update_url ||= nil %>
 <div class="custom-attribute-definition title <%=titleClass%>">Name:</div>
 <div class="custom-attribute-definition field <%=fieldClass%>">
@@ -27,16 +27,22 @@
 </div>
 
 <div class="clearfix"></div>
-<div class="custom-attribute-definition-options <%= 'hide' if f.object.blank? || !f.object.dropdown_type? %>">
+<div class="custom-attribute-definition-options <%= 'hide' if f.object.blank? || !f.object.has_options? %>">
   <div class="custom_attribute_options_content sort-custom-attribute-options" data-update-url="<%= position_update_url %>">
     <%= f.fields_for :custom_attribute_options do |g| %>
-      <%= render partial: 'custom_attribute_option_fields', locals: { f: g, option_deletion_alert_url: option_deletion_alert_url } %>
+      <%= render partial: 'custom_attribute_option_fields', locals: { f: g, confirm_option_deletion_url: confirm_option_deletion_url } %>
     <% end %>
   </div>
-  <%= link_to_add_options 'Add Options', f, :custom_attribute_options %>
+  <% 
+    new_object = f.object.class.reflect_on_association(:custom_attribute_options).klass.new
+    fields     = f.fields_for(:custom_attribute_options, new_object, child_index: "new_custom_attribute_options") do |builder|
+      render("custom_attribute_option_fields", f: builder)
+    end
+  %>
+  <%= link_to_function('Add Options', "addOptionToDropdownField('custom_attribute_options', '#{escape_javascript(fields)}')") %>
 </div>
 
-<% unless f.object.try(:boolean_type?) || f.object.try(:dropdown_type?) %>
+<% unless f.object.try(:boolean_type?) || f.object.try(:has_options?) %>
   <div id="custom_attribute_placeholder_div">
     <div class="custom-attribute-definition title <%= titleClass %>">Placeholder:
       <%= link_to "(?)", "#", title: "It will be displayed in the custom field before the user enters a value" %>

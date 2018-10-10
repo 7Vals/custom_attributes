@@ -1,15 +1,15 @@
-<% option_deletion_alert_url ||= nil %>
+<% confirm_option_deletion_url ||= nil %>
 <div class="custom_dropdown_option custom_option<%= f.object.id %>" id="<%= dom_id(f.object) %>">
   <div class="pull-right">
-    <% if f.object.id.present? && option_deletion_alert_url.present? %>
+    <% if f.object.id.present? %>
       <div class="pull-right">
-        <%= link_to "#{option_deletion_alert_url}?c_attr_option=#{f.object.id}", remote: true do %>
+        <%= link_to "#{confirm_option_deletion_url}?c_attr_option=#{f.object.id}", remote: true do %>
           <i class="icon-remove-sign"></i>
         <% end %> 
       </div>
       <%= f.hidden_field(:_destroy) %>
     <% else %>
-      <%= link_to_function(content_tag('i','', class: "icon-remove-sign"), "remove_option_from_dropdown_field(this)") %>
+      <%= link_to_function(content_tag('i','', class: "icon-remove-sign"), "removeOptionFromDropdownField(this)") %>
     <% end %>
   </div>
   <a href="#_" class="multihandle pull-left"><i class="icon-move"></i>&nbsp;</a>
