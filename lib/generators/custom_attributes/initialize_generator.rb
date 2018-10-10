@@ -28,7 +28,7 @@ module CustomAttributes
       def create_base_models
         template "custom_attribute_definition_model.rb", "app/models/#{file_name}_custom_attribute_definition.rb"
         template "custom_attribute_value_model.rb", "app/models/#{file_name}_custom_attribute_value.rb"
-        template "custom_attribute_value_option_model.rb", "app/models/#{file_name}_custom_attribute_option.rb"
+        template "custom_attribute_option_model.rb", "app/models/#{file_name}_custom_attribute_option.rb"
         template "custom_attribute_option_value_model.rb", "app/models/#{file_name}_custom_attribute_option_value.rb"
       end
 
@@ -51,7 +51,7 @@ module CustomAttributes
       end
 
       def copy_dropdown_js_file
-        template "custom_attributes_dropdown.js.erb", "public/javascripts/vendors/custom_attributes/dropdown_option.js"
+        template "custom_attributes_dropdown_option.js.erb", "public/javascripts/vendors/custom_attributes/dropdown_option.js"
       end
 
       def copy_custom_attributes_css_file
