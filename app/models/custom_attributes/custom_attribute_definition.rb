@@ -25,11 +25,15 @@ module CustomAttributes
       def save_custom_attribute(selected_option_label)
         begin
           transaction do
+            unless has_options?
+              self.custom_attribute_options = []
+            end
             save!
             if has_options?
               selected_option = custom_attribute_options.find_by label: selected_option_label
               update! default_value: selected_option.try(:id)
             end
+            true
           end
         rescue ActiveRecord::ActiveRecordError => e
           false
@@ -44,6 +48,7 @@ module CustomAttributes
               selected_option = custom_attribute_options.find_by label: selected_option_label
               update! default_value: selected_option.try(:id)
             end
+            true
           end
         rescue ActiveRecord::ActiveRecordError => e
           false
