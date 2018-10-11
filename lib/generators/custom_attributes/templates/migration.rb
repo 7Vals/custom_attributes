@@ -39,5 +39,27 @@ class CreateCustomAttributesFor<%= name %> < ActiveRecord::Migration
     add_foreign_key :<%= singular_table_name %>_custom_attribute_values, :<%= options.tenant.pluralize %>, column: :<%= options.tenant.underscore %>_id, on_delete: :cascade
   <% end %>
 
+    create_table (:<%= singular_table_name %>_custom_attribute_options) do |t|
+      t.text :label, index: { length: 767 }
+      t.integer :position, index: true
+      t.references :<%= singular_table_name %>_custom_attribute_definition, index: true
+
+      <% if options.tenant %>
+        t.integer :<%= options.tenant.underscore %>_id, index: true
+      <% end %>
+
+      t.timestamps null: false
+    end
+
+    create_table (:<%= singular_table_name %>_custom_attribute_option_values) do |t|
+      t.references :<%= singular_table_name %>_custom_attribute_option, index: true
+      t.references :<%= singular_table_name %>_custom_attribute_value, index: true
+
+      <% if options.tenant %>
+        t.integer :<%= options.tenant.underscore %>_id, index: true
+      <% end %>
+
+      t.timestamps null: false
+    end
   end
 end

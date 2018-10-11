@@ -16,16 +16,16 @@ $.fn.inline_editable = function() {
       $("div.value", $this).hide();
       $("div.field", $this).show();
       if(!$("div.field", $this).data("radio-field")){
-        $("div.field input,textarea", $this).focus();
+        $("div.field input, textarea, select", $this).focus();
       }
     });
 
-    $("div.field input,textarea", $this).focusout(function() {
+    $("div.field input, textarea, select", $this).focusout(function() {
       if (! this.validity.valid) {
         var attrName = $(this).closest("div.custom-attributes.editable-inline").find("div.custom-attributes.title").text().trim()
         alert("Invalid value for \'"+ attrName + "\'.");
         if(!$("div.field", $this).data("radio-field")){
-          $("div.field input", $this).val($("div.value", $this).text().trim());
+          $("div.field input, select", $this).val($("div.value", $this).text().trim());
         }
         $("div.field", $this).hide();
         $("div.value", $this).show();
@@ -40,9 +40,14 @@ $.fn.inline_editable = function() {
            ,data: $.param({ owner_id: owner_id, name: attr_name, value: value })
            ,success: function(data) {
               if (data.value) {
-                strValue = '' + data.value;
+                if(data.custom_attribute_defn.attr_type == "dropdown"){
+                  var value = data.selected_option_id;
+                }else{
+                  var value = data.value;
+                }
+                var strValue = '' + data.value;
                 if(!$("div.field", $this).data("radio-field")){
-                  $("div.field input,textarea", $this).val(data.value);
+                  $("div.field input, textarea, select", $this).val(value);
                 }
                 $("div.value", $this).html(strValue.replace(/\n/g, '<br/>'));
               } else {

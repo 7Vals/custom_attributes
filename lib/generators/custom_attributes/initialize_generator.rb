@@ -28,6 +28,8 @@ module CustomAttributes
       def create_base_models
         template "custom_attribute_definition_model.rb", "app/models/#{file_name}_custom_attribute_definition.rb"
         template "custom_attribute_value_model.rb", "app/models/#{file_name}_custom_attribute_value.rb"
+        template "custom_attribute_option_model.rb", "app/models/#{file_name}_custom_attribute_option.rb"
+        template "custom_attribute_option_value_model.rb", "app/models/#{file_name}_custom_attribute_option_value.rb"
       end
 
       def create_controllers
@@ -41,10 +43,15 @@ module CustomAttributes
         create_custom_attribute_value_sub_class("Double")
         create_custom_attribute_value_sub_class("DateTime")
         create_custom_attribute_value_sub_class("Boolean")
+        create_custom_attribute_value_sub_class("Dropdown")
       end
 
       def copy_inline_editing_js_file
         template "custom_attributes_inline_editing.js.erb", "public/javascripts/vendors/custom_attributes/inline_editing.js"
+      end
+
+      def copy_dropdown_js_file
+        template "custom_attributes_dropdown_option.js.erb", "public/javascripts/vendors/custom_attributes/dropdown_option.js"
       end
 
       def copy_custom_attributes_css_file

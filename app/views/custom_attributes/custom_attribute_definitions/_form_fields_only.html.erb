@@ -1,7 +1,8 @@
 <% titleClass ||= nil %>
 <% fieldClass ||= nil %>
-
 <% new_record ||= false %>
+<% confirm_option_deletion_url ||= nil %>
+<% position_update_url ||= nil %>
 <div class="custom-attribute-definition title <%=titleClass%>">Name:</div>
 <div class="custom-attribute-definition field <%=fieldClass%>">
   <%= f.text_field :attr_name, pattern:"^[a-zA-Z0-9\_\s]+$", title: "Name can only contain alphanumeric characters and spaces." %>
@@ -18,12 +19,30 @@
     <%= f.radio_button :default_value, true, class: "default-value-field" %> Yes<br />
     <%= f.radio_button :default_value, false, class: "default-value-field" %> No<br />
     <%= f.radio_button :default_value, "", class: "default-value-field" %> <i>Do not set a default value</i>
+  <% elsif f.object.try(:dropdown_type?) %>
+    <%= select_tag :selected_option_label, options_for_select(f.object.custom_attribute_options.map { |op| op.label }, selected: f.object.default_option.try(:label)), include_blank: "-- Select --", class: "dropdown-ca-default-select" %>
   <% else %>
     <%= f.text_field :default_value, class: "default-value-field" %>
   <% end %>
 </div>
 
-<% unless f.object.try(:boolean_type?) %>
+<div class="clearfix"></div>
+<div class="custom-attribute-definition-options <%= 'hide' if f.object.blank? || !f.object.has_options? %>">
+  <div class="custom_attribute_options_content sort-custom-attribute-options" data-update-url="<%= position_update_url %>">
+    <%= f.fields_for :custom_attribute_options do |g| %>
+      <%= render partial: 'custom_attribute_option_fields', locals: { f: g, confirm_option_deletion_url: confirm_option_deletion_url } %>
+    <% end %>
+  </div>
+  <% 
+    new_object = f.object.class.reflect_on_association(:custom_attribute_options).klass.new
+    fields     = f.fields_for(:custom_attribute_options, new_object, child_index: "new_custom_attribute_options") do |builder|
+      render("custom_attribute_option_fields", f: builder)
+    end
+  %>
+  <%= link_to_function('Add Options', "addOptionToDropdownField('custom_attribute_options', '#{escape_javascript(fields)}')") %>
+</div>
+
+<% unless f.object.try(:boolean_type?) || f.object.try(:has_options?) %>
   <div id="custom_attribute_placeholder_div">
     <div class="custom-attribute-definition title <%= titleClass %>">Placeholder:
       <%= link_to "(?)", "#", title: "It will be displayed in the custom field before the user enters a value" %>

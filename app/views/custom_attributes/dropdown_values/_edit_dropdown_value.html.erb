@@ -1,0 +1,32 @@
+<% form       ||= nil %>
+<% cssClasses ||= {} %>
+<% required   ||= false %>
+<% if form %>
+  <% # BEGIN Field part of form %>
+    <%= form.fields_for :custom_attributes do |custom_fields| %>
+      <% label_text = dropdown_value.name %>
+      <% label_text += content_tag(:span, '*', class: cssClasses[:required]) if required %>
+      <%= custom_fields.label dropdown_value.name.to_sym, sanitize(label_text), class: cssClasses[:title] %>
+      <%= custom_fields.select "#{dropdown_value.name}".to_sym, options_for_select(dropdown_value.custom_attribute_options.map { |op| [op.label, op.id] }, selected: dropdown_value.selected_option_id), { include_blank: "-- Select --" }, class: "#{cssClasses[:field]}", required: required %>
+    <% end %>
+  <% # END Field part of form %>
+<% else %>
+  <% # BEGIN Inline Editing %>
+  <div class="custom-attributes editable-inline" data-controller="<%= dropdown_value.owner.class.to_s.underscore %>_custom_attribute_values" data-owner-id="<%= dropdown_value.owner.id %>" data-attr-name="<%= dropdown_value.name %>">
+    <div class="<%= cssClasses[:title] %>">
+      <div class="custom-attributes title custom-attribute-title">
+        <%= dropdown_value.name %>
+      </div>
+      <% if required %>
+        <span class="<%= cssClasses[:required] %>">*</span>
+      <% end %>
+    </div>
+    <div class="custom-attributes value edit-cursor <%= cssClasses[:field] %>">
+      <%= dropdown_value.value %>
+    </div>
+    <div class="custom-attributes field <%= cssClasses[:field] %>" style="display: none" data-radio-field="true">
+      <%= select_tag "#{dropdown_value.name}".to_sym, options_for_select(dropdown_value.custom_attribute_options.map { |op| [op.label, op.id] }, selected: dropdown_value.selected_option_id), class: "custom-attributes field #{cssClasses[:field]}", include_blank: "-- Select --", required: required %>
+    </div>
+  </div>
+  <% # END Inline Editing %>
+<% end %>

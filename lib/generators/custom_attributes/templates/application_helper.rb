@@ -8,7 +8,8 @@ module CustomAttributes
 #       CustomAttributes::CustomAttribute::TYPE_DATE_TIME       => "Date Time",
         CustomAttributes::CustomAttribute::TYPE_TEXT            => "Single Line Text",
         CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT  => "Paragraph Text",
-        CustomAttributes::CustomAttribute::TYPE_BOOLEAN         => "Boolean"
+        CustomAttributes::CustomAttribute::TYPE_BOOLEAN         => "Boolean",
+        CustomAttributes::CustomAttribute::TYPE_DROPDOWN        => "Dropdown"
       }
     end
   end

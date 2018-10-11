@@ -1,0 +1,19 @@
+<% confirm_option_deletion_url ||= nil %>
+<div class="custom_dropdown_option custom_option<%= f.object.id %>" id="<%= dom_id(f.object) %>">
+  <div class="pull-right">
+    <% if f.object.id.present? %>
+      <div class="pull-right">
+        <%= link_to "#{confirm_option_deletion_url}?c_attr_option=#{f.object.id}", remote: true do %>
+          <i class="icon-remove-sign"></i>
+        <% end %> 
+      </div>
+      <%= f.hidden_field(:_destroy) %>
+    <% else %>
+      <%= link_to_function(content_tag('i','', class: "icon-remove-sign"), "removeOptionFromDropdownField(this)") %>
+    <% end %>
+  </div>
+  <a href="#_" class="multihandle pull-left"><i class="icon-move"></i>&nbsp;</a>
+  <%= f.label "Option" %>
+  <%= f.text_field :label, class: "span4 input-height-ez custom-attribute-dropdown-option"%>
+</div>
+<div class="clearfix"></div>
