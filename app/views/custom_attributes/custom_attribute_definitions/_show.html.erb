@@ -1,6 +1,6 @@
 <% link_to_edit   ||= nil %>
 <% link_to_delete ||= nil %>
-<% cssClasses ||= {} %>
+<% cssClasses     ||= {} %>
 
 <div class="custom-attributes row">
   <div class="actions_links pull-right">
@@ -24,7 +24,6 @@
       <%= content_tag :ul do %>
         <% custom_attribute_definition.custom_attribute_options.each { |option| concat content_tag :li, option.label } %>
       <% end %>
-      <%= radio_button_tag 'custom_attribute_definition', false, false, disabled: true %> No
     <% else %>
       <input type="text" disabled="disabled">
     <% end %>
