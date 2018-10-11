@@ -6,7 +6,7 @@
     <%= form.fields_for :custom_attributes do |custom_fields| %>
       <% label_text = dropdown_value.name %>
       <% label_text += content_tag(:span, '*', class: cssClasses[:required]) if required %>
-      <%= custom_fields.label dropdown_value.name.to_sym, label_text.html_safe, class: cssClasses[:title] %>
+      <%= custom_fields.label dropdown_value.name.to_sym, sanitize(label_text), class: cssClasses[:title] %>
       <%= custom_fields.select "#{dropdown_value.name}".to_sym, options_for_select(dropdown_value.custom_attribute_options.map { |op| [op.label, op.id] }, selected: dropdown_value.selected_option_id), { include_blank: "-- Select --" }, class: "#{cssClasses[:field]}", required: required %>
     <% end %>
   <% # END Field part of form %>

@@ -41,7 +41,7 @@ class CreateCustomAttributesFor<%= name %> < ActiveRecord::Migration
 
     create_table (:<%= singular_table_name %>_custom_attribute_options) do |t|
       t.text :label, index: { length: 767 }
-      t.integer :position
+      t.integer :position, index: true
       t.references :<%= singular_table_name %>_custom_attribute_definition, index: true
 
       <% if options.tenant %>
