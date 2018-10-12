@@ -10,7 +10,13 @@ module CustomAttributes
           custom_attribute_option_value.destroy
         end
       else
-        custom_attribute_option_values.build custom_attribute_option: custom_attribute_option if custom_attribute_option.present?
+        if custom_attribute_option.present?
+          if new_record?
+            custom_attribute_option_values.build custom_attribute_option: custom_attribute_option
+          else
+            custom_attribute_option_values.create custom_attribute_option: custom_attribute_option
+          end
+        end
       end
     end
 
