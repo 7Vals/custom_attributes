@@ -1,5 +1,6 @@
 <% cssClasses ||= {} %>
 <% required   ||= false %>
+<% date_time_value.value ||= date_time_value.custom_attribute_defn.default_value %>
 
 <div class="custom-attributes title <%=cssClasses[:title]%>">
   <%= date_time_value.name %>

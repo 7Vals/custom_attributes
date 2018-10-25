@@ -1,5 +1,6 @@
 <% cssClasses ||= {} %>
 <% required   ||= false %>
+<% integer_value.value ||= integer_value.custom_attribute_defn.default_value %>
 
 <div class="custom-attributes title <%=cssClasses[:title]%>">
   <%= integer_value.name %>

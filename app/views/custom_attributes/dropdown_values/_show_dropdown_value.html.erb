@@ -1,5 +1,6 @@
 <% cssClasses ||= {} %>
 <% required   ||= false %>
+<% dropdown_value.value ||= dropdown_value.custom_attribute_defn.default_value %>
 
 <div class="custom-attributes title <%=cssClasses[:title]%>">
   <%= dropdown_value.name %>

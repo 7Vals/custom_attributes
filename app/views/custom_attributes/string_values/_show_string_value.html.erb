@@ -1,5 +1,7 @@
 <% cssClasses ||= {} %>
 <% required   ||= false %>
+<% string_value.value ||= string_value.custom_attribute_defn.default_value %>
+
 <div class="custom-attributes title <%=cssClasses[:title]%>">
   <%= string_value.name %>
   <% if required %>

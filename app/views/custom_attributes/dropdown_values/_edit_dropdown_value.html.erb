@@ -1,6 +1,8 @@
 <% form       ||= nil %>
 <% cssClasses ||= {} %>
 <% required   ||= false %>
+<% dropdown_value.value ||= dropdown_value.custom_attribute_defn.default_value %>
+
 <% if form %>
   <% # BEGIN Field part of form %>
     <%= form.fields_for :custom_attributes do |custom_fields| %>

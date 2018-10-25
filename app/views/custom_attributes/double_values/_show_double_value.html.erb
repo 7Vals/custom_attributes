@@ -1,5 +1,6 @@
 <% cssClasses ||= {} %>
 <% required   ||= false %>
+<% double_value.value ||= double_value.custom_attribute_defn.default_value %>
 
 <div class="custom-attributes title <%=cssClasses[:title]%>">
   <%= double_value.name %>
