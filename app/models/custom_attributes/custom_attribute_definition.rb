@@ -18,6 +18,10 @@ module CustomAttributes
         attr_type == CustomAttributes::CustomAttribute::TYPE_DROPDOWN
       end
 
+      def paragraph_type?
+        attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT
+      end
+
       def has_options?
         dropdown_type?
       end
