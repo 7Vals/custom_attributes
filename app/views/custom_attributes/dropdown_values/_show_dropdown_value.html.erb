@@ -1,5 +1,6 @@
 <% cssClasses ||= {} %>
 <% required   ||= false %>
+<% default_field_value ||= "&nbsp" %>
 
 <div class="custom-attributes title <%=cssClasses[:title]%>">
   <%= dropdown_value.name %>
@@ -8,5 +9,5 @@
   <% end %>
 </div>
 <div class="custom-attributes value edit-cursor <%=cssClasses[:field]%>">
-  <%= dropdown_value.value %>
+  <%= dropdown_value.value || default_field_value.html_safe %>
 </div>
