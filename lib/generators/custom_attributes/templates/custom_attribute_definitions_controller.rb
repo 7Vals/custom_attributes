@@ -34,6 +34,8 @@ class <%= name %>CustomAttributeDefinitionsController < CustomAttributes::Custom
       :attr_name, 
       :attr_type, 
       :sort_order,
+      :required, 
+      :unique,
       custom_attribute_options_attributes: [
         :id,
         :label,
