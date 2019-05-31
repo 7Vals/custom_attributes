@@ -5,7 +5,7 @@
 <% position_update_url ||= nil %>
 <div class="custom-attribute-definition title <%=titleClass%>">Name:</div>
 <div class="custom-attribute-definition field <%=fieldClass%>">
-  <%= f.text_field :attr_name, pattern:"^[a-zA-Z0-9\_\s]+$", title: "Name can only contain alphanumeric characters and spaces." %>
+  <%= f.text_field :attr_name, pattern:"^[a-zA-Z0-9ąćęłńóśźżĄĆĘŁŃÓŚŹŻ ]+$", title: "Name can only contain alphanumeric characters and spaces." %>
 </div>
 
 <div class="custom-attribute-definition title <%=titleClass%>">Type:</div>
