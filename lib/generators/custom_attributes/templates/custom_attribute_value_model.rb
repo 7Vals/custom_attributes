@@ -1,5 +1,5 @@
 class <%= name %>CustomAttributeValue < ActiveRecord::Base
-  include CustomAttributes::CustomAttributeValue
+  include CustomAttributes::CustomAttributeValue, CustomAttributes::CustomAttributesUtilities
   belongs_to :custom_attribute_defn, class_name: "<%= name %>CustomAttributeDefinition", foreign_key: "<%= singular_name %>_custom_attribute_definition_id"
   belongs_to :owner, class_name: "<%= name %>", foreign_key: "<%= singular_name %>_id"
   has_many   :custom_attribute_options, through: :custom_attribute_defn

@@ -58,3 +58,16 @@
 <% if new_record %>
   <%= f.hidden_field :sort_order %>
 <% end %>
+
+<div class="clearfix"></div>
+<h3>Preferences</h3>
+<div class="clearfix"></div>
+
+<div class='custom_attribute_required margin-bottom-55'>
+  <%= f.check_box :required, class: "ca_required ca_required_field", disabled: f.object.try(:boolean_type?) %> Make this mandatory <br/>
+</div>
+
+<div class='custom_attribute_unique margin-bottom-55'>
+  <% unique_restricted = !f.object.try(:can_be_unique?) || f.object.try(:has_duplicate_values?) %>
+  <%= f.check_box :unique, class: "ca_unique ca_unique_field", id: 'make_unique_checkbox', disabled: unique_restricted %> Make this unique <br/>
+</div>
