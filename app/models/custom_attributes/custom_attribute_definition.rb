@@ -88,15 +88,8 @@ module CustomAttributes
           CustomAttributes::CustomAttribute::TYPE_DECIMAL => 'double_value', 
         }[attr_type]
         return false if column.blank?
-        cavs_counts = custom_attribute_values.where("#{column} IS NOT NULL").select("#{column}, count(*) as values_count").group(column).order('values_count desc')
-        duplicate = false
-        cavs_counts.each do |cav_count|
-          if cav_count.values_count > 1
-            duplicate = true
-            break
-          end
-        end
-        duplicate
+        duplicate_cavs = custom_attribute_values.where("#{column} IS NOT NULL").select("#{column}, count(*) as values_count").group(column).having("count(*) > 1")
+        duplicate_cavs.present?
       end
     end
   end

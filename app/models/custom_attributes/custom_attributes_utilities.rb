@@ -7,7 +7,7 @@ module CustomAttributes
     end
 
     def check_duplicate_custom_attributes
-      return if !self.custom_attribute_defn.unique?
+      return unless self.custom_attribute_defn.unique?
       column_maping = {
         "#{self.owner.class.name}CustomAttributeStringValue"  => 'string_value', 
         "#{self.owner.class.name}CustomAttributeIntegerValue" => 'integer_value', 
