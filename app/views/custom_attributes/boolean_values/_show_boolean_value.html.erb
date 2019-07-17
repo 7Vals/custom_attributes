@@ -3,10 +3,12 @@
 <% default_field_value ||= "&nbsp" %>
 
 <div class="custom-attributes title <%=cssClasses[:title]%>">
+  <%= "<div class='#{cssClasses[:innerClasses]}'>".html_safe if cssClasses[:innerClasses].present? %> 
   <%= boolean_value.name %>
   <% if required %>
     <span class="<%= cssClasses[:required] %>">*</span>
   <% end %>
+  <%= '</div>'.html_safe if cssClasses[:innerClasses].present? %>
 </div>
 <div class="custom-attributes value edit-cursor <%=cssClasses[:field]%>">
   <%= boolean_value.value || default_field_value.html_safe %>

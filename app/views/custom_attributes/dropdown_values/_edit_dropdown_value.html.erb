@@ -14,12 +14,12 @@
   <% # BEGIN Inline Editing %>
   <div class="custom-attributes editable-inline" data-controller="<%= dropdown_value.owner.class.to_s.underscore %>_custom_attribute_values" data-owner-id="<%= dropdown_value.owner.id %>" data-attr-name="<%= dropdown_value.name %>">
     <div class="<%= cssClasses[:title] %>">
-      <div class="custom-attributes title custom-attribute-title">
+      <div class="custom-attributes title custom-attribute-title <%= cssClasses[:innerClasses] %>">
         <%= dropdown_value.name %>
+        <% if required %>
+          <span class="<%= cssClasses[:required] %>">*</span>
+        <% end %>
       </div>
-      <% if required %>
-        <span class="<%= cssClasses[:required] %>">*</span>
-      <% end %>
     </div>
     <div class="custom-attributes value edit-cursor <%= cssClasses[:field] %>">
       <%= dropdown_value.value %>
