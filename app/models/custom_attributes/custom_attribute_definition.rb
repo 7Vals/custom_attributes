@@ -14,6 +14,10 @@ module CustomAttributes
         attr_type == CustomAttributes::CustomAttribute::TYPE_BOOLEAN
       end
 
+      def date_type?
+        attr_type == CustomAttributes::CustomAttribute::TYPE_DATE
+      end
+
       def dropdown_type?
         attr_type == CustomAttributes::CustomAttribute::TYPE_DROPDOWN
       end
