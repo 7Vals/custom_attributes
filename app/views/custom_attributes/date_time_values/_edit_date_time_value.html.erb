@@ -8,7 +8,7 @@
     <% label_text = date_time_value.name %>
     <% label_text += content_tag(:span, '*', class: 'required asterisk') if required %>
     <%= custom_fields.label date_time_value.name.to_sym, label_text.html_safe, class: "#{cssClasses[:title]}" %>
-    <%= custom_fields.text_field "#{date_time_value.name}".to_sym, value: "#{format_date_input(date_time_value.date_time_value)}", class: "#{cssClasses[:field]}", readonly: true, data: { date_field: true }, required: required %>
+    <%= custom_fields.text_field "#{date_time_value.name}".to_sym, value: "#{format_date_input(date_time_value.date_time_value)}", class: "#{cssClasses[:field]}", readonly: true, data: { date_field: true } %>
   <% end %>
 <% # END Field part of form %>
 <% else %>
@@ -26,8 +26,19 @@
     <%= date_time_value.date_time_value.try(:to_date).try(:to_s, :long) %>
   </div>
   <div class="custom-attributes field datetime <%= cssClasses[:field] %>" data-date-field="true" style="display: none">
-    <%= text_field_tag '', format_date_input(date_time_value.date_time_value), class: 'custom-attributes field', readonly: true, required: required %>
+    <%= text_field_tag '', format_date_input(date_time_value.date_time_value), class: 'custom-attributes field', readonly: true %>
   </div>
 </div>
 <% # END Inline Editing %>
+<% end %>
+
+<% unless request_from_webstore?(request) %>
+  <script type="text/javascript" charset="utf-8">
+    $("input[data-date-field='true']").each(function(){
+    $(this).datepicker({
+      autoclose: true,
+      todayHighlight: true
+    });
+  });
+  </script>
 <% end %>
