@@ -60,7 +60,7 @@ $.fn.inline_editable = function() {
       });
     });
 
-    if($("div.field", $this).data("date-custom-attribute-field")) {
+    if($("div.field", $this).data("custom-attribute-date-field")) {
       $("div.field input", $this).datepicker( { autoclose: true } );
       $("div.field input", $this).unbind('focusout');
       $("div.field input", $this).on('changeDate', function() {
