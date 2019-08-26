@@ -1,6 +1,5 @@
 module CustomAttributes
   module DateTimeValue
-    include ApplicationHelper
     def value=(newVal)
       if (newVal && newVal.present?)
         self.date_time_value = Date.parse(newVal)
@@ -10,7 +9,7 @@ module CustomAttributes
     end
 
     def value
-      format_date_input(date_time_value, Company.find(company_id))
+      date_time_value
     end
 
     def display_value
