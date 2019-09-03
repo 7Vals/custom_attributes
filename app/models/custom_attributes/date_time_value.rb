@@ -9,7 +9,11 @@ module CustomAttributes
     end
 
     def value
-      self.date_time_value
+      date_time_value
+    end
+
+    def display_value
+      date_time_value.try(:to_date).try(:to_s, :long)
     end
   end
 end

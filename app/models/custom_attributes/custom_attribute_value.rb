@@ -14,7 +14,7 @@ module CustomAttributes
       end
 
       def value_present?
-        string_value.present? || double_value.present? || integer_value.present? || !boolean_value.nil? || custom_attribute_option_values.any?
+        date_time_value.present? || string_value.present? || double_value.present? || integer_value.present? || !boolean_value.nil? || custom_attribute_option_values.any?
       end
     end
   end
