@@ -47,7 +47,7 @@
   <%= link_to_function('Add Options', "addOptionToDropdownField('custom_attribute_options', '#{escape_javascript(fields)}')") %>
 </div>
 
-<% unless f.object.try(:boolean_type?) || f.object.try(:has_options?) %>
+<% if !(f.object.try(:date_type?) || f.object.try(:boolean_type?) || f.object.try(:has_options?)) %>
   <div id="custom_attribute_placeholder_div">
     <div class="custom-attribute-definition title <%= titleClass %>">Placeholder:
       <%= link_to "(?)", "#", title: "It will be displayed in the custom field before the user enters a value" %>
