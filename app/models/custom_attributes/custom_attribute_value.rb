@@ -14,7 +14,7 @@ module CustomAttributes
       end
 
       def value_or_display_value
-        try(:custom_attribute_defn).try(:date_type?) ? try(:display_value) : try(:value)
+        custom_attribute_defn.try(:date_type?) ? try(:display_value) : try(:value)
       end
 
       def value_present?
