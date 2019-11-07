@@ -1,7 +1,6 @@
 module CustomAttributes
   module CustomAttributeDefinition
     extend ActiveSupport::Concern
-
     included do
       scope :by_sort_order, -> { order('sort_order ASC') }
       scope :visible_to_staff, -> { where(hide_visibility_from_staff: false) }
@@ -25,7 +24,6 @@ module CustomAttributes
       end
 
       def has_options?
-        binding.pry
         dropdown_type?
       end
 
