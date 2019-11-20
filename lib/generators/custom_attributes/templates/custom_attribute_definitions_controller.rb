@@ -34,6 +34,7 @@ class <%= name %>CustomAttributeDefinitionsController < CustomAttributes::Custom
       :attr_name, 
       :attr_type, 
       :sort_order,
+      :hide_visibility_from_staff,
       custom_attribute_options_attributes: [
         :id,
         :label,

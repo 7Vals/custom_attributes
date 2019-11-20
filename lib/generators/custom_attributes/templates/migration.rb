@@ -8,6 +8,7 @@ class CreateCustomAttributesFor<%= name %> < ActiveRecord::Migration
       t.string :placeholder
       t.integer :sort_order
       t.boolean :required, default: false
+      t.boolean :hide_visibility_from_staff, default: false
     end
   <% if options.tenant %>
       t.integer :<%= options.tenant.underscore %>_id, foreign_key: true
