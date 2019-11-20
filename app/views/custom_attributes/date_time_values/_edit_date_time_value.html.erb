@@ -1,31 +1,46 @@
 <% form       ||= nil %>
 <% cssClasses ||= {} %>
 <% required   ||= false %>
+<% datepicker_added ||= false %>
+<% formatted_date ||= date_time_value.date_time_value %>
 
 <% if form %>
 <% # BEGIN Field part of form %>
   <%= form.fields_for :custom_attributes do |custom_fields| %>
-    <%= custom_fields.label date_time_value.name, class: "#{cssClasses[:title]}" %>
-    <%= custom_fields.text_field "#{date_time_value.name}".to_sym, value: "#{date_time_value.value}", class: "#{cssClasses[:field]}" %>
+    <% label_text = date_time_value.name %>
+    <% label_text += content_tag(:span, '*', class: 'required asterisk') if required %>
+    <%= custom_fields.label date_time_value.name.to_sym, label_text.html_safe, class: "#{cssClasses[:title]}" %>
+    <%= custom_fields.text_field "#{date_time_value.name}".to_sym, value: "#{formatted_date}", class: "#{cssClasses[:field]}", readonly: true, data: { custom_attribute_date_field: true } %>
   <% end %>
 <% # END Field part of form %>
 <% else %>
 <% # BEGIN Inline Editing %>
 <div class="custom-attributes editable-inline" data-controller="<%= date_time_value.owner.class.to_s.underscore %>_custom_attribute_values" data-owner-id="<%= date_time_value.owner.id %>" data-attr-name="<%= date_time_value.name %>">
   <div class="<%=cssClasses[:title]%>">
-    <div class="custom-attributes title custom-attribute-title">
+    <div class="custom-attributes title custom-attribute-title <%= cssClasses[:innerClasses] %>">
       <%= date_time_value.name %>
+      <% if required %>
+        <span class="<%= cssClasses[:required] %>">*</span>
+      <% end %>
     </div>
-    <% if required %>
-      <span class="<%= cssClasses[:required] %>">*</span>
-    <% end %>
   </div>
-  <div class="custom-attributes value edit-cursor <%=cssClasses[:field]%>">
-    <%= date_time_value.value %>
+  <div class="custom-attributes value edit-cursor <%= cssClasses[:field] %>">
+    <%= date_time_value.date_time_value.try(:to_date).try(:to_s, :long) %>
   </div>
-  <div class="custom-attributes field datetime <%=cssClasses[:field]%>" style="display: none">
-    <input type="text" class="custom-attributes field" value="<%= date_time_value.value %>" required=<%= required %>/>
+  <div class="custom-attributes field datetime <%= cssClasses[:field] %>" data-custom-attribute-date-field="true" style="display: none">
+    <%= text_field_tag '', formatted_date, class: 'custom-attributes field', readonly: true %>
   </div>
 </div>
 <% # END Inline Editing %>
+<% end %>
+
+<% unless datepicker_added %>
+  <script type="text/javascript" charset="utf-8">
+    $("input[data-custom-attribute-date-field='true']").each(function(){
+    $(this).datepicker({
+      autoclose: true,
+      todayHighlight: true
+    });
+  });
+  </script>
 <% end %>

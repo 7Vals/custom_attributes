@@ -5,28 +5,31 @@
 <% position_update_url ||= nil %>
 <div class="custom-attribute-definition title <%=titleClass%>">Name:</div>
 <div class="custom-attribute-definition field <%=fieldClass%>">
-  <%= f.text_field :attr_name, pattern:"^[a-zA-Z0-9\_\s]+$", title: "Name can only contain alphanumeric characters and spaces." %>
+  <%= f.text_field :attr_name, pattern:"^[a-zA-Z0-9ąćęłńóśźżĄĆĘŁŃÓŚŹŻ ]+$", title: "Name can only contain alphanumeric characters and spaces." %>
 </div>
 
 <div class="custom-attribute-definition title <%=titleClass%>">Type:</div>
 <div class="custom-attribute-definition field <%=fieldClass%>">
   <%= f.select :attr_type, custom_attribute_types.invert, {}, { disabled: !new_record, id: "custom_attribute_type" } %> 
 </div>
-
-<div class="custom-attribute-definition title <%=titleClass%>">Default Value:</div>
-<div class="custom-attribute-definition field <%=fieldClass%> default-value-div">
-  <% if f.object.try(:boolean_type?) %>
-    <%= f.radio_button :default_value, true, class: "default-value-field" %> Yes<br />
-    <%= f.radio_button :default_value, false, class: "default-value-field" %> No<br />
-    <%= f.radio_button :default_value, "", class: "default-value-field" %> <i>Do not set a default value</i>
-  <% elsif f.object.try(:dropdown_type?) %>
-    <%= select_tag :selected_option_label, options_for_select(f.object.custom_attribute_options.map { |op| op.label }, selected: f.object.default_option.try(:label)), include_blank: "-- Select --", class: "dropdown-ca-default-select" %>
-  <% elsif f.object.try(:paragraph_type?) %>
-    <%= f.text_area :default_value, class: "default-value-field" %>
-  <% else %>
-    <%= f.text_field :default_value, class: "default-value-field" %>
-  <% end %>
-</div>
+<% unless f.object.try(:date_type?) %>
+  <div id="custom_attribute_default_value_div">
+    <div class="custom-attribute-definition title <%=titleClass%>">Default Value:</div>
+    <div class="custom-attribute-definition field <%=fieldClass%> default-value-div">
+      <% if f.object.try(:boolean_type?) %>
+        <%= f.radio_button :default_value, true, class: "default-value-field" %> Yes<br />
+        <%= f.radio_button :default_value, false, class: "default-value-field" %> No<br />
+        <%= f.radio_button :default_value, "", class: "default-value-field" %> <i>Do not set a default value</i>
+      <% elsif f.object.try(:dropdown_type?) %>
+        <%= select_tag :selected_option_label, options_for_select(f.object.custom_attribute_options.map { |op| op.label }, selected: f.object.default_option.try(:label)), include_blank: "-- Select --", class: "dropdown-ca-default-select" %>
+      <% elsif f.object.try(:paragraph_type?) %>
+        <%= f.text_area :default_value, class: "default-value-field" %>
+      <% else %>
+        <%= f.text_field :default_value, class: "default-value-field" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
 
 <div class="clearfix"></div>
 <div class="custom-attribute-definition-options <%= 'hide' if f.object.blank? || !f.object.has_options? %>">
@@ -44,7 +47,7 @@
   <%= link_to_function('Add Options', "addOptionToDropdownField('custom_attribute_options', '#{escape_javascript(fields)}')") %>
 </div>
 
-<% unless f.object.try(:boolean_type?) || f.object.try(:has_options?) %>
+<% if !(f.object.try(:date_type?) || f.object.try(:boolean_type?) || f.object.try(:has_options?)) %>
   <div id="custom_attribute_placeholder_div">
     <div class="custom-attribute-definition title <%= titleClass %>">Placeholder:
       <%= link_to "(?)", "#", title: "It will be displayed in the custom field before the user enters a value" %>

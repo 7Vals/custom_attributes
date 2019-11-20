@@ -60,6 +60,32 @@ $.fn.inline_editable = function() {
       });
     });
 
+    if($("div.field", $this).data("custom-attribute-date-field")) {
+      $("div.field input", $this).datepicker( { autoclose: true } );
+      $("div.field input", $this).unbind('focusout');
+      $("div.field input", $this).on('changeDate', function() {
+        var url = '/' + controller  + '.json';
+        var value = this.value;
+        $.ajax({
+          type:'POST'
+          ,url: url
+          ,data: $.param({ owner_id: owner_id, name: attr_name, value: value })
+          , success: function(data) {
+              if (data.value) {
+                var value = data.value;
+                var strValue = '' + data.display_value;
+                $("div.field input", $this).val(value);
+                $("div.value", $this).html(strValue.replace(/\n/g, '<br/>'));
+              } else {
+                $("div.value", $this).html(CLICK_TO_EDIT_HTML);
+              }
+
+              $("div.field", $this).hide();
+              $("div.value", $this).show();
+             }
+        });
+      });
+    }
   });
 };
 
