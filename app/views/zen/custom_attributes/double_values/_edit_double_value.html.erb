@@ -1,0 +1,17 @@
+<% form    ||= nil %>
+<% options ||= { title_wrapper_options: {}, title_options: {}, field_wrapper_options: {}, field_options: {} } %>
+<% if form %>
+  <!-- # BEGIN Field part of form -->
+  <%= form.fields_for :custom_attributes do |custom_fields| %>
+    <% label_text  = custom_attribute_value.name %>
+    <% label_text += content_tag(:span, '*') if options[:field_options][:required] %>
+    <%= content_tag(:div, options[:title_wrapper_options]) do %>
+      <%= custom_fields.label custom_attribute_value.name.to_sym, label_text.html_safe, options[:title_options] %>
+    <% end %>
+    <%= content_tag(:div, options[:field_wrapper_options]) do %>
+      <%= custom_fields.number_field custom_attribute_value.name.to_sym, options[:field_options] %>
+    <% end %>
+  <% end %>
+  <!-- # END Field part of form -->
+  <!-- TODO: please add zen theme inline editing structure -->
+<% end %>
