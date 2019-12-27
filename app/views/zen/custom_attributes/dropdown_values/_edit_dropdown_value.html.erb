@@ -1,5 +1,5 @@
-<% form       ||= nil %>
-<% options    ||= { title_wrapper_options: {}, title_options: {}, field_wrapper_options: {}, field_options: {} } %>
+<% form    ||= nil %>
+<% options ||= { title_wrapper_options: {}, title_options: {}, field_wrapper_options: {}, field_options: {} } %>
 <% if form %>
   <!-- BEGIN Field part of form -->
   <%= form.fields_for :custom_attributes do |custom_fields| %>
@@ -9,7 +9,7 @@
       <%= custom_fields.label custom_attribute_value.name.to_sym, sanitize(label_text), options[:title_options] %>
     <% end %>
     <%= content_tag(:div, options[:field_wrapper_options]) do %>
-      <%= custom_fields.select "#{custom_attribute_value.name}".to_sym, options_for_select(custom_attribute_value.custom_attribute_options.map { |op| [op.label, op.id] }, selected: custom_attribute_value.selected_option_id), { include_blank: "-- Select --" }, options[:field_options] %>
+      <%= custom_fields.select custom_attribute_value.name.to_sym, options_for_select(custom_attribute_value.custom_attribute_options.map { |op| [op.label, op.id] }, selected: custom_attribute_value.selected_option_id), { include_blank: "-- Select --" }, options[:field_options] %>
     <% end %>
   <% end %>
   <!-- END Field part of form -->
