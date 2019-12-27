@@ -15,10 +15,10 @@
   <% # BEGIN Inline Editing %>
   <div class="custom-attributes editable-inline" data-controller="<%= boolean_value.owner.class.to_s.underscore %>_custom_attribute_values" data-owner-id="<%= boolean_value.owner.id %>" data-attr-name="<%= boolean_value.name %>">
     <div class="<%= cssClasses[:title] %>">
-      <div class="custom-attributes title custom-attribute-title">
+      <div class="custom-attributes title custom-attribute-title <%= cssClasses[:innerClasses] %>">
         <%= boolean_value.name %>
+        <span class="<%= cssClasses[:required] %>">*</span>
       </div>
-      <span class="<%= cssClasses[:required] %>">*</span>
     </div>
     <div class="custom-attributes value edit-cursor <%= cssClasses[:field] %>">
       <%= boolean_value.value %>
