@@ -1,0 +1,8 @@
+<% options             ||= { title_wrapper_options: {}, title_options: {}, field_wrapper_options: {}, field_options: {} } %>
+<% default_field_value ||= "--" %>
+<% label_text            = custom_attribute_value.name %>
+<% label_text           += content_tag(:span, '*') if options[:field_options][:required] %>
+
+<%= content_tag(:div, content_tag(:p, label_text.html_safe, options[:title_options]), options[:title_wrapper_options]) %>
+
+<%= content_tag(:div, content_tag(:p, custom_attribute_value.value || default_field_value.html_safe, options[:field_options]), options[:field_wrapper_options]) %>
