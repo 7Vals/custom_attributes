@@ -16,9 +16,9 @@
         <%= content_tag(:div, '', { class: 'check' }) %>
       <% end %>
       <% options[:field_options].merge!(checked: !custom_attribute_value.custom_attribute_defn.default_value.nil? && custom_attribute_value.custom_attribute_defn.default_value == 'false', required: true) %>
-      <%= custom_fields.label "#{custom_attribute_value.name}_true".to_sym, class: 'radio-button-label' do %>
+      <%= custom_fields.label "#{custom_attribute_value.name}_false".to_sym, class: 'radio-button-label' do %>
         <%= custom_fields.radio_button "#{custom_attribute_value.name}".to_sym, false, options[:field_options] %>
-        <%= custom_fields.label "#{custom_attribute_value.name}_true".to_sym, 'No' %>
+        <%= custom_fields.label "#{custom_attribute_value.name}_false".to_sym, 'No' %>
         <%= content_tag(:div, '', { class: 'check' }) %>
       <% end %>
     <% end %>
