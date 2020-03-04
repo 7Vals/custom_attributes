@@ -1,0 +1,102 @@
+<% fieldClass ||= nil %>
+<% new_record ||= false %>
+<% confirm_option_deletion_url ||= nil %>
+<% position_update_url ||= nil %>
+
+<div class="label-input-item">
+  <div class="row no-gutters">
+    <div class="col-12">
+      <label>Name</label>
+    </div>
+    <div class="col-12 <%= fieldClass %>">
+      <%= f.text_field :attr_name, pattern:"^[a-zA-Z0-9ąćęłńóśźżĄĆĘŁŃÓŚŹŻ ]+$", title: "Name can only contain alphanumeric characters and spaces.", class: 'w-100' %>
+    </div>
+  </div>
+</div>
+
+<div class="label-input-item">
+  <div class="row no-gutters">
+    <div class="col-12">
+      <label>Type</label>
+    </div>
+    <div class="col-12 <%= fieldClass %>">
+      <%= f.select :attr_type, custom_attribute_types.invert, {}, { disabled: !new_record, id: "custom_attribute_type", class: 'select2-small', data: { select2_classes: 'select2-small-container' } } %> 
+    </div>
+  </div>
+</div>
+<% unless f.object.try(:date_type?) %>
+  <div id="custom_attribute_default_value_div" class="label-input-item">
+    <div class="row no-gutters">
+      <div class="col-12 pb-3">
+        <label>Default Value</label>
+      </div>
+      <div class="col-12 <%= fieldClass %> js-default-value-div">
+        <% if f.object.try(:boolean_type?) %>
+          <div class="radio-button-label">
+            <%= f.radio_button :default_value, true, { class: 'js-default-value-field', id: 'enabled_custom_attribute_default_value' } %>
+            <label for="enabled_custom_attribute_default_value">Yes</label>
+            <div class="check"></div>
+          </div>
+          <div class="radio-button-label">
+            <%= f.radio_button :default_value, false, { class: 'js-default-value-field', id: 'disabled_custom_attribute_default_value' } %>
+            <label for="disabled_custom_attribute_default_value">No</label>
+            <div class="check"></div>
+          </div>
+          <div class="radio-button-label">
+            <%= f.radio_button :default_value, '', { class: 'js-default-value-field', id: 'custom_attribute_definition_default_value' } %>
+            <label for="custom_attribute_definition_default_value">Do not set a default value</label>
+            <div class="check"></div>
+          </div>
+        <% elsif f.object.try(:dropdown_type?) %>
+          <%= select_tag :selected_option_label, options_for_select(f.object.custom_attribute_options.map { |op| op.label }, selected: f.object.default_option.try(:label)), include_blank: "Select", class: "js-dropdown-ca-default-select select2-small", data: { select2_classes: 'select2-small-container' } %>
+        <% elsif f.object.try(:paragraph_type?) %>
+          <%= f.text_area :default_value, class: "js-default-value-field w-100" %>
+        <% else %>
+          <%= f.text_field :default_value, class: "js-default-value-field w-100" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="js-custom-attribute-definition-options <%= 'collapse' if f.object.blank? || !f.object.has_options? %>">
+  <div class="js-custom-attribute-options-content js-sort-custom-attribute-options" data-update-url="<%= position_update_url %>">
+    <%= f.fields_for :custom_attribute_options do |g| %>
+      <%= render partial: 'zen/custom_attributes/custom_attribute_definitions/custom_attribute_option_fields', locals: { f: g, confirm_option_deletion_url: confirm_option_deletion_url } %>
+    <% end %>
+  </div>
+  <% 
+    new_object = f.object.class.reflect_on_association(:custom_attribute_options).klass.new
+    fields     = f.fields_for(:custom_attribute_options, new_object, child_index: "new_custom_attribute_options") do |builder|
+      render("zen/custom_attributes/custom_attribute_definitions/custom_attribute_option_fields", f: builder)
+    end
+  %>
+  <div class="row no-gutters py-3 justify-content-center">
+    <div class="col-11">
+      <% text_tag = "<div class='d-flex justify-content-center'><p class='add-item-prepend-icon'>+&nbsp;</p><p>Add Options</p></div>" %>
+      <%= link_to_function(text_tag, "addOptionToDropdownField('custom_attribute_options', '#{escape_javascript(fields)}')", class: 'btn-secondary-small list-view-preferences-add-column') %>
+    </div>
+  </div>
+  
+</div>
+
+<% if !(f.object.try(:date_type?) || f.object.try(:boolean_type?) || f.object.try(:has_options?)) %>
+  <div class="label-input-contanier-sm">
+    <div class="label-input-item">
+      <div class="row no-gutters" id="custom_attribute_placeholder_div">
+        <div class="col-12">
+          <label>Placeholder
+            <%= help_link({ title: 'It will be displayed in the custom field before the user enters a value' }) %>
+          </label>
+        </div>
+        <div class="col-12 <%= fieldClass %>">
+          <%= f.text_field :placeholder, class: 'w-100' %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if new_record %>
+  <%= f.hidden_field :sort_order %>
+<% end %>
