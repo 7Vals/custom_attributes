@@ -6,12 +6,7 @@ module CustomAttributes
         if new_selected_options.present?
           options_to_destroy = old_selected_options.where.not(id: new_selected_options.ids)
           destroy_options(options_to_destroy)
-          options_to_create =
-            if old_selected_options.present?
-              new_selected_options.where.not(id: old_selected_options.ids)
-            else
-              new_selected_options
-            end
+          options_to_create = new_selected_options.where.not(id: old_selected_options.ids)
           create_options(options_to_create)
         else
           destroy_options(old_selected_options)
