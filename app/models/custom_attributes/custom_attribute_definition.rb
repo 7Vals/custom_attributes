@@ -23,6 +23,14 @@ module CustomAttributes
         attr_type == CustomAttributes::CustomAttribute::TYPE_DROPDOWN
       end
 
+      def multiple_choice_type?
+        attr_type == CustomAttributes::CustomAttribute::TYPE_MULTIPLE_CHOICE
+      end
+
+      def checkbox_type?
+        attr_type == CustomAttributes::CustomAttribute::TYPE_CHECKBOX
+      end
+
       def paragraph_type?
         attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT
       end
