@@ -1,0 +1,28 @@
+<% confirm_option_deletion_url ||= nil %>
+<div class="label-input-item js-custom-dropdown-option custom_option<%= f.object.id %>" id="<%= dom_id(f.object) %>">
+  <div class="row no-gutters">
+    <div class="col-12">
+      <%= f.label "Option" %>
+    </div>
+    <div class="col">
+      <%= f.text_field :label, class: "w-100 js-custom-attribute-dropdown-option" %>
+    </div>
+    <div class="col-2 d-flex justify-content-end pt-2">
+      <% if f.object.id.present? %>
+        <%= link_to "#{confirm_option_deletion_url}?c_attr_option=#{f.object.id}", remote: true, class: 'delete tiny-svg-icon blue-svg' do %>
+          <%= render partial: 'zen/shared/svgs/delete' %>
+        <% end %>
+        <%= f.hidden_field(:_destroy) %>
+      <% else %>
+        <% icon_tag = content_tag(:div, class: 'tiny-svg-icon blue-svg') do
+            render partial: 'zen/shared/svgs/delete'
+          end 
+        %>
+        <%= link_to_function(icon_tag, "removeOptionFromDropdownField(this)") %>
+      <% end %>
+      <%= link_to '#_', class: 'tiny-svg-icon blue-svg js-multihandle ml-5' do %>
+        <%= render partial: 'zen/shared/svgs/move' %>
+      <% end %>
+    </div>
+  </div>
+</div>

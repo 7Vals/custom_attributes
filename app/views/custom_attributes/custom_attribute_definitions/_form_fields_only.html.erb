@@ -10,7 +10,7 @@
 
 <div class="custom-attribute-definition title <%=titleClass%>">Type:</div>
 <div class="custom-attribute-definition field <%=fieldClass%>">
-  <%= f.select :attr_type, custom_attribute_types.invert, {}, { disabled: !new_record, id: "custom_attribute_type" } %> 
+  <%= f.select :attr_type, custom_attribute_types.except!(CustomAttributes::CustomAttribute::TYPE_MULTIPLE_CHOICE, CustomAttributes::CustomAttribute::TYPE_CHECKBOX).invert, {}, { disabled: !new_record, id: "custom_attribute_type" } %>
 </div>
 <% unless f.object.try(:date_type?) %>
   <div id="custom_attribute_default_value_div">
