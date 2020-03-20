@@ -24,7 +24,7 @@
       <% options[:input_options][:data]  = { 'select2-small' => "select2-small-container" } %>
       <% options[:input_options][:include_blank]  = 'Select' %>
       
-      <%= select_tag "#{custom_attribute_value.name}".to_sym, options_for_select(custom_attribute_value.custom_attribute_options.map { |op| [op.label, op.id] }, selected: custom_attribute_value.selected_option_id), options %>
+      <%= select_tag "#{custom_attribute_value.name}".to_sym, options_for_select(custom_attribute_value.custom_attribute_options.map { |op| [op.label, op.id] }, selected: custom_attribute_value.selected_option_id), options[:input_options] %>
     <% end %>
   <% elsif custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_DECIMAL %>
     <%= content_tag(:div, options[:input_field_wrapper]) do %>
