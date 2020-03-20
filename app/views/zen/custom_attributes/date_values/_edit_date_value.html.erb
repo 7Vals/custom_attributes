@@ -1,5 +1,6 @@
 <% form    ||= nil %>
-<% options ||= { title_wrapper_options: {}, title_options: {}, field_wrapper_options: {}, field_options: {} } %>
+<% options ||= { title_wrapper_options: {}, title_options: {}, field_wrapper_options: {}, field_options: {}, input_field_wrapper: {}, input_options: {} } %>
+<% datepicker_added ||= false %>
 <% if form %>
   <!-- # BEGIN Field part of form -->
   <%= form.fields_for :custom_attributes do |custom_fields| %>
@@ -13,5 +14,20 @@
     <% end %>
   <% end %>
   <!-- # END Field part of form -->
-  <!-- TODO: please add zen theme inline editing structure -->
+<% else %>
+  <!-- Inline Editing Start -->
+  <%= render partial: 'zen/custom_attributes/custom_attribute_inline_styling', locals: { options: options, custom_attribute_value: custom_attribute_value } %>
+  <!-- Inline Editing End -->
+<% end %>
+
+
+<% unless datepicker_added %>
+  <script type="text/javascript" charset="utf-8">
+    $("input[data-custom-attribute-date-field='true']").each(function(){
+    $(this).datepicker({
+      autoclose: true,
+      todayHighlight: true
+    });
+  });
+  </script>
 <% end %>
