@@ -1,5 +1,7 @@
-<% form    ||= nil %>
-<% options ||= { title_wrapper_options: {}, title_options: {}, field_wrapper_options: {}, field_options: {} } %>
+<% form                  ||= nil %>
+<% options               ||= { title_wrapper_options: {}, title_options: {}, field_wrapper_options: {}, field_options: {}, input_field_wrapper: {}, input_options: {} } %>
+<% default_field_value   = options[:default_field_value] || "--" %>
+
 <% if form %>
   <!-- BEGIN Field part of form -->
   <%= form.fields_for :custom_attributes do |custom_fields| %>
@@ -19,5 +21,24 @@
     <% end %>
   <% end %>
   <!-- END Field part of form -->
-  <!-- TODO: please add zen theme inline editing structure -->
+<% else %>
+  <!-- Inline Editing Start -->
+  <div class="col-12 js-custom-attributes js-editable-inline row no-gutters" data-controller="<%= custom_attribute_value.owner.class.to_s.underscore %>_custom_attribute_values" data-owner-id="<%= custom_attribute_value.owner.id %>" data-attr-name="<%= custom_attribute_value.name %>">
+    <% label_text  = custom_attribute_value.name %>
+    <% label_text  += content_tag(:span, '*') if options[:field_options][:required] %>
+      <%= content_tag(:div, content_tag(:p, label_text.html_safe, options[:title_options]), options[:title_wrapper_options]) %>
+
+      <%= content_tag(:div, content_tag(:p, (custom_attribute_value.value.present? ? auto_link(custom_attribute_value.value) : default_field_value.html_safe), options[:field_options]), options[:field_wrapper_options]) %>
+
+      <% if custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
+        <%= content_tag(:div, options[:input_field_wrapper]) do %>
+          <%= text_area_tag custom_attribute_value.name.to_sym, custom_attribute_value.value, options[:input_options]%>
+        <% end %>
+      <% else %>
+        <%= content_tag(:div, options[:input_field_wrapper]) do %>
+          <%= text_field_tag custom_attribute_value.name.to_sym, custom_attribute_value.value, options[:input_options] %>
+        <% end %>
+      <% end %>
+  </div>
+  <!-- Inline Editing End -->
 <% end %>
