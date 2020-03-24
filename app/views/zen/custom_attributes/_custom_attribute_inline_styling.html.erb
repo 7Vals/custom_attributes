@@ -1,0 +1,49 @@
+<% default_field_value   = options[:default_field_value] || "--" %>
+
+<div class="col-12 js-custom-attributes js-editable-inline row no-gutters" data-controller="<%= custom_attribute_value.owner.class.to_s.underscore %>_custom_attribute_values" data-owner-id="<%= custom_attribute_value.owner.id %>" data-attr-name="<%= custom_attribute_value.name %>">
+  <% label_text  = custom_attribute_value.name %>
+  <% label_text  += content_tag(:span, '*') if options[:field_options][:required] %>
+  
+  <%= content_tag(:div, content_tag(:p, label_text.html_safe, options[:title_options]), options[:title_wrapper_options]) %>
+
+  <% if custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_DECIMAL %>
+    <%= content_tag(:div, content_tag(:p, (custom_attribute_value.value.present? ? custom_attribute_value.value : default_field_value.html_safe), options[:field_options]), options[:field_wrapper_options]) %>
+  <% elsif custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_DATE %>
+    <%= content_tag(:div, content_tag(:p, (custom_attribute_value.date_time_value.present? ? auto_link(custom_attribute_value.date_time_value.try(:to_date).try(:to_s, :long)) : default_field_value.html_safe), options[:field_options]), options[:field_wrapper_options]) %>
+  <% else %>
+    <%= content_tag(:div, content_tag(:p, (custom_attribute_value.value.present? ? auto_link(custom_attribute_value.value) : default_field_value.html_safe), options[:field_options]), options[:field_wrapper_options]) %>
+  <% end %>
+
+  <% if custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
+    <%= content_tag(:div, options[:input_field_wrapper]) do %>
+      <%= text_area_tag custom_attribute_value.name.to_sym, custom_attribute_value.value, options[:input_options] %>
+    <% end %>
+  <% elsif custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_DROPDOWN %>
+    <%= content_tag(:div, options[:input_field_wrapper]) do %>
+      <% options[:input_options][:class] = "select2-small #{options[:input_options][:class]}" %>
+      <% options[:input_options][:data]  = { 'select2-small' => "select2-small-container" } %>
+      <% options[:input_options][:include_blank]  = 'Select' %>
+      
+      <%= select_tag "#{custom_attribute_value.name}".to_sym, options_for_select(custom_attribute_value.custom_attribute_options.map { |op| [op.label, op.id] }, selected: custom_attribute_value.selected_option_id), options[:input_options] %>
+    <% end %>
+  <% elsif custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_DECIMAL %>
+    <%= content_tag(:div, options[:input_field_wrapper]) do %>
+      <%= number_field_tag custom_attribute_value.name.to_sym, custom_attribute_value.value, options[:input_options] %>
+    <% end %>
+  <% elsif custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_DATE %>
+    <%= content_tag(:div, class: options[:input_field_wrapper][:class], data: { 'custom_attribute_date_field': 'true' }) do %>
+      <% options[:input_options][:class] = "w-100 js-date-field ez-date-field #{options[:input_options][:class]}" %>
+      
+      <%= date_input_tag custom_attribute_value.name.to_sym, custom_attribute_value.date_time_value, options[:input_options] %>
+    <% end %>
+  <% elsif custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_BOOLEAN %>
+    <%= content_tag(:div, options[:input_field_wrapper]) do %>
+      <%= theme_radio_button(nil, 'custom_attribute_definition', nil, { id: 'custom_attribute_definition_true', value: true, checked: custom_attribute_value.boolean_value, required: true, class: options[:input_options][:class] }, { label: t('shared.yes_label') }) %>
+      <%= theme_radio_button(nil, 'custom_attribute_definition', nil, { id: 'custom_attribute_definition_false', value: false, checked: (!custom_attribute_value.boolean_value.nil? && !custom_attribute_value.boolean_value), required: true, class: options[:input_options][:class] }, { label: t('shared.no_label') }) %>
+    <% end %>
+  <% else %>
+    <%= content_tag(:div, options[:input_field_wrapper]) do %>
+      <%= text_field_tag custom_attribute_value.name.to_sym, custom_attribute_value.value, options[:input_options] %>
+    <% end %>
+  <% end %>
+</div>
