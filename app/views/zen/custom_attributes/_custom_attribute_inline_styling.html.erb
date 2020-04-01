@@ -16,7 +16,11 @@
 
   <% if custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
     <%= content_tag(:div, options[:input_field_wrapper]) do %>
-      <%= text_area_tag custom_attribute_value.name.to_sym, custom_attribute_value.value, options[:input_options] %>
+      <%= content_tag(:div, class: 'label-input-container-sm') do %>
+        <%= content_tag(:div, class: 'label-input-item') do %>
+          <%= text_area_tag custom_attribute_value.name.to_sym, custom_attribute_value.value, options[:input_options] %>
+          <% end %>
+      <% end %>
     <% end %>
   <% elsif custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_DROPDOWN %>
     <%= content_tag(:div, options[:input_field_wrapper]) do %>
@@ -28,13 +32,20 @@
     <% end %>
   <% elsif custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_DECIMAL %>
     <%= content_tag(:div, options[:input_field_wrapper]) do %>
-      <%= number_field_tag custom_attribute_value.name.to_sym, custom_attribute_value.value, options[:input_options] %>
+      <%= content_tag(:div, class: 'label-input-container-sm') do %>
+        <%= content_tag(:div, class: 'label-input-item') do %>
+          <%= number_field_tag custom_attribute_value.name.to_sym, custom_attribute_value.value, options[:input_options] %>
+        <% end %>
+      <% end %>
     <% end %>
   <% elsif custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_DATE %>
     <%= content_tag(:div, class: options[:input_field_wrapper][:class], data: { 'custom_attribute_date_field': 'true' }) do %>
       <% options[:input_options][:class] = "w-100 js-date-field ez-date-field #{options[:input_options][:class]}" %>
-      
-      <%= date_input_tag custom_attribute_value.name.to_sym, custom_attribute_value.date_time_value, options[:input_options] %>
+      <%= content_tag(:div, class: 'label-input-container-sm') do %>
+        <%= content_tag(:div, class: 'label-input-item') do %>
+          <%= date_input_tag custom_attribute_value.name.to_sym, custom_attribute_value.date_time_value, options[:input_options] %>
+        <% end %>
+      <% end %>
     <% end %>
   <% elsif custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_BOOLEAN %>
     <%= content_tag(:div, options[:input_field_wrapper]) do %>
@@ -43,7 +54,11 @@
     <% end %>
   <% else %>
     <%= content_tag(:div, options[:input_field_wrapper]) do %>
-      <%= text_field_tag custom_attribute_value.name.to_sym, custom_attribute_value.value, options[:input_options] %>
+      <%= content_tag(:div, class: 'label-input-container-sm') do %>
+        <%= content_tag(:div, class: 'label-input-item') do %>
+          <%= text_field_tag custom_attribute_value.name.to_sym, custom_attribute_value.value, options[:input_options] %>
+        <% end %>
+      <% end %>  
     <% end %>
   <% end %>
 </div>
