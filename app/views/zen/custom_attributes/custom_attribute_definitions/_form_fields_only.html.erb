@@ -20,7 +20,7 @@
       <label>Type</label>
     </div>
     <div class="col-12 <%= fieldClass %>">
-      <%= f.select :attr_type, custom_attribute_types.invert, {}, { disabled: !new_record, id: "custom_attribute_type", class: 'select2-small', data: { select2_classes: 'select2-small-container' } } %> 
+      <%= f.select :attr_type, custom_attribute_types.except!(CustomAttributes::CustomAttribute::TYPE_MULTIPLE_CHOICE, CustomAttributes::CustomAttribute::TYPE_CHECKBOX).invert, {}, { disabled: !new_record, id: "custom_attribute_type", class: 'select2-small', data: { select2_classes: 'select2-small-container' } } %> 
     </div>
   </div>
 </div>
