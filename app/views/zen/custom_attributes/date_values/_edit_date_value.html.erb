@@ -5,7 +5,7 @@
   <!-- # BEGIN Field part of form -->
   <%= form.fields_for :custom_attributes do |custom_fields| %>
     <% label_text    = custom_attribute_value.name %>
-    <% label_text   += content_tag(:span, '*') if options[:field_options][:required] %>
+    <% label_text   += content_tag(:span, '*', class: 'required asterisk') if options[:field_options][:required] %>
     <%= content_tag(:div, options[:title_wrapper_options]) do %>
       <%= custom_fields.label custom_attribute_value.name.to_sym, label_text.html_safe, options[:title_options] %>
     <% end %>
