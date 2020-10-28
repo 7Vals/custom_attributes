@@ -20,7 +20,16 @@
       <label>Type</label>
     </div>
     <div class="col-12 <%= fieldClass %>">
-      <%= f.select :attr_type, custom_attribute_types.except!(CustomAttributes::CustomAttribute::TYPE_MULTIPLE_CHOICE, CustomAttributes::CustomAttribute::TYPE_CHECKBOX).invert, {}, { disabled: !new_record, id: "custom_attribute_type", class: 'select2-small', data: { select2_classes: 'select2-small-container' } } %> 
+      <% custom_attr_type_hash = custom_attribute_types.except!(CustomAttributes::CustomAttribute::TYPE_MULTIPLE_CHOICE, CustomAttributes::CustomAttribute::TYPE_CHECKBOX).invert %>
+      <% type_options = { disabled: !new_record, id: "custom_attribute_type", class: 'select2-small', data: { select2_classes: 'select2-small-container' } } %>
+      <% 
+        if local_assigns[:is_date_alert]
+          custom_attr_type_hash = custom_attr_type_hash.transform_keys{ |key| key == 'Date Field' ? "#{key} (alert)" : key }
+          type_options['data-attr-id'] = "custom_attribute_type_#{id}"
+        end 
+      %>
+      
+      <%= f.select :attr_type, custom_attr_type_hash, {}, type_options %> 
     </div>
   </div>
 </div>
@@ -79,6 +88,78 @@
   </div>
   
 </div>
+
+<% if local_assigns[:is_date_alert] %>
+  <div class="<%= 'collapse' unless f.object.try(:date_type?) %>" id="custom_attribute_definition_email_alert_<%= id %>">
+    <%= theme_checkbox(f, :send_email_alert, { checked: custom_attribute.new_record? || custom_attribute.send_email_alert?, id: 'custom_attribute_definition_send_email_alert' }, { label: t('custom_attributes.form_dialog.send_email_alert') }) %>
+
+    <div class="ml-3 <%= 'collapse' unless (custom_attribute.new_record? || custom_attribute.send_email_alert?) %>" id="custom_attribute_definition_email_options_div">
+      <%= theme_checkbox(f, :scheduled_alert, { checked: custom_attribute.new_record? || custom_attribute.scheduled_alert?, id: 'custom_attribute_definition_scheduled_alert' }, { label: t('custom_attributes.form_dialog.scheduled_custom_field_alert') }) %>
+
+      <div class="ml-3 <%= 'collapse' unless (custom_attribute.new_record? || custom_attribute.scheduled_alert?) %>" id='custom_attribute_definition_recurring_alert_div'>
+        <%= theme_checkbox(f, :is_recurring, { id: 'custom_attribute_definition_is_recurring', data: { 'attr-id' => id } }, { label: t('custom_attributes.form_dialog.setup_recurring_date_alert_label') } ) %>
+       
+        <div class="ml-3 <%= 'collapse' unless custom_attribute.is_recurring? %>" id="custom_attribute_definition_recurring_cycle_type">
+          <div class="row no-gutters">
+            <div class="col m-r-8">
+              <div class="label-input-item">
+                <div class="row no-gutters">
+                  <div class="col-12">
+                    <%= f.label :repeat_duration, t('custom_attributes.form_dialog.repeat_duration_label') %>
+                  </div>
+                  <div class="col-12">
+                    <%= f.text_field :repeat_duration, type: 'number', min: 1 %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col m-l-8">
+              <div class="label-input-item">
+                <div class="row no-gutters">
+                  <% cycle_types = [t('custom_attributes.form_dialog.day_label'), t('custom_attributes.form_dialog.week_label'), t('custom_attributes.form_dialog.month_label'), t('custom_attributes.form_dialog.year_label')] %>
+                  <div class="col-12">
+                    <%= f.label :repeat_cycle, t('custom_attributes.form_dialog.repeat_cycle_label') %>
+                  </div>
+                  <div class="col-12">
+                    <%= f.select :repeat_cycle, cycle_types, {}, data: { select2_classes: 'select2-small-container' }, class: "select2-small" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <%= theme_checkbox(f, :advance_alert, { id: 'custom_attribute_definition_advance_alert' }, { label: t('custom_attributes.form_dialog.advance_custom_field_alert'), help_link: { title: t('custom_attributes.form_dialog.alert_sent_from_selected_date_title') } }) %>
+      <div class="ml-3 <%= 'collapse' unless custom_attribute.advance_alert? %>" id="custom_field_definition_advance_notification_days">
+        <div class="label-input-item">
+          <div class="row no-gutters">
+            <div class="col-12">
+              <%= f.label :advance_alert_days, t('custom_attributes.form_dialog.advance_alert_days_label') %>
+            </div>
+            <div class="col-12">
+              <%= f.number_field :advance_alert_days, min: 1, max: 365, step: '1', class: 'w-100' %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <%= theme_checkbox(f, :subsequent_alert, { id: 'custom_attribute_definition_subsequent_alert' }, { label: t('custom_attributes.form_dialog.subsequent_custom_field_alert'), help_link: { title: t('custom_attributes.form_dialog.alert_sent_from_selected_date_title') } }) %>
+      <div class="ml-3 <%= 'collapse' unless custom_attribute.subsequent_alert? %>" id="custom_field_definition_subsequent_notification_days">
+        <div class="label-input-item">
+          <div class="row no-gutters">
+            <div class="col-12">
+              <%= f.label :subsequent_alert_days, t('custom_attributes.form_dialog.subsequent_alert_days_label') %>
+            </div>
+            <div class="col-12">
+              <%= f.number_field :subsequent_alert_days, min: 1, max: 365, step: '1', class: 'w-100' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
 
 <% if !(f.object.try(:date_type?) || f.object.try(:boolean_type?) || f.object.try(:has_options?)) %>
   <div class="label-input-contanier-sm">
