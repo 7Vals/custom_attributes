@@ -30,11 +30,12 @@ class <%= name %>CustomAttributeDefinitionsController < CustomAttributes::Custom
   # You can delete the remove the above scope if you have defined a default_scope for <%= name %>CustomAttributeDefinition.
   <% end %>
   def custom_attribute_params
+    list_params_allowed = [:attr_name, :attr_type, :sort_order, :hide_visibility_from_staff]
+    if singular_name == 'vendor'
+      list_params_allowed += [:send_email_alert, :scheduled_alert, :is_recurring, :repeat_cycle, :repeat_duration, :advance_alert, :advance_alert_days, :subsequent_alert, :subsequent_alert_days]
+    end
     params.require(:<%= singular_name %>_custom_attribute_definition).permit(
-      :attr_name, 
-      :attr_type, 
-      :sort_order,
-      :hide_visibility_from_staff,
+      list_params_allowed,
       custom_attribute_options_attributes: [
         :id,
         :label,

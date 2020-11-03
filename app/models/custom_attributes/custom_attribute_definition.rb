@@ -4,6 +4,7 @@ module CustomAttributes
     included do
       scope :by_sort_order, -> { order('sort_order ASC') }
       scope :visible_to_staff, -> { where(hide_visibility_from_staff: false) }
+      scope :datebox_attributes, -> { where(attr_type: 'date') }
       validates :attr_name, presence: true, format: { with: /^[a-zA-Z\_\s]+$/, multiline: true, message: 'cannot contain special characters.' }
       validates :default_value, format: { with: /^[\+\-]?\d*\.?\d*$/, multiline: true, message: 'should be a number.' }, if: :number_type?
 
@@ -70,6 +71,30 @@ module CustomAttributes
 
       def default_option
         custom_attribute_options.find_by(id: default_value)
+      end
+
+      def load_resoruce
+        respond_to?(:resource_type) ? resource_type : self.class.to_s.underscore.downcase.gsub!('_custom_attribute_definition', '')
+      end
+
+      def recurring_custom_attribute
+        @recurring_custom_attribute_was = try(:is_recurring_was)
+      end
+
+      def update_recurring_custom_attribute
+        if date_type? && @recurring_custom_attribute_was.present? && custom_attribute_values.present? && @recurring_custom_attribute_was != is_recurring
+          if @recurring_custom_attribute_was && !is_recurring
+            custom_attribute_values.update_all(recurring_date_value: nil)
+          else
+            custom_attribute_values_array = custom_attribute_values.map do |custom_attr_val|
+              [custom_attr_val.id, { recurring_date_value: custom_attr_val.date_for_next_alert }] if custom_attr_val.date_time_value.present?
+            end
+            custom_attribute_values_hash = custom_attribute_values_array.compact.to_h
+            resource                     = load_resoruce
+            custom_attrubute_value_class = Object.const_get "#{resource.humanize}CustomAttributeValue"
+            custom_attrubute_value_class.update(custom_attribute_values_hash.keys, custom_attribute_values_hash.values)
+          end
+        end
       end
     end
   end

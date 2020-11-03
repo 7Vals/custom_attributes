@@ -11,16 +11,13 @@
 <div class="custom-attribute-definition title <%=titleClass%>">Type:</div>
 <div class="custom-attribute-definition field <%=fieldClass%>">
   <% custom_attr_type_hash = custom_attribute_types.except!(CustomAttributes::CustomAttribute::TYPE_MULTIPLE_CHOICE, CustomAttributes::CustomAttribute::TYPE_CHECKBOX).invert %>
-  <% type_options = { disabled: !new_record, id: "custom_attribute_type" } %>
-
   <% 
-    if local_assigns[:is_date_alert]
+    if f.object.class.to_s == "VendorCustomAttributeDefinition"
       custom_attr_type_hash = custom_attr_type_hash.transform_keys{ |key| key == 'Date Field' ? "#{key} (alert)" : key }
-      type_options['data-attr-id'] = "custom_attribute_type_#{id}"
     end 
   %>
 
-  <%= f.select :attr_type, custom_attr_type_hash, {}, type_options %>
+  <%= f.select :attr_type, custom_attr_type_hash, {}, { disabled: !new_record, id: "custom_attribute_type", data: { attr_id: "custom_attribute_type_#{local_assigns[:id]}" } } %>
 </div>
 
 <% unless f.object.try(:date_type?) %>
@@ -58,56 +55,8 @@
   <%= link_to_function('Add Options', "addOptionToDropdownField('custom_attribute_options', '#{escape_javascript(fields)}')") %>
 </div>
 
-<% if local_assigns[:is_date_alert] %>
-  <div class="<%= 'hide' unless f.object.try(:date_type?) %>" id="custom_attribute_definition_email_alert_<%= id %>">
-    <%= f.check_box :send_email_alert, { checked: custom_attribute.new_record? || custom_attribute.send_email_alert?, id: "custom_attribute_definition_send_email_alert" } %>
-    <%= t('custom_attributes.form_dialog.send_email_alert') %><br/>
-
-    <div class="margin-left-20 <%= 'hide' unless (custom_attribute.new_record? || custom_attribute.send_email_alert?) %>" id="custom_attribute_definition_email_options_div">
-      <%= f.check_box :scheduled_alert, { checked: custom_attribute.new_record? || custom_attribute.scheduled_alert?, id: "custom_attribute_definition_scheduled_alert" } %>
-      <%= t('custom_attributes.form_dialog.scheduled_custom_field_alert') %><br/>
-
-      <div class="margin-left-20 <%= 'hide' unless (custom_attribute.new_record? || custom_attribute.scheduled_alert?) %>" id='custom_attribute_definition_recurring_alert_div'>
-        <%= f.check_box :is_recurring, { data: { 'attr-id' => id }, id: "custom_attribute_definition_is_recurring" } %>
-        <%= t('custom_attributes.form_dialog.setup_recurring_date_alert_label') %><br/>
-       
-        <div class="margin-left-20 <%= 'hide' unless custom_attribute.is_recurring? %>" id="custom_attribute_definition_recurring_cycle_type">
-          <span class="span2 margin-left-reset margin-right-12">
-            <%= f.label :repeat_duration, t('custom_attributes.form_dialog.repeat_duration_label') %>
-            <%= f.text_field :repeat_duration, type: 'number', min: 1, class: "span2" %>
-          </span>
-
-          <span>
-            <% cycle_types = [t('custom_attributes.form_dialog.day_label'), t('custom_attributes.form_dialog.week_label'), t('custom_attributes.form_dialog.month_label'), t('custom_attributes.form_dialog.year_label')] %>
-            <%= f.label :repeat_cycle, t('custom_attributes.form_dialog.repeat_cycle_label') %>
-            <%= f.select :repeat_cycle, cycle_types, {}, class: "span2" %>
-          </span>
-        </div>
-      </div>
-
-      <%= f.check_box :advance_alert, { id: "custom_attribute_definition_advance_alert" } %>
-      <%= t('custom_attributes.form_dialog.advance_custom_field_alert') %>
-      <label style="display: inline-block;" title="<%= t('custom_attributes.form_dialog.alert_sent_from_selected_date_title') %>">(<a>?</a>)</label><br/>
-
-      <div class="margin-left-20 <%= 'hide' unless custom_attribute.advance_alert? %>" id="custom_field_definition_advance_notification_days">
-        <span>
-          <%= f.label :advance_alert_days, t('custom_attributes.form_dialog.advance_alert_days_label') %>
-          <%= f.number_field :advance_alert_days, min: 1, max: 365, step: '1', class: 'span2' %>
-        </span>
-      </div>
-
-      <%= f.check_box :subsequent_alert, { id: "custom_attribute_definition_subsequent_alert" } %>
-      <%= t('custom_attributes.form_dialog.subsequent_custom_field_alert') %>
-      <label style="display: inline-block;" title="<%= t('custom_attributes.form_dialog.alert_sent_from_selected_date_title') %>">(<a>?</a>)</label><br/>
-
-      <div class="margin-left-20 <%= 'hide' unless custom_attribute.subsequent_alert? %>" id="custom_field_definition_subsequent_notification_days">
-        <span>
-          <%= f.label :subsequent_alert_days, t('custom_attributes.form_dialog.subsequent_alert_days_label') %>
-          <%= f.number_field :subsequent_alert_days, min: 1, max: 365, step: '1', class: 'span2' %>
-        </span>
-      </div>
-    </div>
-  </div>
+<% if f.object.class.to_s == "VendorCustomAttributeDefinition" %>
+  <%= render partial: 'custom_attributes/custom_attribute_definitions/alert_date_attributes', locals: { f: f, custom_attribute: custom_attribute, id: id } %>
 <% end %>
 
 <% if !(f.object.try(:date_type?) || f.object.try(:boolean_type?) || f.object.try(:has_options?)) %>
