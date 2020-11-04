@@ -1,6 +1,5 @@
 class <%= name %>CustomAttributeDefinition < ActiveRecord::Base
   include CustomAttributes::CustomAttributeDefinition
-  has_many :custom_attribute_values, dependent: :destroy, class_name: "<%= name %>CustomAttributeValue", foreign_key: "<%= singular_name %>_custom_attribute_definition_id"
   has_many :custom_attribute_options, dependent: :destroy, class_name: "<%= name %>CustomAttributeOption", foreign_key: "<%= singular_name %>_custom_attribute_definition_id"
   <% if options.tenant %>
     validates :attr_name, uniqueness: { scope: :<%= options.tenant %>_id, message: " has already been taken." }
