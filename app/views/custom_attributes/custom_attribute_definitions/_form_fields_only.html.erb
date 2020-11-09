@@ -17,7 +17,7 @@
     end 
   %>
 
-  <%= f.select :attr_type, custom_attr_type_hash, {}, { disabled: !new_record, id: "custom_attribute_type", data: { attr_id: "custom_attribute_type_#{local_assigns[:id]}" } } %>
+  <%= f.select :attr_type, custom_attr_type_hash, {}, { disabled: !new_record, id: "custom_attribute_type", data: { attr_id: "custom_attribute_type_#{local_assigns[:custom_attr_postfix]}" } } %>
 </div>
 
 <% unless f.object.try(:date_type?) %>
@@ -55,8 +55,8 @@
   <%= link_to_function('Add Options', "addOptionToDropdownField('custom_attribute_options', '#{escape_javascript(fields)}')") %>
 </div>
 
-<% if f.object.class.to_s == "VendorCustomAttributeDefinition" %>
-  <%= render partial: 'custom_attributes/custom_attribute_definitions/alert_date_attributes', locals: { f: f, custom_attribute: custom_attribute, id: id } %>
+<% if CustomAttributes::CustomAttributeDefinition::ALLOW_DATE_ALERT_FOR_MODULES.include?(f.object_name.gsub('_custom_attribute_definition', '')) %>
+  <%= render partial: 'custom_attributes/custom_attribute_definitions/alert_date_attributes', locals: { f: f, custom_attribute: custom_attribute, custom_attr_postfix: custom_attr_postfix } %>
 <% end %>
 
 <% if !(f.object.try(:date_type?) || f.object.try(:boolean_type?) || f.object.try(:has_options?)) %>

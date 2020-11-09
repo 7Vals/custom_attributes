@@ -1,4 +1,4 @@
-<div class="<%= 'hide' unless f.object.try(:date_type?) %>" id="custom_attribute_definition_email_alert_<%= id %>">
+<div class="<%= 'hide' unless f.object.try(:date_type?) %>" id="custom_attribute_definition_email_alert_<%= custom_attr_postfix %>">
   <%= f.check_box :send_email_alert, { checked: custom_attribute.new_record? || custom_attribute.send_email_alert?, id: "custom_attribute_definition_send_email_alert" } %>
   <%= t('custom_attributes.form_dialog.send_email_alert') %><br/>
 
@@ -7,7 +7,7 @@
     <%= t('custom_attributes.form_dialog.scheduled_custom_field_alert') %><br/>
 
     <div class="margin-left-20 <%= 'hide' unless (custom_attribute.new_record? || custom_attribute.scheduled_alert?) %>" id='custom_attribute_definition_recurring_alert_div'>
-      <%= f.check_box :is_recurring, { data: { 'attr-id' => id }, id: "custom_attribute_definition_is_recurring" } %>
+      <%= f.check_box :is_recurring, { data: { 'attr-id' => custom_attr_postfix }, id: "custom_attribute_definition_is_recurring" } %>
       <%= t('custom_attributes.form_dialog.setup_recurring_date_alert_label') %><br/>
      
       <div class="margin-left-20 <%= 'hide' unless custom_attribute.is_recurring? %>" id="custom_attribute_definition_recurring_cycle_type">

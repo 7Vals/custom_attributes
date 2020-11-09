@@ -9,17 +9,15 @@ class CreateCustomAttributesFor<%= name %> < ActiveRecord::Migration
       t.integer :sort_order
       t.boolean :required, default: false
       t.boolean :hide_visibility_from_staff, default: false
-      <% if singular_table_name == 'vendor' %>
-        t.boolean :send_email_alert, default: false
-        t.boolean :scheduled_alert, default: false
-        t.boolean :is_recurring, default: false
-        t.integer :repeat_duration, default: 1
-        t.text,   :repeat_cycle
-        t.boolean :advance_alert, default: false
-        t.integer :advance_alert_days, default: 1
-        t.boolean :subsequent_alert, default: false
-        t.integer :subsequent_alert_days, default: 1
-      <% end %>
+      t.boolean :send_email_alert, default: false
+      t.boolean :scheduled_alert, default: false
+      t.boolean :is_recurring, default: false
+      t.integer :repeat_duration, default: 1
+      t.text,   :repeat_cycle, default: 'Day'
+      t.boolean :advance_alert, default: false
+      t.integer :advance_alert_days, default: 1
+      t.boolean :subsequent_alert, default: false
+      t.integer :subsequent_alert_days, default: 1
     end
   <% if options.tenant %>
       t.integer :<%= options.tenant.underscore %>_id, foreign_key: true
