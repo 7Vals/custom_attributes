@@ -2,6 +2,7 @@
 <% new_record ||= false %>
 <% confirm_option_deletion_url ||= nil %>
 <% position_update_url ||= nil %>
+<% show_date_alert = CustomAttributes::CustomAttributeDefinition::ALLOW_DATE_ALERT_FOR_MODULES.include?(f.object_name.gsub('_custom_attribute_definition', '')) %>
 
 <div class="label-input-item">
   <div class="row no-gutters">
@@ -22,7 +23,7 @@
     <div class="col-12 <%= fieldClass %>">
       <% custom_attr_type_hash = custom_attribute_types.except!(CustomAttributes::CustomAttribute::TYPE_MULTIPLE_CHOICE, CustomAttributes::CustomAttribute::TYPE_CHECKBOX).invert %>
       <% 
-        if f.object.class.to_s == "VendorCustomAttributeDefinition"
+        if show_date_alert
           custom_attr_type_hash = custom_attr_type_hash.transform_keys{ |key| key == 'Date Field' ? "#{key} (alert)" : key }
         end 
       %>
@@ -87,7 +88,7 @@
   
 </div>
 
-<% if CustomAttributes::CustomAttributeDefinition::ALLOW_DATE_ALERT_FOR_MODULES.include?(f.object_name.gsub('_custom_attribute_definition', '')) %>
+<% if show_date_alert %>
   <%= render partial: 'zen/custom_attributes/custom_attribute_definitions/alert_date_attributes', locals: { f: f, custom_attribute: custom_attribute, custom_attr_postfix: custom_attr_postfix } %>
 <% end %>
 

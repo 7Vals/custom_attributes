@@ -38,9 +38,7 @@ class CreateCustomAttributesFor<%= name %> < ActiveRecord::Migration
       t.datetime  :date_time_value
       t.references :<%= singular_table_name %>, foreign_key: true
       t.references :<%= singular_table_name %>_custom_attribute_definition, foreign_key: true
-      <% if singular_table_name == 'vendor' %>
-        t.date :recurring_date_value
-      <% end %>
+      t.date       :recurring_date_value
   <% if options.tenant %>
       t.integer :<%= options.tenant.underscore %>_id, foreign_key: true
   <% end %>
