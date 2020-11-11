@@ -30,8 +30,9 @@ module CustomAttributes
           date_time_value
         else
           time_cycle    = custom_attribute_defn.repeat_cycle.downcase
-          no_of_days    = { day: 1, week: 7, month: Date.today.end_of_month.day, year: no_of_days_in_year }[time_cycle.to_sym]
-          cycles_to_add = custom_attribute_defn.repeat_duration * no_of_days
+          divisor       = { day: 1, week: 7, month: Date.today.end_of_month.day, year: no_of_days_in_year }[time_cycle.to_sym]
+          difference    = (Date.today - date_time_value.to_date).to_i
+          cycles_to_add = difference / divisor + 1
           date_time_value + cycles_to_add.send(time_cycle)
         end
       end

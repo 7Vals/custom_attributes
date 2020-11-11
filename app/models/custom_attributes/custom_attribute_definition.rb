@@ -87,13 +87,15 @@ module CustomAttributes
         custom_attribute_values      = custom_attrubute_value_class.where("#{resource}_custom_attribute_definition_id" => id)
 
         if ALLOW_DATE_ALERT_FOR_MODULES.include?(resource) && date_type? && custom_attribute_values.present? && is_recurring_previously_changed?
-          if is_recurring
+          if is_recurring?
             custom_attribute_values_array = custom_attribute_values.map do |custom_attr_val|
               # no need to populate recurring date for those custom attr values in which we didn't set the custom attr for resource.
-              [custom_attr_val.id, { recurring_date_value: custom_attr_val.date_for_next_alert }] if custom_attr_val.date_time_value.present?
+              { id: custom_attr_val.id, recurring_date_value: custom_attr_val.date_for_next_alert, updated_at: Time.zone.now, created_at: Time.zone.now } if custom_attr_val.date_time_value.present?
             end
-            custom_attribute_values_hash = custom_attribute_values_array.compact.to_h
-            custom_attrubute_value_class.update(custom_attribute_values_hash.keys, custom_attribute_values_hash.values)
+            custom_attribute_values_array.compact!
+            custom_attribute_values_array.each_slice(200) do |custom_attribute_values|
+              custom_attrubute_value_class.upsert_all(custom_attribute_values)
+            end
           else
             custom_attribute_values.update_all(recurring_date_value: nil)
           end
