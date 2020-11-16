@@ -21,19 +21,11 @@ module CustomAttributes
         date_time_value.present? || string_value.present? || double_value.present? || integer_value.present? || !boolean_value.nil? || custom_attribute_option_values.any?
       end
 
-      def no_of_days_in_year
-        Date.leap?(DateTime.now.year) ? 366 : 365
-      end
-
       def date_for_next_alert
         if date_time_value > Date.today
           date_time_value
         else
-          time_cycle    = custom_attribute_defn.repeat_cycle.downcase
-          divisor       = { day: 1, week: 7, month: Date.today.end_of_month.day, year: no_of_days_in_year }[time_cycle.to_sym]
-          difference    = (Date.today - date_time_value.to_date).to_i
-          cycles_to_add = difference / divisor + 1
-          date_time_value + cycles_to_add.send(time_cycle)
+          (recurring_date_value || date_time_value) + custom_attribute_defn.repeat_duration.send(custom_attribute_defn.repeat_cycle.downcase)
         end
       end
     end
