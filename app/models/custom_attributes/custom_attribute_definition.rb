@@ -4,8 +4,13 @@ module CustomAttributes
     included do
       scope :by_sort_order, -> { order('sort_order ASC') }
       scope :visible_to_staff, -> { where(hide_visibility_from_staff: false) }
+      scope :datebox_attributes, -> { where(attr_type: 'date') }
       validates :attr_name, presence: true, format: { with: /^[a-zA-Z\_\s]+$/, multiline: true, message: 'cannot contain special characters.' }
       validates :default_value, format: { with: /^[\+\-]?\d*\.?\d*$/, multiline: true, message: 'should be a number.' }, if: :number_type?
+      validate :validate_custom_attr_date_alert_options
+      after_save :update_recurring_custom_attribute
+
+      ALLOW_DATE_ALERT_FOR_MODULES = %w[vendor]
 
       def number_type?
         [CustomAttributes::CustomAttribute::TYPE_NUMBER, CustomAttributes::CustomAttribute::TYPE_DECIMAL].include?(attr_type)
@@ -70,6 +75,36 @@ module CustomAttributes
 
       def default_option
         custom_attribute_options.find_by(id: default_value)
+      end
+
+      def load_resource
+        respond_to?(:resource_type) ? resource_type : self.class.to_s.underscore.downcase.gsub!('_custom_attribute_definition', '')
+      end
+
+      def update_recurring_custom_attribute
+        resource                     = load_resource
+        custom_attrubute_value_class = Object.const_get "#{resource.humanize}CustomAttributeValue"
+        custom_attribute_values      = custom_attrubute_value_class.where("#{resource}_custom_attribute_definition_id" => id)
+
+        if ALLOW_DATE_ALERT_FOR_MODULES.include?(resource) && date_type? && custom_attribute_values.present? && is_recurring_previously_changed?
+          if is_recurring?
+            custom_attribute_values_array = custom_attribute_values.map do |custom_attr_val|
+              # no need to populate recurring date for those custom attr values in which we didn't set the custom attr for resource.
+              { id: custom_attr_val.id, recurring_date_value: custom_attr_val.date_for_next_alert, updated_at: Time.zone.now, created_at: Time.zone.now } if custom_attr_val.date_time_value.present?
+            end
+            custom_attribute_values_array.compact!
+            custom_attribute_values_array.each_slice(200) do |custom_attribute_values|
+              custom_attrubute_value_class.upsert_all(custom_attribute_values)
+            end
+          else
+            custom_attribute_values.update_all(recurring_date_value: nil)
+          end
+        end
+      end
+
+      def validate_custom_attr_date_alert_options
+        resource = load_resource
+        errors.add(:base, I18n.t('custom_attribute_alert_unchecked_error')) if ALLOW_DATE_ALERT_FOR_MODULES.include?(resource) && send_email_alert && !(scheduled_alert || advance_alert || subsequent_alert)
       end
     end
   end
