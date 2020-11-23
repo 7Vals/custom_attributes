@@ -20,14 +20,6 @@ module CustomAttributes
       def value_present?
         date_time_value.present? || string_value.present? || double_value.present? || integer_value.present? || !boolean_value.nil? || custom_attribute_option_values.any?
       end
-
-      def date_for_next_alert
-        if date_time_value > Date.today
-          date_time_value
-        else
-          (recurring_date_value || date_time_value) + custom_attribute_defn.repeat_duration.send(custom_attribute_defn.repeat_cycle.downcase)
-        end
-      end
     end
   end
 end
