@@ -93,8 +93,8 @@ module CustomAttributes
               { id: custom_attr_val.id, recurring_date_value: custom_attr_val.date_for_next_alert, updated_at: Time.zone.now, created_at: Time.zone.now } if custom_attr_val.date_time_value.present?
             end
             custom_attribute_values_array.compact!
-            custom_attribute_values_array.each_slice(200) do |custom_attribute_values|
-              custom_attrubute_value_class.upsert_all(custom_attribute_values)
+            custom_attribute_values_array.each_slice(200) do |custom_attribute_def_values|
+              custom_attrubute_value_class.upsert_all(custom_attribute_def_values)
             end
           else
             custom_attribute_values.update_all(recurring_date_value: nil)

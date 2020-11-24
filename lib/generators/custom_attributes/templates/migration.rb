@@ -13,7 +13,7 @@ class CreateCustomAttributesFor<%= name %> < ActiveRecord::Migration
       t.boolean :scheduled_alert, default: false
       t.boolean :is_recurring, default: false
       t.integer :repeat_duration, default: 1
-      t.text,   :repeat_cycle, default: 'Day'
+      t.text,   :repeat_cycle
       t.boolean :advance_alert, default: false
       t.integer :advance_alert_days, default: 1
       t.boolean :subsequent_alert, default: false
