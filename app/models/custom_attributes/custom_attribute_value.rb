@@ -25,7 +25,8 @@ module CustomAttributes
         if date_time_value > Date.today
           date_time_value
         else
-          (recurring_date_value || date_time_value) + custom_attribute_defn.repeat_duration.send(custom_attribute_defn.repeat_cycle.downcase)
+          difference = (Date.today - date_time_value.to_date).to_i
+          (recurring_date_value || (date_time_value + difference)) + custom_attribute_defn.repeat_duration.send(custom_attribute_defn.repeat_cycle.downcase)
         end
       end
     end
