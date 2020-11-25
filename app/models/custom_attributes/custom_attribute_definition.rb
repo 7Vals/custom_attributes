@@ -83,7 +83,7 @@ module CustomAttributes
 
       def update_recurring_custom_attribute
         resource                     = load_resource
-        custom_attrubute_value_class = Object.const_get "#{resource.humanize}CustomAttributeValue"
+        custom_attrubute_value_class = Object.const_get "#{resource.gsub(/_/, ' ').titleize.gsub(/\s+/, '')}CustomAttributeValue"
         custom_attribute_values      = custom_attrubute_value_class.where("#{resource}_custom_attribute_definition_id" => id)
 
         if ALLOW_DATE_ALERT_FOR_MODULES.include?(resource) && date_type? && custom_attribute_values.present? && is_recurring_previously_changed?
