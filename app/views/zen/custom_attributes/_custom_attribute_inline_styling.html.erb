@@ -31,10 +31,11 @@
       <%= select_tag "#{custom_attribute_value.name}".to_sym, options_for_select(custom_attribute_value.custom_attribute_options.map { |op| [op.label, op.id] }, selected: custom_attribute_value.selected_option_id), options[:input_options] %>
     <% end %>
   <% elsif custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_DECIMAL %>
+    <% options[:input_options].merge!(pattern: "[0-9]+(\.[0-9]+)?") %>
     <%= content_tag(:div, options[:input_field_wrapper]) do %>
       <%= content_tag(:div, class: 'label-input-container-sm') do %>
         <%= content_tag(:div, class: 'label-input-item') do %>
-          <%= number_field_tag custom_attribute_value.name.to_sym, custom_attribute_value.value, options[:input_options] %>
+          <%= text_field_tag custom_attribute_value.name.to_sym, custom_attribute_value.value, options[:input_options] %>
         <% end %>
       <% end %>
     <% end %>
