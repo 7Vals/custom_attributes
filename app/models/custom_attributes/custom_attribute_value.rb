@@ -22,7 +22,9 @@ module CustomAttributes
       end
 
       def date_for_next_alert
-        if date_time_value > Date.today
+        if !date_time_value.try(:to_date)
+          nil
+        elsif date_time_value > Date.today
           date_time_value
         else
           difference = (Date.today - date_time_value.to_date).to_i
