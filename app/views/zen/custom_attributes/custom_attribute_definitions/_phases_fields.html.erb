@@ -4,7 +4,7 @@
       <div class='row no-gutters' id="alert_phase_id_<%= index %>">
         <%= hidden_field_tag "#{class_prefix}[advance_alert_phases_attributes][#{index}][id]", phase.id %>
         <div class="col-11 p-2">
-          <%= number_field_tag "#{class_prefix}[advance_alert_phases_attributes][#{index}][value]", phase.value, class: "<%= field_classes %>", min: 1, max: 100  %>
+          <%= number_field_tag "#{class_prefix}[advance_alert_phases_attributes][#{index}][value]", phase.value, class: "#{field_classes}", min: 1, max: 100  %>
         </div>
         <%= link_to "#_", class: "js-remove-phase tiny-svg-icon blue-svg m-l-20 pt-3 d-inline-block", data: { parent_identifier: index } do %>
           <%= render partial: 'zen/shared/svgs/delete' %>
