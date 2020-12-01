@@ -45,9 +45,9 @@
           <div class="col-12">
             <%= f.label :advance_alert_days, t('custom_attributes.form_dialog.advance_alert_days_label') %>
           </div>
-          <% if local_assings[:show_multiple_phases] %>
+          <% if local_assigns[:show_multiple_phases] %>
             <div id="phases_list" class="col-12" data-alert-type = "<%=custom_attribute.try(:type) %>" data-class-prefix = "<%= class_prefix %>">
-              <% if local_assings[:alert_phases].present? %>
+              <% if local_assigns[:alert_phases].present? %>
                   <%= render partial: "zen/custom_attributes/custom_attribute_definitions/phases_fields", locals: { class_prefix: class_prefix, alert_phases: alert_phases, field_classes: field_classes } %>
               <% end %>
             </div>
