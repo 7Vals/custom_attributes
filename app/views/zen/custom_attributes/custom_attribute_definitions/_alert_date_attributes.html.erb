@@ -46,7 +46,7 @@
             <%= f.label :advance_alert_days, t('custom_attributes.form_dialog.advance_alert_days_label') %>
           </div>
           <% if local_assigns[:show_multiple_phases] %>
-            <div id="phases_list" class="col-12" data-class-prefix = "<%= custom_attribute.class.name.underscore %>">
+            <div id="phases_list" class="col-12" data-class-prefix="<%= custom_attribute.class.name.underscore %>">
               <% if local_assigns[:alert_phases].present? %>
                 <%= render partial: "zen/custom_attributes/custom_attribute_definitions/phases_fields", locals: { class_prefix: custom_attribute.class.name.underscore, alert_phases: alert_phases, field_classes: field_classes } %>
               <% end %>

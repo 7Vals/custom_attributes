@@ -89,7 +89,7 @@
 </div>
 
 <% if show_date_alert %>
-  <%= render partial: 'zen/custom_attributes/custom_attribute_definitions/alert_date_attributes', locals: { f: f, custom_attribute: custom_attribute, custom_attr_postfix: custom_attr_postfix, alert_phases: local_assigns[:alert_phases], class_prefix: local_assigns[:class_prefix], field_classes: local_assigns[:alert_phase_field_class], show_multiple_phases: local_assigns[:show_multiple_phases] } %>
+  <%= render partial: 'zen/custom_attributes/custom_attribute_definitions/alert_date_attributes', locals: { f: f, custom_attribute: custom_attribute, custom_attr_postfix: custom_attr_postfix, alert_phases: local_assigns[:alert_phases], field_classes: local_assigns[:alert_phase_field_class], show_multiple_phases: local_assigns[:show_multiple_phases] } %>
 <% end %>
 
 <% if !(f.object.try(:date_type?) || f.object.try(:boolean_type?) || f.object.try(:has_options?)) %>
