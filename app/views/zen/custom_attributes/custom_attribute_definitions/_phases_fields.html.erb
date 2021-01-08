@@ -1,0 +1,21 @@
+<% if alert_phases.present? %>
+  <% prefix_to_append = local_assigns[:alert_type] == 'subsequent' ? '1' : '' %>
+  <% class_prefix_to_append = local_assigns[:alert_type] == 'subsequent' ? 'subsequent-' : '' %>
+  <div>
+    <% alert_phases.each.with_index(1) do |phase, index| %>
+      <% primary_identifier = "#{prefix_to_append}#{index}" %>
+      <div class='row no-gutters' id="alert_phase_id_<%= primary_identifier %>">
+        <%= hidden_field_tag "#{class_prefix}[advance_alert_phases_attributes][#{primary_identifier}][id]", phase.id %>
+        <div class="col-11 p-2">
+          <%= number_field_tag "#{class_prefix}[advance_alert_phases_attributes][#{primary_identifier}][value]", phase.value, class: "#{class_prefix_to_append}#{field_classes}", min: 1, max: 100  %>
+        </div>
+        <div class="col-1">
+          <%= link_to "#_", class: "#{class_prefix_to_append}js-remove-phase tiny-svg-icon blue-svg m-l-20 pt-3 d-inline-block", data: { parent_identifier: primary_identifier } do %>
+            <%= render partial: 'zen/shared/svgs/delete' %>
+          <% end %>
+        </div>
+        <%= hidden_field_tag "#{class_prefix}[advance_alert_phases_attributes][#{primary_identifier}][_destroy]", false %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
