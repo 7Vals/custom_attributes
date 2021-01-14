@@ -3,7 +3,8 @@
 <% new_record ||= false %>
 <% confirm_option_deletion_url ||= nil %>
 <% position_update_url ||= nil %>
-<% show_date_alert = CustomAttributes::CustomAttributeDefinition::ALLOW_DATE_ALERT_FOR_MODULES.include?(f.object_name.gsub('_custom_attribute_definition', '')) %>
+<%# show_date_alert = CustomAttributes::CustomAttributeDefinition::ALLOW_DATE_ALERT_FOR_MODULES.include?(f.object_name.gsub('_custom_attribute_definition', '')) %>
+<% show_date_alert = %w[vendor].include?(f.object_name.gsub('_custom_attribute_definition', '')) %>
 
 <div class="custom-attribute-definition title <%=titleClass%>">Name:</div>
 <div class="custom-attribute-definition field <%=fieldClass%>">

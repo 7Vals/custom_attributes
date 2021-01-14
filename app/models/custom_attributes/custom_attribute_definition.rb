@@ -10,7 +10,7 @@ module CustomAttributes
       validate :validate_custom_attr_date_alert_options
       after_save :update_recurring_custom_attribute
 
-      ALLOW_DATE_ALERT_FOR_MODULES = %w[vendor]
+      #ALLOW_DATE_ALERT_FOR_MODULES = %w[vendor]
 
       def number_type?
         [CustomAttributes::CustomAttribute::TYPE_NUMBER, CustomAttributes::CustomAttribute::TYPE_DECIMAL].include?(attr_type)
@@ -104,7 +104,8 @@ module CustomAttributes
 
       def validate_custom_attr_date_alert_options
         resource = load_resource
-        errors.add(:base, I18n.t('custom_attribute_alert_unchecked_error')) if ALLOW_DATE_ALERT_FOR_MODULES.include?(resource) && send_email_alert && !(scheduled_alert || advance_alert || subsequent_alert)
+        #errors.add(:base, I18n.t('custom_attribute_alert_unchecked_error')) if ALLOW_DATE_ALERT_FOR_MODULES.include?(resource) && send_email_alert && !(scheduled_alert || advance_alert || subsequent_alert)
+        errors.add(:base, I18n.t('custom_attribute_alert_unchecked_error')) if send_email_alert && !(scheduled_alert || advance_alert || subsequent_alert)
       end
     end
   end
