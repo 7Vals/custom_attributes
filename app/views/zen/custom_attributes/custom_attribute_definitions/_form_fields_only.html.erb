@@ -2,7 +2,6 @@
 <% new_record ||= false %>
 <% confirm_option_deletion_url ||= nil %>
 <% position_update_url ||= nil %>
-<%# show_date_alert = CustomAttributes::CustomAttributeDefinition::ALLOW_DATE_ALERT_FOR_MODULES.include?(f.object_name.gsub('_custom_attribute_definition', '')) %>
 
 <div class="label-input-item">
   <div class="row no-gutters">
@@ -22,11 +21,7 @@
     </div>
     <div class="col-12 <%= fieldClass %>">
       <% custom_attr_type_hash = custom_attribute_types.except!(CustomAttributes::CustomAttribute::TYPE_MULTIPLE_CHOICE, CustomAttributes::CustomAttribute::TYPE_CHECKBOX).invert %>
-      <% 
-        #if show_date_alert
-          custom_attr_type_hash = custom_attr_type_hash.transform_keys{ |key| key == 'Date Field' ? "#{key} (alert)" : key }
-        #end 
-      %>
+      <% custom_attr_type_hash = custom_attr_type_hash.transform_keys{ |key| key == 'Date Field' ? "#{key} (alert)" : key } %>
       
       <%= f.select :attr_type, custom_attr_type_hash, {}, { disabled: !new_record, id: "custom_attribute_type", class: 'select2-small', data: { select2_classes: 'select2-small-container', attr_id: "custom_attribute_type_#{local_assigns[:custom_attr_postfix]}" } } %> 
     </div>
@@ -88,9 +83,7 @@
   
 </div>
 
-<%# if show_date_alert %>
-  <%= render partial: 'zen/custom_attributes/custom_attribute_definitions/alert_date_attributes', locals: { f: f, custom_attribute: custom_attribute, custom_attr_postfix: custom_attr_postfix, advance_alert_phases: local_assigns[:advance_alert_phases], subsequent_alert_phases: local_assigns[:subsequent_alert_phases] , field_classes: local_assigns[:alert_phase_field_class], show_multiple_phases: local_assigns[:show_multiple_phases], link_label: local_assigns[:link_label] } %>
-<%# end %>
+<%= render partial: 'zen/custom_attributes/custom_attribute_definitions/alert_date_attributes', locals: { f: f, custom_attribute: custom_attribute, custom_attr_postfix: custom_attr_postfix, advance_alert_phases: local_assigns[:advance_alert_phases], subsequent_alert_phases: local_assigns[:subsequent_alert_phases] , field_classes: local_assigns[:alert_phase_field_class], show_multiple_phases: local_assigns[:show_multiple_phases], link_label: local_assigns[:link_label] } %>
 
 <% if !(f.object.try(:date_type?) || f.object.try(:boolean_type?) || f.object.try(:has_options?)) %>
   <div class="label-input-contanier-sm">
