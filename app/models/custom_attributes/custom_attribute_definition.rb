@@ -10,6 +10,9 @@ module CustomAttributes
       validate :validate_custom_attr_date_alert_options
       after_save :update_recurring_custom_attribute
 
+      #Required for OLD UI
+      ALLOW_DATE_ALERT_FOR_MODULES = %w[vendor]
+
       def number_type?
         [CustomAttributes::CustomAttribute::TYPE_NUMBER, CustomAttributes::CustomAttribute::TYPE_DECIMAL].include?(attr_type)
       end
@@ -84,7 +87,7 @@ module CustomAttributes
         custom_attrubute_value_class = Object.const_get "#{resource.gsub(/_/, ' ').titleize.gsub(/\s+/, '')}CustomAttributeValue"
         custom_attribute_values      = custom_attrubute_value_class.where("#{resource}_custom_attribute_definition_id" => id)
 
-        if ALLOW_DATE_ALERT_FOR_MODULES.include?(resource) && date_type? && custom_attribute_values.present? && is_recurring_previously_changed?
+        if date_type? && custom_attribute_values.present? && is_recurring_previously_changed?
           if is_recurring?
             custom_attribute_values_array = custom_attribute_values.map do |custom_attr_val|
               # no need to populate recurring date for those custom attr values in which we didn't set the custom attr for resource.
