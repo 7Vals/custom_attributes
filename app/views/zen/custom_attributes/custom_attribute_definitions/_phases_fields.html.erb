@@ -4,7 +4,7 @@
   <div>
     <% alert_phases.each.with_index(1) do |phase, index| %>
       <% primary_identifier = "#{prefix_to_append}#{index}" %>
-      <div class='row no-gutters' id="alert_phase_id_<%= primary_identifier %>">
+      <div class='row no-gutters persisted' id="alert_phase_id_<%= primary_identifier %>">
         <%= hidden_field_tag "#{class_prefix}[advance_alert_phases_attributes][#{primary_identifier}][id]", phase.id %>
         <div class="col-11 p-2">
           <%= number_field_tag "#{class_prefix}[advance_alert_phases_attributes][#{primary_identifier}][value]", phase.value, class: "#{class_prefix_to_append}#{field_classes}", min: 1, max: 100  %>
