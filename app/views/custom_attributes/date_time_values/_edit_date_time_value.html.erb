@@ -9,7 +9,13 @@
   <%= form.fields_for :custom_attributes do |custom_fields| %>
     <% label_text = date_time_value.name %>
     <% label_text += content_tag(:span, '*', class: 'required asterisk') if required %>
-    <%= custom_fields.label date_time_value.name.to_sym, label_text.html_safe, class: "#{cssClasses[:title]}" %>
+    <div class="required_label">
+      <%= custom_fields.label date_time_value.name.to_sym, label_text.html_safe, class: "#{cssClasses[:title]}" %>
+      <% if date_time_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_DATE && (date_time_value.custom_attribute_defn.try(:send_email_alert) || date_time_value.custom_attribute_defn.try(:is_recurring)) %>
+        <img title="<%= t(:custom_field_alert) %>" data-placement="right" alt="Schedule Alert" src="/images/icon-bell-1.png" class = "custom_alert_img" />
+      <% end %>
+    </div>
+
     <%= custom_fields.text_field "#{date_time_value.name}".to_sym, value: "#{formatted_date}", class: "#{cssClasses[:field]}", readonly: true, data: { custom_attribute_date_field: true } %>
   <% end %>
 <% # END Field part of form %>

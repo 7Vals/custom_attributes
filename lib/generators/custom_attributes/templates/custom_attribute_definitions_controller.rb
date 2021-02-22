@@ -35,10 +35,24 @@ class <%= name %>CustomAttributeDefinitionsController < CustomAttributes::Custom
       :attr_type, 
       :sort_order,
       :hide_visibility_from_staff,
+      :send_email_alert,
+      :scheduled_alert,
+      :is_recurring,
+      :repeat_cycle,
+      :repeat_duration,
+      :advance_alert,
+      :subsequent_alert,
       custom_attribute_options_attributes: [
         :id,
         :label,
         :position,
+        :_destroy
+      ],
+      advance_alert_phases_attributes: [
+        :id,
+        :value,
+        :type,
+        :alert_type,
         :_destroy
       ]
     )

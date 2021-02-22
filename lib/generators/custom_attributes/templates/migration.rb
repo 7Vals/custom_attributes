@@ -9,6 +9,15 @@ class CreateCustomAttributesFor<%= name %> < ActiveRecord::Migration
       t.integer :sort_order
       t.boolean :required, default: false
       t.boolean :hide_visibility_from_staff, default: false
+      t.boolean :send_email_alert, default: false
+      t.boolean :scheduled_alert, default: false
+      t.boolean :is_recurring, default: false
+      t.integer :repeat_duration, default: 1
+      t.text    :repeat_cycle
+      t.boolean :advance_alert, default: false
+      t.integer :advance_alert_days, default: 1
+      t.boolean :subsequent_alert, default: false
+      t.integer :subsequent_alert_days, default: 1
     end
   <% if options.tenant %>
       t.integer :<%= options.tenant.underscore %>_id, foreign_key: true
@@ -29,6 +38,7 @@ class CreateCustomAttributesFor<%= name %> < ActiveRecord::Migration
       t.datetime  :date_time_value
       t.references :<%= singular_table_name %>, foreign_key: true
       t.references :<%= singular_table_name %>_custom_attribute_definition, foreign_key: true
+      t.date       :recurring_date_value
   <% if options.tenant %>
       t.integer :<%= options.tenant.underscore %>_id, foreign_key: true
   <% end %>
