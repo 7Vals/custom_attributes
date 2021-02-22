@@ -41,13 +41,18 @@ class <%= name %>CustomAttributeDefinitionsController < CustomAttributes::Custom
       :repeat_cycle,
       :repeat_duration,
       :advance_alert,
-      :advance_alert_days,
       :subsequent_alert,
-      :subsequent_alert_days,
       custom_attribute_options_attributes: [
         :id,
         :label,
         :position,
+        :_destroy
+      ],
+      advance_alert_phases_attributes: [
+        :id,
+        :value,
+        :type,
+        :alert_type,
         :_destroy
       ]
     )

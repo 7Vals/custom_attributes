@@ -10,6 +10,7 @@ module CustomAttributes
       validate :validate_custom_attr_date_alert_options
       after_save :update_recurring_custom_attribute
 
+      #Required for OLD UI
       ALLOW_DATE_ALERT_FOR_MODULES = %w[vendor]
 
       def number_type?
@@ -86,7 +87,7 @@ module CustomAttributes
         custom_attrubute_value_class = Object.const_get "#{resource.gsub(/_/, ' ').titleize.gsub(/\s+/, '')}CustomAttributeValue"
         custom_attribute_values      = custom_attrubute_value_class.where("#{resource}_custom_attribute_definition_id" => id)
 
-        if ALLOW_DATE_ALERT_FOR_MODULES.include?(resource) && date_type? && custom_attribute_values.present? && is_recurring_previously_changed?
+        if date_type? && custom_attribute_values.present? && is_recurring_previously_changed?
           if is_recurring?
             custom_attribute_values_array = custom_attribute_values.map do |custom_attr_val|
               # no need to populate recurring date for those custom attr values in which we didn't set the custom attr for resource.
@@ -104,7 +105,7 @@ module CustomAttributes
 
       def validate_custom_attr_date_alert_options
         resource = load_resource
-        errors.add(:base, I18n.t('custom_attribute_alert_unchecked_error')) if ALLOW_DATE_ALERT_FOR_MODULES.include?(resource) && send_email_alert && !(scheduled_alert || advance_alert || subsequent_alert)
+        errors.add(:base, I18n.t('custom_attribute_alert_unchecked_error')) if send_email_alert && !(scheduled_alert || advance_alert || subsequent_alert)
       end
     end
   end
