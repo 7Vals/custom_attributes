@@ -7,8 +7,8 @@ module CustomAttributes
       scope :datebox_attributes, -> { where(attr_type: 'date') }
       validates :attr_name, presence: true, format: { with: /^[a-zA-Z\_\s]+$/, multiline: true, message: 'cannot contain special characters.' }
       validates :default_value, format: { with: /^[\+\-]?\d*\.?\d*$/, multiline: true, message: 'should be a number.' }, if: :number_type?
-      validate :validate_custom_attr_date_alert_options
-      after_save :update_recurring_custom_attribute
+      validate :validate_custom_attr_date_alert_options, if: :date_type?
+      after_save :update_recurring_custom_attribute, if: :date_type?
 
       #Required for OLD UI
       ALLOW_DATE_ALERT_FOR_MODULES = %w[vendor]
@@ -46,7 +46,6 @@ module CustomAttributes
       end
 
       def save_custom_attribute(selected_option_label)
-        binding.pry
         begin
           transaction do
             self.custom_attribute_options = [] unless has_options?
@@ -84,7 +83,6 @@ module CustomAttributes
       end
 
       def update_recurring_custom_attribute
-        binding.pry
         resource                     = load_resource
         custom_attrubute_value_class = Object.const_get "#{resource.gsub(/_/, ' ').titleize.gsub(/\s+/, '')}CustomAttributeValue"
         custom_attribute_values      = custom_attrubute_value_class.where("#{resource}_custom_attribute_definition_id" => id)
@@ -106,7 +104,6 @@ module CustomAttributes
       end
 
       def validate_custom_attr_date_alert_options
-        binding.pry
         resource = load_resource
         errors.add(:base, I18n.t('custom_attribute_alert_unchecked_error')) if send_email_alert && !(scheduled_alert || advance_alert || subsequent_alert)
       end
