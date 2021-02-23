@@ -7,8 +7,8 @@ module CustomAttributes
       scope :datebox_attributes, -> { where(attr_type: 'date') }
       validates :attr_name, presence: true, format: { with: /^[a-zA-Z\_\s]+$/, multiline: true, message: 'cannot contain special characters.' }
       validates :default_value, format: { with: /^[\+\-]?\d*\.?\d*$/, multiline: true, message: 'should be a number.' }, if: :number_type?
-      validate :validate_custom_attr_date_alert_options
-      after_save :update_recurring_custom_attribute
+      validate :validate_custom_attr_date_alert_options, if: :date_type?
+      after_save :update_recurring_custom_attribute, if: :date_type?
 
       #Required for OLD UI
       ALLOW_DATE_ALERT_FOR_MODULES = %w[vendor]
@@ -105,7 +105,7 @@ module CustomAttributes
 
       def validate_custom_attr_date_alert_options
         resource = load_resource
-        errors.add(:base, I18n.t('custom_attribute_alert_unchecked_error')) if send_email_alert && !(scheduled_alert || advance_alert || subsequent_alert)
+        errors.add(:base, I18n.t('custom_attribute_alert_unchecked_error')) if date_type? && send_email_alert && !(scheduled_alert || advance_alert || subsequent_alert)
       end
     end
   end
