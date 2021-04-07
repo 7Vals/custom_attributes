@@ -1,5 +1,5 @@
 <% can_edit_templates = current_user.is_admin_not_supervisor(company) && company.company_settings.email_templates? %>
-<% if can_edit_templates && custom_attribute.present? && custom_attribute.persisted? && (custom_attribute.is_a?(DateBoxAttribute) || custom_attribute.date_type?) %>
+<% if can_edit_templates && custom_attribute.present? && custom_attribute.persisted? && (custom_attribute.date_type? || custom_attribute.is_a?(DateBoxAttribute)) %>
   <% template_for = EmailTemplate::TEMPLATE_FOR_USER %>
   <% template_type, key = get_email_template_details_for_custom_attr(custom_attribute) %>
   <div class="pt-4">
@@ -14,7 +14,7 @@
           <%= get_templates_select_tag(company, template_type, template_for, 'select_email_template', include_default: true, class: 'js-select-email-template', id: "select_email_template_#{template_type}") %>
         </div>
         <div class="row pt-2 pl-4">
-          <% new_email_template = new_email_template_path({ template_for: template_for, template_type: template_type, is_default: true, disable_template_type: true}) %>
+          <% new_email_template = new_email_template_path({ template_for: template_for, template_type: template_type, is_default: true, disable_template_type: true, custom_attr_template_type: template_type}) %>
           <%= link_to new_email_template, method: :get, remote: true do %>
             <div class="tiny-svg-icon blue-svg">
               <%= render partial: 'zen/shared/svgs/add_with_circle' %>
