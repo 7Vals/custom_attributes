@@ -88,7 +88,9 @@
       </div>
     </div>
   </div>
-  <% if EmailTemplate::CUSTOM_FIELD_PLACEHOLDERS.exclude?(f.object_name.gsub('_custom_attribute_definition', '').pluralize) %>
+  <% resource_type = f.object_name.gsub('_custom_attribute_definition', '') %>
+  <% resource_type = f.object.try(:resource_type) == 'user' && IS_RENTALS ? f.object.resource_type : EmailTemplate::CUSTOM_ATTRIBUTE_DEF_CLASS_PREFIX.key(resource_type) || resource_type %>
+  <% if EmailTemplate::CUSTOM_FIELD_PLACEHOLDERS.exclude?(resource_type.pluralize) %>
     <div id="email_templates_section_for_custom_attribute">
       <%= render partial: 'zen/custom_attributes/custom_attribute_definitions/email_templates_section', locals: { company: local_assigns[:company], current_user: local_assigns[:current_user], custom_attribute: custom_attribute } %>
     </div>
