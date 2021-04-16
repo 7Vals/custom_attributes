@@ -1,4 +1,4 @@
-<% can_edit_templates = current_user.is_admin_not_supervisor(company) && company.company_settings.email_templates? %>
+<% can_edit_templates = current_user&.is_admin_not_supervisor(company) && company&.company_settings&.email_templates? %>
 <% if can_edit_templates && custom_attribute.present? && custom_attribute.persisted? && (custom_attribute.date_type? || custom_attribute.is_a?(DateBoxAttribute)) %>
   <% template_for = EmailTemplate::TEMPLATE_FOR_USER %>
   <% template_type, key = get_email_template_details_for_custom_attr(custom_attribute) %>
