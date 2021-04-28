@@ -83,7 +83,7 @@
   
 </div>
 
-<%= render partial: 'zen/custom_attributes/custom_attribute_definitions/alert_date_attributes', locals: { f: f, custom_attribute: custom_attribute, custom_attr_postfix: custom_attr_postfix, advance_alert_phases: local_assigns[:advance_alert_phases], subsequent_alert_phases: local_assigns[:subsequent_alert_phases] , field_classes: local_assigns[:alert_phase_field_class], show_multiple_phases: local_assigns[:show_multiple_phases], link_label: local_assigns[:link_label], company: local_assigns[:company], current_user: local_assigns[:current_user] } %>
+<%= render partial: 'zen/custom_attributes/custom_attribute_definitions/alert_date_attributes', locals: { f: f, custom_attribute: custom_attribute, custom_attr_postfix: custom_attr_postfix, advance_alert_phases: local_assigns[:advance_alert_phases], subsequent_alert_phases: local_assigns[:subsequent_alert_phases] , field_classes: local_assigns[:alert_phase_field_class], show_multiple_phases: local_assigns[:show_multiple_phases], link_label: local_assigns[:link_label], company: local_assigns[:company], user: local_assigns[:user] } %>
 
 <% if !(f.object.try(:date_type?) || f.object.try(:boolean_type?) || f.object.try(:has_options?)) %>
   <div class="label-input-contanier-sm">
