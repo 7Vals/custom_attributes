@@ -46,14 +46,16 @@
             <%= f.label :advance_alert_days, t('custom_attributes.form_dialog.advance_alert_days_label') %>
           </div>
           <% if local_assigns[:show_multiple_phases] %>
-            <div id="phases_list" class="col-12" data-class-prefix="<%= custom_attribute.class.name.underscore %>" data-alert-type="advance">
-              <% if local_assigns[:advance_alert_phases].present? %>
-                <%= render partial: "zen/custom_attributes/custom_attribute_definitions/phases_fields", locals: { class_prefix: custom_attribute.class.name.underscore, alert_phases: advance_alert_phases, field_classes: field_classes, alert_type: 'advance' } %>
-              <% end %>
-            </div>
-            <div class="col-12 p-2">
-              <%= link_to link_label, '#_', id: 'add_phase' %>
-            </div>
+            <div class="w-50">
+              <div id="phases_list" class="w-100" data-class-prefix="<%= custom_attribute.class.name.underscore %>" data-alert-type="advance">
+                <% if local_assigns[:advance_alert_phases].present? %>
+                  <%= render partial: "zen/custom_attributes/custom_attribute_definitions/phases_fields", locals: { class_prefix: custom_attribute.class.name.underscore, alert_phases: advance_alert_phases, field_classes: field_classes, alert_type: 'advance' } %>
+                <% end %>
+              </div>
+              <div class="col-12 p-2">
+                <%= link_to link_label, '#_', id: 'add_phase', data: { keys: AdvanceAlertPhase::PHASES[:advance_phases].keys, values: AdvanceAlertPhase::PHASES[:advance_phases].values } %>
+              </div>
+            </div> 
           <% else %>
             <div class="col-12">
               <%= f.number_field :advance_alert_days, min: 1, max: 365, step: '1', class: 'w-100' %>
@@ -71,13 +73,15 @@
             <%= f.label :subsequent_alert_days, t('custom_attributes.form_dialog.subsequent_alert_days_label') %>
           </div>
           <% if local_assigns[:show_multiple_phases] %>
-            <div id="subsequent_phases_list" class="col-12" data-class-prefix = "<%=  custom_attribute.class.name.underscore %>" data-alert-type="subsequent">
-              <% if local_assigns[:subsequent_alert_phases].present? %>
-                <%= render partial: "zen/custom_attributes/custom_attribute_definitions/phases_fields", locals: { class_prefix: custom_attribute.class.name.underscore, alert_phases: subsequent_alert_phases, field_classes: field_classes, alert_type: 'subsequent' } %>
-              <% end %>
-            </div>
-            <div class="col-12 p-2">
-              <%= link_to link_label, '#_', id: 'add_subsequent_phase' %>
+            <div class="w-50">
+              <div id="subsequent_phases_list" class="w-100" data-class-prefix = "<%=  custom_attribute.class.name.underscore %>" data-alert-type="subsequent">
+                <% if local_assigns[:subsequent_alert_phases].present? %>
+                  <%= render partial: "zen/custom_attributes/custom_attribute_definitions/phases_fields", locals: { class_prefix: custom_attribute.class.name.underscore, alert_phases: subsequent_alert_phases, field_classes: field_classes, alert_type: 'subsequent' } %>
+                <% end %>
+              </div>
+              <div class="col-12 p-2">
+                <%= link_to link_label, '#_', id: 'add_subsequent_phase', data: { keys: AdvanceAlertPhase::PHASES[:subsequent_phases].keys, values: AdvanceAlertPhase::PHASES[:subsequent_phases].values } %>
+              </div>
             </div>
           <% else %>
             <div class="col-12">
