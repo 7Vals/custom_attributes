@@ -2,7 +2,6 @@
   <% prefix_to_append = local_assigns[:alert_type] == 'subsequent' ? '1' : '' %>
   <% class_prefix_to_append = local_assigns[:alert_type] == 'subsequent' ? 'subsequent-' : '' %>
   <div>
-    <% alert_phases_values = alert_phases.pluck(:value) %>
     <% alert_phases.each.with_index(1) do |phase, index| %>
       <% primary_identifier = "#{prefix_to_append}#{index}" %>
       <div class='row no-gutters persisted w-100' id="alert_phase_id_<%= primary_identifier %>">

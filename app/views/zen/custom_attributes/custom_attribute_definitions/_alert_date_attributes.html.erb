@@ -1,5 +1,6 @@
 <div class="<%= 'collapse' unless f.object.try(:date_type?) %>" id="custom_attribute_definition_email_alert_<%= custom_attr_postfix %>">
   <%= theme_checkbox(f, :send_email_alert, { checked: custom_attribute.new_record? || custom_attribute.send_email_alert?, id: 'custom_attribute_definition_send_email_alert' }, { label: t('custom_attributes.form_dialog.send_email_alert') }) %>
+
   <div class="ml-3 <%= 'collapse' unless (custom_attribute.new_record? || custom_attribute.send_email_alert?) %>" id="custom_attribute_definition_email_options_div">
     <%= theme_checkbox(f, :scheduled_alert, { checked: custom_attribute.new_record? || custom_attribute.scheduled_alert?, id: 'custom_attribute_definition_scheduled_alert' }, { label: t('custom_attributes.form_dialog.scheduled_custom_field_alert') }) %>
 
