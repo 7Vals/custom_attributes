@@ -9,14 +9,14 @@
         <%= hidden_field_tag "#{class_prefix}[advance_alert_phases_attributes][#{primary_identifier}][id]", phase.id %>
         <% select_field_key = phase.alert_type == 'subsequent' ? 'subsequent_phases' : 'advance_phases' %>
         <div class="col-4 col-xl-3 d-flex align-content-center flex-wrap">
-          <span class="px-2 phase-reminder-text"><%= "Reminder #{index}:" %></span>
+          <span class="px-2 phase-reminder-text"><%= t('advance_alert_phases.reminder_label', number: index) %></span>
         </div>
         <% if AdvanceAlertPhase::PHASES[:advance_phases].value?(phase.value) %>
           <div class="col-6 col-xl-4 m-2 js-advance-alert-phases">
-            <%= select_tag "#{class_prefix}[advance_alert_phases_attributes][#{primary_identifier}][value]", options_for_select(AdvanceAlertPhase::PHASES[select_field_key.to_sym], { selected: phase.value, disabled: alert_phases_values - [phase.value] }), { class: "#{class_prefix_to_append}days-value span2 margin-bottom-reset select_email_template select2-alert-phase", id: "select_advance_alert_#{primary_identifier}" } %>
+            <%= select_tag "#{class_prefix}[advance_alert_phases_attributes][#{primary_identifier}][value]", options_for_select(AdvanceAlertPhase::PHASES[select_field_key.to_sym], { selected: phase.value, disabled: alert_phases_values - [phase.value] }), { class: "#{class_prefix_to_append}days-value span2 margin-bottom-reset select_email_template js-select2-alert-phase", id: "select_advance_alert_#{primary_identifier}" } %>
           </div>
         <% else %>
-          <div class="col-6 col-xl-4 m-2">
+          <div class="col-6 col-xl-4 m-2 js-advance-alert-phases">
             <%= number_field_tag "#{class_prefix}[advance_alert_phases_attributes][#{primary_identifier}][value]", phase.value, class: "#{class_prefix_to_append}days-value w-100 p-2", min: 1, max: 100 %>
           </div>
         <% end %>
