@@ -1,0 +1,28 @@
+<% if alert_phases.present? %>
+  <% prefix_to_append = local_assigns[:alert_type] == 'subsequent' ? '1' : '' %>
+  <% class_prefix_to_append = local_assigns[:alert_type] == 'subsequent' ? 'subsequent-' : '' %>
+  <div>
+    <% alert_phases.each.with_index(1) do |phase, index| %>
+      <% primary_identifier = "#{prefix_to_append}#{index}" %>
+      <div class='row no-gutters persisted w-100' id="alert_phase_id_<%= primary_identifier %>">
+        <%= hidden_field_tag "#{class_prefix}[advance_alert_phases_attributes][#{primary_identifier}][id]", phase.id %>
+        <% phase_text = phase.alert_type == 'subsequent' ? 'after' : 'before' %>
+        <div class="col-4 col-xl-3 d-flex align-content-center flex-wrap">
+          <span class="px-2 phase-reminder-text"><%= t('advance_alert_phases.reminder_label', number: index) %></span>
+        </div>
+        <div class="col-6 col-xl-4 m-2">
+          <div class="col-12 p-0 d-flex">
+            <%= number_field_tag "#{class_prefix}[advance_alert_phases_attributes][#{primary_identifier}][value]", phase.value, class: "#{class_prefix_to_append}days-value col-6 w-100 p-2", min: 1, max: 100 %>
+            <p class="col-6 align-self-center text-left pl-4"><%= t('advance_alert_phases.days_label', alert_type: phase_text) %></p>
+          </div>
+        </div>
+        <div class="col-1 p-0">
+          <%= link_to "#_", class: "#{class_prefix_to_append}js-remove-phase tiny-svg-icon blue-svg m-l-20 pt-4 d-inline-block", data: { parent_identifier: primary_identifier } do %>
+            <%= render partial: 'zen/shared/svgs/delete' %>
+          <% end %>
+        </div>
+        <%= hidden_field_tag "#{class_prefix}[advance_alert_phases_attributes][#{primary_identifier}][_destroy]", false %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
