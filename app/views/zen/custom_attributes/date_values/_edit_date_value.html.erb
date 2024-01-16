@@ -12,6 +12,11 @@
     <%= content_tag(:div, options[:field_wrapper_options]) do %>
       <%= custom_fields.text_field custom_attribute_value.name.to_sym, options[:field_options] %>
     <% end %>
+    <div class="col-1 pl-3 pt-3">
+      <a href="#_" class="reset-date-time reset-custom-attr-date" data-reset-date-time-elements='<%= "#{form.object_name}_custom_attributes_#{label_text}" %>'>
+        <i class="fas fa-sync-alt"></i>
+      </a>
+    </div>
   <% end %>
   <!-- # END Field part of form -->
 <% else %>
@@ -30,3 +35,11 @@
   });
   </script>
 <% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $('.reset-custom-attr-date').on('click', function() {
+    debugger;
+    var idForReset = $(this).data('reset-date-time-elements');
+    $(`input[id='${idForReset}']`).val('');
+  })
+</script>
