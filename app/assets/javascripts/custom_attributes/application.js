@@ -11,8 +11,9 @@
 // about supported directives.
 //
 //= require_tree .
-
-$(".reset-custom-attr-date").on("click", function () {
-  var idForReset = $(this).data("reset-date-time-elements");
-  $(`input[id='${idForReset}']`).val("");
+$(function () {
+  $(".reset-custom-attr-date").on("click", function () {
+    var idForReset = $(this).data("reset-date-time-elements");
+    $(`input[id='${idForReset}']`).val("");
+  });
 });
