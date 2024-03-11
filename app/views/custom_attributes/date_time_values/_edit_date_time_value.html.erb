@@ -12,7 +12,7 @@
     <div class="required_label">
       <%= custom_fields.label date_time_value.name.to_sym, label_text.html_safe, class: "#{cssClasses[:title]}" %>
       <% if date_time_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_DATE && (date_time_value.custom_attribute_defn.try(:send_email_alert) || date_time_value.custom_attribute_defn.try(:is_recurring)) %>
-        <img title="<%= t(:custom_field_alert) %>" data-placement="right" alt="Schedule Alert" src="/images/notification_icon.svg" class = "custom_alert_img" />
+        <img title="<%= t(:custom_field_alert) %>" data-placement="right" alt="Schedule Alert" src="/images/icon-bell-1.png" class = "custom_alert_img" />
       <% end %>
     </div>
 
