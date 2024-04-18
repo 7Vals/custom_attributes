@@ -8,9 +8,9 @@ module CustomAttributes
       end
 
       def apply_default_value
-        unless custom_attribute_defn.default_value.blank?
-          self.value = custom_attribute_defn.default_value
-        end
+        return if custom_attribute_defn.default_value.blank?
+
+        self.value = custom_attribute_defn.default_value
       end
 
       def value_or_display_value
