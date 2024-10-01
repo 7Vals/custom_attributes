@@ -14,7 +14,7 @@
       <%= custom_fields.label custom_attribute_value.name.to_sym, label_text.html_safe, options[:title_options] %>
     <% end %>
     <%= content_tag(:div, options[:field_wrapper_options]) do %>
-      <%= custom_fields.text_field custom_attribute_value.name.to_sym, options[:field_options] %>
+      <%= custom_fields.text_field "#{options[:field_options][:use_defn_id] ? custom_attribute_value.custom_attribute_defn.id : custom_attribute_value.name}".to_sym, options[:field_options] %>
     <% end %>
   <% end %>
   <!-- # END Field part of form -->
