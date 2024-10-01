@@ -3,6 +3,8 @@
 <% new_record ||= false %>
 <% confirm_option_deletion_url ||= nil %>
 <% position_update_url ||= nil %>
+<% show_date_alert = CustomAttributes::CustomAttributeDefinition::ALLOW_DATE_ALERT_FOR_MODULES.include?(f.object_name.gsub('_custom_attribute_definition', '')) %>
+
 <div class="custom-attribute-definition title <%=titleClass%>">Name:</div>
 <div class="custom-attribute-definition field <%=fieldClass%>">
   <%= f.text_field :attr_name, pattern:"^[a-zA-Z0-9ąćęłńóśźżĄĆĘŁŃÓŚŹŻ ]+$", title: "Name can only contain alphanumeric characters and spaces." %>
@@ -10,8 +12,16 @@
 
 <div class="custom-attribute-definition title <%=titleClass%>">Type:</div>
 <div class="custom-attribute-definition field <%=fieldClass%>">
-  <%= f.select :attr_type, custom_attribute_types.except!(CustomAttributes::CustomAttribute::TYPE_MULTIPLE_CHOICE, CustomAttributes::CustomAttribute::TYPE_CHECKBOX).invert, {}, { disabled: !new_record, id: "custom_attribute_type" } %>
+  <% custom_attr_type_hash = custom_attribute_types.except!(CustomAttributes::CustomAttribute::TYPE_MULTIPLE_CHOICE, CustomAttributes::CustomAttribute::TYPE_CHECKBOX).invert %>
+  <% 
+    if show_date_alert
+      custom_attr_type_hash = custom_attr_type_hash.transform_keys{ |key| key == 'Date Field' ? "#{key} (alert)" : key }
+    end 
+  %>
+
+  <%= f.select :attr_type, custom_attr_type_hash, {}, { disabled: !new_record, id: "custom_attribute_type", data: { attr_id: "custom_attribute_type_#{local_assigns[:custom_attr_postfix]}" } } %>
 </div>
+
 <% unless f.object.try(:date_type?) %>
   <div id="custom_attribute_default_value_div">
     <div class="custom-attribute-definition title <%=titleClass%>">Default Value:</div>
@@ -46,6 +56,10 @@
   %>
   <%= link_to_function('Add Options', "addOptionToDropdownField('custom_attribute_options', '#{escape_javascript(fields)}')") %>
 </div>
+
+<% if show_date_alert %>
+  <%= render partial: 'custom_attributes/custom_attribute_definitions/alert_date_attributes', locals: { f: f, custom_attribute: custom_attribute, custom_attr_postfix: custom_attr_postfix } %>
+<% end %>
 
 <% if !(f.object.try(:date_type?) || f.object.try(:boolean_type?) || f.object.try(:has_options?)) %>
   <div id="custom_attribute_placeholder_div">

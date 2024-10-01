@@ -6,9 +6,9 @@
       <% label_text = boolean_value.name %>
       <% label_text += content_tag(:span, '*', class: cssClasses[:required]) %>
       <%= custom_fields.label boolean_value.name.to_sym, label_text.html_safe, class: cssClasses[:title] %>
-      <%= custom_fields.radio_button "#{boolean_value.name}".to_sym, true, checked: boolean_value.boolean_value, class: "#{cssClasses[:field]}", required: true %> Yes
+      <%= custom_fields.radio_button "#{boolean_value.name}".to_sym, true, checked: boolean_value.boolean_value, class: "#{cssClasses[:field]}", required: true %> <%= t('custom_attributes.boolean_yes_label') %>
       <br />
-      <%= custom_fields.radio_button "#{boolean_value.name}".to_sym, false, checked: !boolean_value.boolean_value.nil? && !boolean_value.boolean_value, class: "#{cssClasses[:field]}", required: true %> No<br />
+      <%= custom_fields.radio_button "#{boolean_value.name}".to_sym, false, checked: !boolean_value.boolean_value.nil? && !boolean_value.boolean_value, class: "#{cssClasses[:field]}", required: true %> <%= t('custom_attributes.boolean_no_label') %><br />
     <% end %>
   <% # END Field part of form %>
 <% else %>

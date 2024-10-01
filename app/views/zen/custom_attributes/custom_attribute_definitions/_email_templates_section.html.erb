@@ -1,0 +1,37 @@
+<% can_edit_templates = user&.is_admin_not_supervisor(company) && company&.company_settings&.email_templates? %>
+<% if can_edit_templates && custom_attribute.present? && custom_attribute.persisted? && (custom_attribute.date_type? || custom_attribute.is_a?(DateBoxAttribute)) %>
+  <% template_for = EmailTemplate::TEMPLATE_FOR_USER %>
+  <% template_type, key = get_email_template_details_for_custom_attr(custom_attribute) %>
+  <div class="pt-4">
+    <div class="label-input-item">
+      <div class="row no-gutters">
+        <div class="col-3 pt-3">
+          <div class="resource-heading">
+            <h5><div class="d-flex justify-content-start"><%= t('alert.email_template_label', email_label: t('shared.email_label')) %></h5>
+          </div>
+        </div>
+        <div class="col-5 pl-2">
+          <%= get_templates_select_tag(company, template_type, template_for, 'select_email_template', include_default: true, class: 'js-select-email-template', id: "select_email_template_#{template_type}") %>
+        </div>
+        <div class="row pt-3 pl-5">
+          <% new_email_template = new_email_template_path({ template_for: template_for, template_type: template_type, is_default: true, disable_template_type: true, is_custom_attr_template: true}) %>
+          <%= link_to new_email_template, method: :get, remote: true do %>
+            <div class="tiny-svg-icon blue-svg">
+              <%= render partial: 'zen/shared/svgs/add_with_circle' %>
+            </div>
+          <% end %>
+          <a href="#_" class="d-inline-block ml-2 pl-3 js-sample-view-btn" data-template-key="<%= key %>" data-template-for="<%= template_for %>" data-template-type="<%= template_type %>">
+            <div class="tiny-svg-icon blue-svg">
+              <%= render partial: 'zen/shared/svgs/show' %>
+            </div>
+          </a>
+          <a href="#_" class="edit-email-template d-inline-block js-edit-email-template pl-4" id='edit_email_template_<%= "#{template_type}" %>' data-template-for="<%= template_for %>" data-template-type="<%= template_type %>" data-is-custom-attr-template='true'>
+            <div class="<%= 'collapse' if default_template_selected?(company, template_type, template_for) %> tiny-svg-icon blue-svg">
+              <%= render partial: 'zen/shared/svgs/edit' %>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
