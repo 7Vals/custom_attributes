@@ -16,11 +16,11 @@
     <% end %>
     <% if custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_MULTILINE_TEXT %>
       <%= content_tag(:div, options[:field_wrapper_options]) do %>
-        <%= custom_fields.text_area custom_attribute_value.name.to_sym, options[:field_options] %>
+        <%= custom_fields.text_area "#{options[:field_options][:use_defn_id] ? custom_attribute_value.custom_attribute_defn.id : custom_attribute_value.name}".to_sym, options[:field_options] %>
       <% end %>
     <% else %>
       <%= content_tag(:div, options[:field_wrapper_options]) do %>
-        <%= custom_fields.text_field custom_attribute_value.name.to_sym, options[:field_options] %>
+        <%= custom_fields.text_field "#{options[:field_options][:use_defn_id] ? custom_attribute_value.custom_attribute_defn.id : custom_attribute_value.name}".to_sym, options[:field_options] %>
       <% end %>
     <% end %>
   <% end %>
