@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    custom_attributes_scaffold (0.1.46)
+    custom_attributes_scaffold (0.1.50)
       rails (~> 6.1.0)
 
 GEM
@@ -157,4 +157,4 @@ DEPENDENCIES
   sqlite3
 
 BUNDLED WITH
-   2.1.4
+   2.4.8

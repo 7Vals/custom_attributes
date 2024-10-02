@@ -5,20 +5,26 @@
   <%= form.fields_for :custom_attributes do |custom_fields| %>
     <% label_text  = custom_attribute_value.name %>
     <% label_text += content_tag(:span, '*', class: 'required asterisk') if options[:field_options][:required] %>
+    <% if options[:field_options][:label_badge].present? %>
+      <% text = options[:field_options][:label_badge][:text] %>
+      <% classes = options[:field_options][:label_badge][:classes] %>
+      <% label_text += content_tag(:span, text, class: classes) %>
+    <% end %>
     <%= content_tag(:div, options[:title_wrapper_options]) do %>
       <%= custom_fields.label custom_attribute_value.name.to_sym, label_text.html_safe, options[:title_options] %>
     <% end %>
+    <% c_attr_value_key = options[:field_options][:use_defn_id] ? custom_attribute_value.custom_attribute_defn.id : custom_attribute_value.name %>
     <%= content_tag(:div, class: 'radio-buttons-group') do %>
       <% options[:field_options].merge!(checked: custom_attribute_value.boolean_value, required: true) %>
-      <%= custom_fields.label "#{custom_attribute_value.name}_true".to_sym, class: 'radio-button-label' do %>
-        <%= custom_fields.radio_button "#{custom_attribute_value.name}".to_sym, true, options[:field_options] %>
-        <%= custom_fields.label "#{custom_attribute_value.name}_true".to_sym, 'Yes' %>
+      <%= custom_fields.label "#{c_attr_value_key}_true".to_sym, class: 'radio-button-label' do %>
+        <%= custom_fields.radio_button "#{c_attr_value_key}".to_sym, true, options[:field_options] %>
+        <%= custom_fields.label "#{c_attr_value_key}_true".to_sym, 'Yes' %>
         <%= content_tag(:div, '', { class: 'check' }) %>
       <% end %>
       <% options[:field_options].merge!(checked: !custom_attribute_value.boolean_value.nil? && !custom_attribute_value.boolean_value, required: true) %>
-      <%= custom_fields.label "#{custom_attribute_value.name}_false".to_sym, class: 'radio-button-label' do %>
-        <%= custom_fields.radio_button "#{custom_attribute_value.name}".to_sym, false, options[:field_options] %>
-        <%= custom_fields.label "#{custom_attribute_value.name}_false".to_sym, 'No' %>
+      <%= custom_fields.label "#{c_attr_value_key}_false".to_sym, class: 'radio-button-label' do %>
+        <%= custom_fields.radio_button "#{c_attr_value_key}".to_sym, false, options[:field_options] %>
+        <%= custom_fields.label "#{c_attr_value_key}_false".to_sym, 'No' %>
         <%= content_tag(:div, '', { class: 'check' }) %>
       <% end %>
     <% end %>
