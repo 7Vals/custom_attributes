@@ -2,7 +2,7 @@ module CustomAttributes
   module DoubleValue
     def value=(newVal)
       if (newVal && newVal.present?)
-        self.double_value = newVal.to_f
+        self.double_value = newVal.to_d
       else
         self.double_value = nil
       end
