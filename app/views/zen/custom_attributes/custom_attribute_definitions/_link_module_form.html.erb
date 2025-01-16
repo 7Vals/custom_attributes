@@ -1,0 +1,76 @@
+<%= f.fields_for :custom_attribute_linked_module do |g| %>
+  <div id='<%= "#{dom_id(f.object)}_module_name" %>'>
+    <div class="label-input-item">
+      <div class="row no-gutters p-y-7">
+        <div class="col-12 pb-2">
+          <%= g.label :module_name, t('custom_attributes.form_dialog.linked_module_label') %>
+        </div>
+        <div class="col-12">
+          <div>
+            <%= 
+              g.select(
+                :module_name,
+                local_assigns[:module_options],
+                {},
+                id: "custom_attribute_linked_module_name_#{id}",
+                class: 'custom_attribute_linked_module_name select2-small',
+                data: { attribute_id: id, select2_classes: 'select2-small-container' },
+                disabled: local_assigns[:freeze_module_name]
+              )
+            %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <label class="bold-text"><%= t('custom_attributes.form_dialog.manage_linked_module_options_label') %></label>
+    <div class="label-input-item">
+      <div class="row no-gutters">
+        <div>
+          <%=
+            theme_radio_button(
+              g,
+              :module_linkage_category,
+              CustomAttribute::MODULE_LINKAGE_CATEGORIES.fetch(:specify_values),
+              { 
+                id: 'module_linkage_category_specific_values',
+                class: 'custom_attribute_module_linkage_category',
+                data: { attribute_id: id },
+                disabled: local_assigns[:freeze_module_linkage_category]
+              },
+              {
+                label: t('custom_attributes.form_dialog.specific_values_label'),
+                help_link: { title: local_assigns[:freeze_module_linkage_category] ? t('custom_attribute_linkage_spcify_values_disbabled_message') : nil }
+              }
+            )
+          %>
+        </div>
+      </div>
+      <div class="row no-gutters">
+        <div>
+          <%=
+            theme_radio_button(
+              g,
+              :module_linkage_category,
+              CustomAttribute::MODULE_LINKAGE_CATEGORIES.fetch(:filter_by_criteria),
+              {
+                id: 'module_linkage_category_filter_by_criteria',
+                class: 'custom_attribute_module_linkage_category',
+                data: { attribute_id: id },
+                disabled: local_assigns[:freeze_module_linkage_category]
+              },
+              {
+                label: t('custom_attributes.form_dialog.filter_by_criteria_label'),
+                title: local_assigns[:freeze_module_linkage_category] ? t('custom_attribute_linkage_filter_by_criteria_disbabled_message') : nil
+              }
+            )
+          %>
+        </div>
+      </div>
+    </div>
+    <div id="linked_module_filters_<%= id %>" data-can-update-filters="<%= local_assigns[:can_update_filters] %>" class="<%= 'collapse' unless local_assigns[:filtered_by_criteria] %>">
+      <p><strong class="text-info">Note: </strong>If you select this option, this custom field will appear as a searchable dropdown from where you can set its value.</p>
+      <div id="linked_module_filter_options_<%= id %>"></div>
+      <div id="custom_attribute_linked_module_filters_results_<%= id %>"></div>
+    </div>
+  </div>
+<% end %>
