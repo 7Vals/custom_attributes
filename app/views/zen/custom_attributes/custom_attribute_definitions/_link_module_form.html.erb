@@ -1,4 +1,4 @@
-<%= f.fields_for :custom_attribute_linked_module do |g| %>
+<%= f.fields_for :custom_attribute_definition_linked_module_attributes do |g| %>
   <div id='<%= "#{dom_id(f.object)}_module_name" %>'>
     <div class="label-input-item">
       <div class="row no-gutters p-y-7">
@@ -28,7 +28,7 @@
         <div>
           <%=
             theme_radio_button(
-              g,
+              f,
               :module_linkage_category,
               CustomAttribute::MODULE_LINKAGE_CATEGORIES.fetch(:specify_values),
               { 
