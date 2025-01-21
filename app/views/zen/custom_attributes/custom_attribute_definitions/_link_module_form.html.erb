@@ -67,9 +67,9 @@
         </div>
       </div>
     </div>
-    <div id="linked_module_filters_<%= id %>" data-can-update-filters="<%= local_assigns[:can_update_filters] %>" class="<%= 'collapse' unless local_assigns[:filtered_by_criteria] %>">
+    <div id="linked_module_filters_<%= id %>" data-can-update-filters="<%= local_assigns[:can_update_filters] %>" class="<%= class_names('js-linked-module-filter-container', { collapse: !local_assigns[:filtered_by_criteria] }) %>">
       <p><strong class="text-info">Note: </strong>If you select this option, this custom field will appear as a searchable dropdown from where you can set its value.</p>
-      <div id="linked_module_filter_options_<%= id %>" class='js-linked-module-filter-options'></div>
+      <div id="linked_module_filter_options_<%= id %>"></div>
       <div id="custom_attribute_linked_module_filters_results_<%= id %>"></div>
     </div>
   </div>
