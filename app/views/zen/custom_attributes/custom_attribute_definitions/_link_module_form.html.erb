@@ -1,4 +1,5 @@
-<%= f.fields_for :custom_attribute_definition_linked_module_attributes do |g| %>
+<%= f.fields_for :custom_attribute_definition_linked_module do |g| %>
+  <%= g.hidden_field :id %>
   <div id='<%= "#{dom_id(f.object)}_module_name" %>'>
     <div class="label-input-item">
       <div class="row no-gutters p-y-7">
