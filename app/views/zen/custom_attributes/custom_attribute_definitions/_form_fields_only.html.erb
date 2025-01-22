@@ -32,7 +32,7 @@
   <div>
     <%= theme_checkbox(f, :linked_to_module, { class: 'custom_attribute_linked_to_module', id: "linked_to_module_#{custom_attribute.id}", data: { attribute_id: custom_attribute.id }, disabled: local_assigns[:freeze_module_linkage] }, { label: t('custom_attributes.form_dialog.link_to_module_label') }) %>
   </div>
-  <div id="module_linkage_specifications_<%= custom_attribute.id %>" class="<%= class_names('js-module-linkage-specifications', { collapse: !custom_attribute.linked_to_module? || local_assigns[:freeze_module_linkage] }) %>">
+  <div id="module_linkage_specifications_<%= custom_attribute.id %>" class="<%= class_names('js-module-linkage-specifications', { collapse: !custom_attribute.linked_to_module? }) %>">
     <%=
       render(
         partial: 'zen/custom_attributes/custom_attribute_definitions/link_module_form',
