@@ -24,7 +24,15 @@ module CustomAttributes
     end
 
     def value
-      custom_attribute_option_values.first.try(:custom_attribute_option).try(:label)
+      if linkable_resource_id.present?
+        linkable_resource_display_value || DEFAULT_FIELD_VALUE
+      else
+        custom_attribute_option_values.first.try(:custom_attribute_option).try(:label)
+      end
+    end
+
+    def linkable_resource_display_value
+      CustomAttributeDefinitionLinkedModule.linkable_resource_display_value(linkable_resource)
     end
 
     def selected_option_id
