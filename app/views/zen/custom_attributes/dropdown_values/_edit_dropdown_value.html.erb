@@ -14,9 +14,17 @@
       <%= custom_fields.label custom_attribute_value.name.to_sym, sanitize(label_text), options[:title_options] %>
     <% end %>
     <%= content_tag(:div, options[:field_wrapper_options]) do %>
-      <%= custom_fields.select "#{options[:field_options][:use_defn_id] ? custom_attribute_value.custom_attribute_defn.id : custom_attribute_value.name}".to_sym, options_for_select(custom_attribute_value.custom_attribute_options.map { |op| [op.label, op.id] }, selected: custom_attribute_value.selected_option_id), { include_blank: "-- Select --" }, options[:field_options] %>
-    <% end %>
-  <% end %>
+      <%  custom_attribute_definition = custom_attribute_value.custom_attribute_defn
+      if custom_attribute_definition.linked_to_module? && custom_attribute_definition.linked_to_module_via_items_filtered_by_criteria? %>
+        <% cust_attr_value_name = "#{options[:field_options][:use_defn_id] ? custom_attribute_definition.id : custom_attribute_value.name}" %>
+        <%= custom_fields.hidden_field "#{cust_attr_value_name}][linkable_resource_id", value: custom_attribute_value.try(:linkable_resource_id_field_value), id: "custom_attribute_linkable_resource_id_#{custom_attribute_definition.id}" %>
+        <%= custom_fields.hidden_field "#{cust_attr_value_name}][linkable_resource_type", value: custom_attribute_value.try(:linkable_resource_type_field_value), id: "custom_attribute_linkable_resource_type_#{custom_attribute_definition.id}" %>
+        <%= text_field_tag("#{options[:field_options][:use_defn_id] ? custom_attribute_value.custom_attribute_defn.id : custom_attribute_value.name}".to_sym, custom_attribute_value.linkable_resource_id, id: "custom_attribute_linkable_resource_search_#{custom_attribute_value.custom_attribute_defn.id}", class: "#{options[:class]} w-100 custom-attribute-linkable-resource-search", data: { attribute_id: custom_attribute_definition.id, attribute_type: custom_attribute_definition.determine_association_name }, placeholder: 'Search') %>
+      <% else %>
+          <%= custom_fields.select "#{options[:field_options][:use_defn_id] ? custom_attribute_value.custom_attribute_defn.id : custom_attribute_value.name}".to_sym, options_for_select(custom_attribute_value.custom_attribute_options.map { |op| [op.label, op.id] }, selected: custom_attribute_value.selected_option_id), { include_blank: "-- Select --" }, options[:field_options] %>
+        <% end %>
+      <% end %>
+    <% end %> 
   <!-- END Field part of form -->
 <% else %>
   <!-- Inline Editing Start -->
