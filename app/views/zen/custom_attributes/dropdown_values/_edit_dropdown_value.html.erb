@@ -15,7 +15,7 @@
     <% end %>
     <%= content_tag(:div, options[:field_wrapper_options]) do %>
       <%  custom_attribute_definition = custom_attribute_value.custom_attribute_defn
-      if custom_attribute_definition.linked_to_module? && custom_attribute_definition.linked_to_module_via_items_filtered_by_criteria? %>
+      if custom_attribute_definition.respond_to?(:linked_to_module) && custom_attribute_definition.linked_to_module? && custom_attribute_definition.linked_to_module_via_items_filtered_by_criteria? %>
         <% cust_attr_value_field_name = "#{options[:field_options][:use_defn_id] ? custom_attribute_definition.id : custom_attribute_value.name}" %>
         <%= custom_fields.hidden_field "#{cust_attr_value_field_name}][linkable_resource_id", value: custom_attribute_value.try(:linkable_resource_id_field_value), id: "custom_attribute_linkable_resource_id_#{custom_attribute_definition.id}" %>
         <%= custom_fields.hidden_field "#{cust_attr_value_field_name}][linkable_resource_type", value: custom_attribute_value.try(:linkable_resource_type_field_value), id: "custom_attribute_linkable_resource_type_#{custom_attribute_definition.id}" %>

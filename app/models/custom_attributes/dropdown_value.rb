@@ -24,7 +24,7 @@ module CustomAttributes
     end
 
     def value
-      if linkable_resource_id.present?
+      if respond_to?(:linkable_resource_id) && linkable_resource_id.present?
         linkable_resource_display_value || DEFAULT_FIELD_VALUE
       else
         custom_attribute_option_values.first.try(:custom_attribute_option).try(:label)
