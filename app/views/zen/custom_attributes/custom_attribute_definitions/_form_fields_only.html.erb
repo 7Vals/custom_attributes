@@ -39,7 +39,7 @@
           partial: 'zen/custom_attributes/custom_attribute_definitions/link_module_form',
           locals: {
             f: f,       
-            id: id,
+            id: local_assigns[:id] || custom_attribute.id,
             custom_attribute: custom_attribute,
             module_options: local_assigns[:module_options],
             freeze_module_name: local_assigns[:freeze_module_name],
