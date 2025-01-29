@@ -1,5 +1,10 @@
 module CustomAttributes
   module DropdownValue
+
+    def display_value
+      value
+    end
+
     def value=(args)
       _set_values_for_linkable_resource(args) and return if args.is_a?(Hash)
 
