@@ -27,8 +27,34 @@
     </div>
   </div>
 </div>
+
+<% if custom_attribute.respond_to?(:linked_to_module) %>
+  <div id="custom_attribute_module_linkage_<%= custom_attribute.id %>">
+    <div>
+      <%= theme_checkbox(f, :linked_to_module, { class: 'custom_attribute_linked_to_module', id: "linked_to_module_#{custom_attribute.id}", data: { attribute_id: custom_attribute.id }, disabled: local_assigns[:freeze_module_linkage] }, { label: t('custom_attributes.form_dialog.link_to_module_label') }) %>
+    </div>
+    <div id="module_linkage_specifications_<%= custom_attribute.id %>" class="<%= class_names('js-module-linkage-specifications', { collapse: !custom_attribute.linked_to_module? }) %>">
+      <%=
+        render(
+          partial: 'zen/custom_attributes/custom_attribute_definitions/link_module_form',
+          locals: {
+            f: f,       
+            id: local_assigns[:id] || custom_attribute.id,
+            custom_attribute: custom_attribute,
+            module_options: local_assigns[:module_options],
+            freeze_module_name: local_assigns[:freeze_module_name],
+            freeze_module_linkage_category: local_assigns[:freeze_module_linkage_category],
+            can_update_filters: local_assigns[:can_update_filters],
+            filtered_by_criteria: local_assigns[:filtered_by_criteria]
+          }
+        )
+      %>
+    </div>
+  </div>
+<% end %>
+
 <% unless f.object.try(:date_type?) %>
-  <div id="custom_attribute_default_value_div" class="label-input-item">
+  <div id="custom_attribute_default_value_div" class="label-input-item js-custom-attribute-default-value-container">
     <div class="row no-gutters">
       <div class="col-12 pb-3">
         <label>Default Value</label>
