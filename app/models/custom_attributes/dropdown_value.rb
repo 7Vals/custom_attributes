@@ -45,6 +45,10 @@ module CustomAttributes
       end
     end
 
+    def linkable_resource_display_value
+      CustomAttributeDefinitionLinkedModule.linkable_resource_display_value(linkable_resource)
+    end
+
     def selected_option_id
       custom_attribute_option_values.first.try(:custom_attribute_option).try(:id)
     end
