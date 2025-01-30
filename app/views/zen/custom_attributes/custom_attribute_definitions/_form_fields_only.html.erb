@@ -2,6 +2,7 @@
 <% new_record ||= false %>
 <% confirm_option_deletion_url ||= nil %>
 <% position_update_url ||= nil %>
+<% id = local_assigns[:id] || custom_attribute.id %>
 
 <div class="label-input-item">
   <div class="row no-gutters">
@@ -29,17 +30,17 @@
 </div>
 
 <% if custom_attribute.respond_to?(:linked_to_module) %>
-  <div id="custom_attribute_module_linkage_<%= custom_attribute.id %>">
+  <div id="custom_attribute_module_linkage_<%= id %>">
     <div>
-      <%= theme_checkbox(f, :linked_to_module, { class: 'custom_attribute_linked_to_module', id: "linked_to_module_#{custom_attribute.id}", data: { attribute_id: custom_attribute.id }, disabled: local_assigns[:freeze_module_linkage] }, { label: t('custom_attributes.form_dialog.link_to_module_label') }) %>
+      <%= theme_checkbox(f, :linked_to_module, { class: 'custom_attribute_linked_to_module', id: "linked_to_module_#{id}", data: { attribute_id: id }, disabled: local_assigns[:freeze_module_linkage] }, { label: t('custom_attributes.form_dialog.link_to_module_label') }) %>
     </div>
-    <div id="module_linkage_specifications_<%= custom_attribute.id %>" class="<%= class_names('js-module-linkage-specifications', { collapse: !custom_attribute.linked_to_module? }) %>">
+    <div id="module_linkage_specifications_<%= id %>" class="<%= class_names('js-module-linkage-specifications', { collapse: !custom_attribute.linked_to_module? }) %>">
       <%=
         render(
           partial: 'zen/custom_attributes/custom_attribute_definitions/link_module_form',
           locals: {
             f: f,       
-            id: local_assigns[:id] || custom_attribute.id,
+            id: id,
             custom_attribute: custom_attribute,
             module_options: local_assigns[:module_options],
             freeze_module_name: local_assigns[:freeze_module_name],
