@@ -46,7 +46,9 @@ module CustomAttributes
     end
 
     def linkable_resource_display_value
-      CustomAttributeDefinitionLinkedModule.linkable_resource_display_value(linkable_resource)
+      # This class method (linkable_resource_display_value) is defined in gem but should be overridden in the codebase
+      # If it's called under the scope of module CustomAttributes, scope resolution operator should be use.
+      ::CustomAttributeDefinitionLinkedModule.linkable_resource_display_value(linkable_resource)
     end
 
     def selected_option_id
