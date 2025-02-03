@@ -23,7 +23,7 @@
                 {},
                 id: "custom_attribute_linked_module_name_#{id}",
                 class: 'custom_attribute_linked_module_name select2-small',
-                data: { attribute_id: id, select2_classes: 'select2-small-container', resource_type: CustomAttributes::DefinitionModuleLinkable::ASSOCIATION_NAMES[f.object.class.name.to_s].singularize },
+                data: { attribute_id: id, select2_classes: 'select2-small-container', resource_type: CustomAttributes::DefinitionModuleLinkable::ASSOCIATION_NAMES[f.object.class.name].singularize },
                 disabled: local_assigns[:freeze_module_name]
               )
             %>
