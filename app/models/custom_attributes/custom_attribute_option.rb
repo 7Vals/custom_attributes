@@ -3,7 +3,7 @@ module CustomAttributes
     extend ActiveSupport::Concern
     included do
       validates :label, presence: { message: 'Option cannot be blank, either remove the blank option or add a value to it' }
-      #validates :label, format: { with: /\A[a-zA-Z\_\s0-9]+\z/, message: 'cannot contain special characters.' }, if: -> { linkable_resource_id.blank? }
+      validates :label, format: { with: /\A[a-zA-Z\_\s0-9]+\z/, message: 'cannot contain special characters.' }, if: -> { try(:linkable_resource_id).blank? }
       default_scope -> { order(:position) }
       belongs_to :linkable_resource, polymorphic: true
     end
