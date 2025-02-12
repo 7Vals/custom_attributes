@@ -7,11 +7,13 @@ class CreateModuleLinkageFor<%= name %>CustomAttributes < ActiveRecord::Migratio
     end
 
     change_table :<%= singular_table_name %>_custom_attribute_options do |t|
-      t.belongs_to :linkable_resource, polymorphic: true, index: { name: :index_<%= singular_table_name %>_custom_attribute_options_on_linkable_resource }
+      t.belongs_to :linkable_resource, polymorphic: true
+      t.index %i[company_id linkable_resource_type linkable_resource_id], name: :index_<%= singular_table_name %>_custom_attribute_options_on_linkable_resource
     end
 
     change_table :<%= singular_table_name %>_custom_attribute_values do |t|
-      t.belongs_to :linkable_resource, polymorphic: true, index: { name: :index_<%= singular_table_name %>_custom_attribute_values_on_linkable_resource }
+      t.belongs_to :linkable_resource, polymorphic: true
+      t.index %i[company_id linkable_resource_type linkable_resource_id], name: :index_<%= singular_table_name %>_custom_attribute_values_on_linkable_resource
     end
   end
 end
