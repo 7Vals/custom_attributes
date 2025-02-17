@@ -107,6 +107,14 @@ module CustomAttributes
         resource = load_resource
         errors.add(:base, I18n.t('custom_attribute_alert_unchecked_error')) if date_type? && send_email_alert && !(scheduled_alert || advance_alert || subsequent_alert)
       end
+
+      def linked_to_module_via_items_filtered_by_criteria?
+        raise NotImplementedError
+      end
+  
+      def linked_to_module_via_specified_values?
+        raise NotImplementedError
+      end
     end
   end
 end

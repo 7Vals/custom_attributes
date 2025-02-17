@@ -6,6 +6,10 @@
     </div>
     <div class="col">
       <%= f.text_field :label, class: "w-100 js-custom-attribute-dropdown-option" %>
+      <% if f.object.respond_to?(:linkable_resource_id) %>
+        <%= f.hidden_field :linkable_resource_id, class: 'js-custom-attribute-option-linkable-resource-id' %>
+        <%= f.hidden_field :linkable_resource_type, class: 'js-custom-attribute-option-linkable-resource-type' %>
+      <% end %>     
     </div>
     <div class="col-2 d-flex justify-content-end pt-2">
       <% if f.object.id.present? %>
