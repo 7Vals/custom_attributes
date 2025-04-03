@@ -7,8 +7,7 @@ module CustomAttributes
         ca.value = params[:value]
         if ca.save
           format.json { render json: ca.to_json(methods: [:display_value, :value, :selected_option_id]), status: :created }
-          binding.pry
-          format.api { render json: { message: "Successfully Updated" }, status: :success }
+          format.api { render json: { message: "Successfully Updated" }, status: 200 }
         else
           format.json { render json: ca, status: :unprocessable_entity }
           format.api { render json: { message: "Failed to update" }, status: :unprocessable_entity }
