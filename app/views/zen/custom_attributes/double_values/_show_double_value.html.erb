@@ -6,5 +6,5 @@
 <%= content_tag(:div, content_tag(:p, label_text.html_safe, options[:title_options]), options[:title_wrapper_options]) %>
 
 <%#= content_tag(:div, content_tag(:p, custom_attribute_value.value || default_field_value.html_safe, options[:field_options]), options[:field_wrapper_options]) %>
-
+<% binding.pry %>
 <%= content_tag(:div, content_tag(:p, number_with_precision(custom_attribute_value.value || default_field_value, precision: 2).html_safe, options[:field_options]), options[:field_wrapper_options]) %>
