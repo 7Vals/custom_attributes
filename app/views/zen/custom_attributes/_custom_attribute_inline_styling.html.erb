@@ -7,6 +7,7 @@
   <%= content_tag(:div, content_tag(:p, label_text.html_safe, options[:title_options]), options[:title_wrapper_options]) %>
 
   <% if custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_DECIMAL %>
+    <% binding.pry %>
     <%= content_tag(:div, content_tag(:p, (custom_attribute_value.value.present? ? format_numeric_custom_attr_val(custom_attribute_value.value) : default_field_value.html_safe), options[:field_options]), options[:field_wrapper_options]) %>
   <% elsif custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_DATE %>
     <%= content_tag(:div, content_tag(:p, (custom_attribute_value.date_time_value.present? ? auto_link(custom_attribute_value.date_time_value.try(:to_date).try(:to_s, :long)) : default_field_value.html_safe), options[:field_options]), options[:field_wrapper_options]) %>
@@ -35,7 +36,8 @@
     <%= content_tag(:div, options[:input_field_wrapper]) do %>
       <%= content_tag(:div, class: 'label-input-container-sm') do %>
         <%= content_tag(:div, class: 'label-input-item') do %>
-          <%= text_field_tag custom_attribute_value.name.to_sym, custom_attribute_value.value, options[:input_options] %>
+          <% binding.pry %>
+          <%= text_field_tag custom_attribute_value.name.to_sym, format_numeric_custom_attr_val(custom_attribute_value.value), options[:input_options] %>
         <% end %>
       <% end %>
     <% end %>
