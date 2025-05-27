@@ -1,3 +1,3 @@
 module CustomAttributes
-  VERSION = '0.1.54'
+  VERSION = '0.1.55'
 end
