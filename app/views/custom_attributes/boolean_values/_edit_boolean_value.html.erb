@@ -1,9 +1,9 @@
-<% binding.pry %>
 <% form       ||= nil %>
 <% cssClasses ||= {} %>
 <% if form %>
   <% # BEGIN Field part of form %>
     <%= form.fields_for :custom_attributes do |custom_fields| %>
+      <% binding.pry %>
       <% label_text = boolean_value.name %>
       <% label_text += content_tag(:span, '*', class: cssClasses[:required]) %>
       <%= custom_fields.label boolean_value.name.to_sym, label_text.html_safe, class: cssClasses[:title] %>
