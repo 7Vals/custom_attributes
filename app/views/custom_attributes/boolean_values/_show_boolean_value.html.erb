@@ -1,6 +1,7 @@
 <% cssClasses ||= {} %>
 <% required   ||= false %>
 <% default_field_value ||= "&nbsp" %>
+
 <div class="custom-attributes title <%=cssClasses[:title]%>">
   <%= "<div class='#{cssClasses[:innerClasses]}'>".html_safe if cssClasses[:innerClasses].present? %> 
   <%= boolean_value.name %>
