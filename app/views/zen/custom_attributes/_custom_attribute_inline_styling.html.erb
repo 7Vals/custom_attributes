@@ -62,4 +62,8 @@
       <% end %>  
     <% end %>
   <% end %>
+  <% if options[:field_icon].present? %>
+    <% icon_path = field_icon_link(options) %>
+    <%= content_tag(:div, icon_path, class: options[:icon_link_size]) %>
+  <% end %>
 </div>
