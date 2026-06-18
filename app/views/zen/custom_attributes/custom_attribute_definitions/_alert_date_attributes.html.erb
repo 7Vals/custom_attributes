@@ -56,7 +56,7 @@
             </div>
           <% else %>
             <div class="col-12">
-              <%= f.number_field :advance_alert_days, min: 1, max: 365, step: '1', class: 'w-100' %>
+              <%= f.number_field :advance_alert_days, min: 1, max: AdvanceAlertPhase::CUSTOM_ATTRIBUTE_ALERT_PHASE_MAX_VALUE, step: '1', class: 'w-100' %>
             </div>
           <% end %>
         </div>
@@ -81,7 +81,7 @@
             </div>
           <% else %>
             <div class="col-12">
-              <%= f.number_field :subsequent_alert_days, min: 1, max: 365, step: '1', class: 'w-100' %>
+              <%= f.number_field :subsequent_alert_days, min: 1, max: AdvanceAlertPhase::CUSTOM_ATTRIBUTE_ALERT_PHASE_MAX_VALUE, step: '1', class: 'w-100' %>
             </div>
           <% end %>
         </div>
