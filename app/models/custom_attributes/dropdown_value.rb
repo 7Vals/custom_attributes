@@ -6,7 +6,8 @@ module CustomAttributes
     end
 
     def value=(args)
-      _set_values_for_linkable_resource(args) and return if args.is_a?(Hash)
+      # Rails nested params arrive as ActionController::Parameters (not a Hash).
+      args = args.to_unsafe_h if args.respond_to?(:to_unsafe_h)
 
       custom_attribute_option_id = args
       custom_attribute_option = custom_attribute_options.find_by id: custom_attribute_option_id
