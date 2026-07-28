@@ -24,11 +24,23 @@
     <% end %>
   <% elsif custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_DROPDOWN %>
     <%= content_tag(:div, options[:input_field_wrapper]) do %>
-      <% options[:input_options][:class] = "select2-small #{options[:input_options][:class]}" %>
-      <% options[:input_options][:data]  = { 'select2-small' => "select2-small-container" } %>
-      <% options[:input_options][:include_blank]  = 'Select' %>
-      
-      <%= select_tag "#{custom_attribute_value.name}".to_sym, options_for_select(custom_attribute_value.custom_attribute_options.map { |op| [op.label, op.id] }, selected: custom_attribute_value.selected_option_id), options[:input_options] %>
+      <% custom_attribute_definition = custom_attribute_value.custom_attribute_defn %>
+      <% if custom_attribute_definition.respond_to?(:linked_to_module) && custom_attribute_definition.linked_to_module? && custom_attribute_definition.linked_to_module_via_items_filtered_by_criteria? %>
+        <% cust_attr_value_field_name = "#{options[:field_options][:use_defn_id] ? custom_attribute_definition.id : custom_attribute_value.name}" %>
+        <%= hidden_field_tag :linkable_resource_id, custom_attribute_value.try(:linkable_resource_id_field_value), id: "custom_attribute_linkable_resource_id_#{custom_attribute_definition.id}" %>
+        <%= hidden_field_tag :linkable_resource_type, custom_attribute_value.try(:linkable_resource_type_field_value), id: "custom_attribute_linkable_resource_type_#{custom_attribute_definition.id}" %>
+        <%= text_field_tag cust_attr_value_field_name.to_sym, custom_attribute_value.value,
+              id: "custom_attribute_linkable_resource_search_#{custom_attribute_definition.id}",
+              class: "#{options[:input_options][:class]} custom-attribute-linkable-resource-search",
+              data: { attribute_id: custom_attribute_definition.id, attribute_type: custom_attribute_definition.determine_association_name },
+              placeholder: 'Search' %>
+      <% else %>
+        <% options[:input_options][:class] = "select2-small #{options[:input_options][:class]}" %>
+        <% options[:input_options][:data]  = { 'select2-small' => "select2-small-container" } %>
+        <% options[:input_options][:include_blank]  = 'Select' %>
+        
+        <%= select_tag "#{custom_attribute_value.name}".to_sym, options_for_select(custom_attribute_value.custom_attribute_options.map { |op| [op.label, op.id] }, selected: custom_attribute_value.selected_option_id), options[:input_options] %>
+      <% end %>
     <% end %>
   <% elsif custom_attribute_value.custom_attribute_defn.attr_type == CustomAttributes::CustomAttribute::TYPE_DECIMAL %>
     <% options[:input_options].merge!(pattern: "[0-9]+(\.[0-9]+)?") %>

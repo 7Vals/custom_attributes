@@ -29,7 +29,7 @@
   </div>
 </div>
 
-<% if custom_attribute.respond_to?(:linked_to_module) %>
+<% if custom_attribute.respond_to?(:linked_to_module) && !local_assigns[:hide_module_linkage] %>
   <div id="custom_attribute_module_linkage_<%= id %>">
     <div>
       <%= theme_checkbox(f, :linked_to_module, { class: 'custom_attribute_linked_to_module', id: "linked_to_module_#{id}", data: { attribute_id: id }, disabled: local_assigns[:freeze_module_linkage] }, { label: t('custom_attributes.form_dialog.link_to_module_label') }) %>
