@@ -5,8 +5,8 @@ module CustomAttributes
       scope :by_sort_order, -> { order('sort_order ASC') }
       scope :visible_to_staff, -> { where(hide_visibility_from_staff: false) }
       scope :datebox_attributes, -> { where(attr_type: 'date') }
-      validates :attr_name, presence: true, format: { with: /^[a-zA-Z\_\s]+$/, multiline: true, message: 'cannot contain special characters.' }
-      validates :default_value, format: { with: /^[\+\-]?\d*\.?\d*$/, multiline: true, message: 'should be a number.' }, if: :number_type?
+      validates :attr_name, presence: true, format: { with: /\A[a-zA-Z\_\s]+\z/, message: 'cannot contain special characters.' }
+      validates :default_value, format: { with: /\A[\+\-]?\d*\.?\d*\z/, message: 'should be a number.' }, if: :number_type?
       validate :validate_custom_attr_date_alert_options, if: :date_type?
       after_save :update_recurring_custom_attribute, if: :date_type?
 
